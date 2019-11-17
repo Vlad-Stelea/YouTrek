@@ -87,6 +87,8 @@ paths:
       responses:
         200:
           description: Video uploaded
+          schema:
+            $ref: "#/definitions/Video"
         400:
           description: invalid input, object invalid
     delete:
@@ -126,7 +128,7 @@ paths:
         200:
           description: Video returned
           schema:
-            $ref: "#/definitions/Video"
+            $ref: "#/definitions/ListOfVideos"
 
   /playlists:
     get:
@@ -142,7 +144,7 @@ paths:
         200:
           description: list of playlists returned
           schema:
-            $ref: "#/definitions/Playlists"
+            $ref: "#/definitions/ListOfPlaylists"
         400:
           description: Error getting playlists
     post:
@@ -165,7 +167,9 @@ paths:
             $ref: "#/definitions/Playlist"
       responses:
         200:
-          description: list of playlists returned
+          description: New Playlist Success
+          schema:
+            $ref: "#/definitions/Playlist"
         400:
           description: Error getting playlists
     delete:
@@ -211,6 +215,8 @@ paths:
       responses:
         200:
           description: list of constants returned
+          schema:
+            $ref: "#/definitions/Playlist"
 
   /playlists/{id}/video:
     post:
@@ -238,6 +244,8 @@ paths:
       responses:
         200:
           description: Video appended
+          schema:
+            $ref: "#/definitions/Playlist"
         400:
           description: invalid input, object invalid
     delete:
@@ -290,6 +298,8 @@ paths:
       responses:
         200:
           description: third-party library added
+          schema:
+            $ref: "#/definitions/TLP"
         400:
           description: invalid input, object invalid
     delete:
@@ -367,7 +377,7 @@ definitions:
         type: array
         items:
           $ref: "#/definitions/Video"
-  Playlists:
+  ListOfPlaylists:
     type: object
     required:
       - playlists
@@ -403,3 +413,12 @@ definitions:
         type: boolean
       isAvailable:
         type: boolean
+  ListOfVideos:
+    type: object
+    required:
+      - videos
+    properties:
+      videos:
+        type: array
+        items:
+          $ref: "#/definitions/Video"
