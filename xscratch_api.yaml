@@ -1,10 +1,9 @@
 swagger: "2.0"
 info:
   version: "1"
-  title: "G.API"
-  description: "API defined using swagger for Canvas assignment."
-# Added by API Auto Mocking Plugin
-host: virtserver.swaggerhub.com
+  title: "XSCRATCH API"
+  description: "API defined using swagger for gr-Xenophobe."
+host: currentlyUnknown.com
 basePath: /Xscratch1/G.API/1
 schemes:
   - https
@@ -51,15 +50,15 @@ schemes:
 
 tags:
   - name: Administrator
-    description: Administrator calls
+    description: Endpoints available to Administators
   - name: Participant
-    description: Participant calls
+    description: Endpoints available to Participants
   - name: Video
-    description: Related to video
+    description: Managing videos in the library
   - name: Playlist
-    description: Related to playlist
+    description: Managing playlists and their videos
   - name: TLP
-    description: Related to third-party libraries
+    description: Managing third party libraries
 
 # Actual API
 
@@ -126,9 +125,11 @@ paths:
         - application/json
       responses:
         200:
-          description: Video returned
+          description: Local videos returned
           schema:
             $ref: "#/definitions/ListOfVideos"
+        400:
+          description: Invalid request
 
   /playlists:
     get:
@@ -146,7 +147,7 @@ paths:
           schema:
             $ref: "#/definitions/ListOfPlaylists"
         400:
-          description: Error getting playlists
+          description: Invalid Request
     post:
       tags:
         - Participant
@@ -164,7 +165,10 @@ paths:
           description: New playlist with title
           required: true
           schema:
-            $ref: "#/definitions/Playlist"
+            type: object
+            properties:
+              name:
+                type: string
       responses:
         200:
           description: New Playlist Success
@@ -192,7 +196,7 @@ paths:
             $ref: "#/definitions/DeleteRequest"
       responses:
         200:
-          description: Video deleted
+          description: Playlist deleted
         400:
           description: invalid input, object invalid
 
@@ -225,12 +229,16 @@ paths:
           name: id
           required: true
           type: integer
+          description: Playlist ID to take action on
         - in: body
-          name: Video to append
-          description: Video to append
+          name: VideoID
+          description: Video ID to append
           required: true
           schema:
-            $ref: "#/definitions/Video"
+            type: object
+            properties:
+              id:
+                type: integer
       tags:
         - Participant
         - Playlist
@@ -264,15 +272,18 @@ paths:
           name: id
           required: true
           type: integer
+          description: Playlist ID to take action on
         - in: body
           name: DeleteRequest
-          description: Video id to delete
+          description: Video id to remove from playlist
           required: true
           schema:
             $ref: "#/definitions/DeleteRequest"
       responses:
         200:
-          description: Video deleted
+          description: Video deleted. Returning new playlist
+          schema:
+            $ref: "#/definitions/Playlist"
         400:
           description: invalid input, object invalid
 
@@ -290,7 +301,10 @@ paths:
           description: Add third-party library by id
           required: true
           schema:
-            $ref: "#/definitions/TLP"
+            type: object
+            properties:
+              url:
+                type: string
       consumes:
         - application/json
       produces:
@@ -331,13 +345,13 @@ definitions:
     type: object
     required:
       - name
-      - script
+      - dialogue
       - characters
       - video
     properties:
       name:
         type: string
-      script:
+      dialogue:
         type: string
       characters:
         type: string
@@ -358,16 +372,10 @@ definitions:
     required:
       - id
     properties:
-      path:
-        type: string
       id:
         type: integer
   Playlist:
     type: object
-    required:
-      - name
-      - id
-      - videos
     properties:
       name:
         type: string
