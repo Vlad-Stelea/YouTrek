@@ -9,126 +9,397 @@ basePath: /Xscratch1/G.API/1
 schemes:
   - https
 
+# Consumer
+# UC.1 Create playlist
+# post /playlist
+# UC.2 Show list of existing playlists
+# get /playlist
+# UC.3 Delete playlist
+# delete /playlist
+# UC.4 Show ordered list of video segments in playlist
+# get /playlist/videos
+# UC.5 Play playlist
+# Frontend
+# UC.6 Upload new local video segments
+# post /video
+# UC.7 Delete local video segment
+# delete /video
+# UC.8 Append video segment to end of existing playlist
+# post /playlist/video
+# UC.9 Remove video segment from existing playlist
+# delete /playlist/video
+# UC.10 Show list of video segments uploaded to library
+# get /videos
+# UC.11 Show list of video segments that match search criteria
+# Frontend
+# UC.12 Preview video
+# Frontend
+
+# Admin
+# UC.13 Mark Local Segment
+# post /video/availability
+# UC.14 Unmark Local Segment
+# post /video/availability
+# UC.15 Delete Local Video Segment
+# delete /video (Same as UC 7)
+# UC.16 Register third-party site
+# post /tlp
+# UC.17: Unregister third-party site
+# delete /tlp
+# UC.18 Preview video
+# Frontend
+
 tags:
-  - name: admins
-    description: Secured Admin-only calls
-  - name: consumers
-    description: Operations available to regular consumers
+  - name: Administrator
+    description: Administrator calls
+  - name: Participant
+    description: Participant calls
+  - name: Video
+    description: Related to video
+  - name: Playlist
+    description: Related to playlist
+  - name: TLP
+    description: Related to third-party libraries
+
+# Actual API
 
 paths:
-  /calculator:
+  /videos:
     post:
       tags:
-        - consumers
-      summary: requests sum of two values
-      description: Requests the sum of two values
-      operationId: requestSum
+        - Administrator
+        - Participant
+        - Video
+      summary: Upload new local video segment
+      description: UC.6
+      operationId: uploadLocalSegment
       consumes:
         - application/json
       produces:
         - application/json
       parameters:
         - in: body
-          name: CalculationRequest
-          description: Add two values
-          required: false
+          name: VideoPostRequest
+          description: Video and metadata for storage
+          required: true
           schema:
-            $ref: "#/definitions/CalculationRequest"
+            $ref: "#/definitions/VideoRequest"
       responses:
         200:
-          description: sum properly computed
+          description: Video uploaded
         400:
           description: invalid input, object invalid
-  /constants:
-    get:
+    delete:
       tags:
-        - consumers
-      summary: request a list of all constants
-      description: Returns a list of all constants
-      operationId: getConstantList
-      produces:
-        - application/json
-      parameters: []
-      responses:
-        200:
-          description: list of constants returned
-  /constant:
-    post:
-      tags:
-        - consumers
-      summary: request to create a constant
-      description: Requests to create a constant from base64 string; can either be a system constant or a user constant
-      operationId: requestCreate
+        - Administrator
+        - Participant
+        - Video
+      summary: Delete local video segment
+      description: UC.7
+      operationId: deleteLocalSegment
       consumes:
         - application/json
       produces:
         - application/json
       parameters:
         - in: body
-          name: ConstantCreateRequest
-          description: Create a constant to be stored until deleted
-          required: false
-          schema:
-            $ref: "#/definitions/ConstantRequest"
-      responses:
-        200:
-          description: constant created
-        400:
-          description: invalid input, object invalid
-        409:
-          description: valid input but duplicate constant
-  /delete:
-    post:
-      tags:
-        - consumers
-      summary: request to delete a constant
-      description: Requests to delete a constant by name.
-      operationId: requestDelete
-      consumes:
-        - application/json
-      produces:
-        - application/json
-      parameters:
-        - in: body
-          name: DeleteConstantRequest
-          description: Delete a Constant
-          required: false
+          name: DeleteRequest
+          description: Video id to delete
+          required: true
           schema:
             $ref: "#/definitions/DeleteRequest"
       responses:
         200:
-          description: constant deleted
+          description: Video deleted
         400:
-          description: invalid constant
-        409:
-          description: unable to delete constant
+          description: invalid input, object invalid
+    get:
+      tags:
+        - Participant
+        - Video
+      summary: Show list of local video segments uploaded to library
+      description: UC.10
+      operationId: showLocalLibrarySegments
+      produces:
+        - application/json
+      responses:
+        200:
+          description: Video returned
+          schema:
+            $ref: "#/definitions/Video"
+
+  /playlists:
+    get:
+      tags:
+        - Participant
+        - Playlist
+      summary: Get list of all playlists
+      description: UC.2
+      operationId: listPlaylists
+      produces:
+        - application/json
+      responses:
+        200:
+          description: list of playlists returned
+          schema:
+            $ref: "#/definitions/Playlists"
+        400:
+          description: Error getting playlists
+    post:
+      tags:
+        - Participant
+        - Playlist
+      summary: Create new playlist
+      description: UC.1
+      operationId: createPlaylist
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: PlaylistPostRequest
+          description: New playlist with title
+          required: true
+          schema:
+            $ref: "#/definitions/Playlist"
+      responses:
+        200:
+          description: list of playlists returned
+        400:
+          description: Error getting playlists
+    delete:
+      tags:
+        - Participant
+        - Playlist
+      summary: Delete playlist
+      description: UC.3
+      operationId: deletePlaylist
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: DeleteRequest
+          description: Playlist id to delete
+          required: true
+          schema:
+            $ref: "#/definitions/DeleteRequest"
+      responses:
+        200:
+          description: Video deleted
+        400:
+          description: invalid input, object invalid
+
+  /playlists/{id}:
+    get:
+      tags:
+        - Participant
+        - Playlist
+      summary: Get playlist data
+      description: UC.4
+      operationId: getPlaylist
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: integer
+          description: The playlist id
+      responses:
+        200:
+          description: list of constants returned
+
+  /playlists/{id}/video:
+    post:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: integer
+        - in: body
+          name: Video to append
+          description: Video to append
+          required: true
+          schema:
+            $ref: "#/definitions/Video"
+      tags:
+        - Participant
+        - Playlist
+      summary: Append video segment to existing playlist
+      description: UC.8
+      operationId: appendVideoSegment
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        200:
+          description: Video appended
+        400:
+          description: invalid input, object invalid
+    delete:
+      tags:
+        - Participant
+        - Playlist
+      summary: Remove video segment from existing playlist
+      description: UC.9
+      operationId: deleteVideoSegment
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: integer
+        - in: body
+          name: DeleteRequest
+          description: Video id to delete
+          required: true
+          schema:
+            $ref: "#/definitions/DeleteRequest"
+      responses:
+        200:
+          description: Video deleted
+        400:
+          description: invalid input, object invalid
+
+  /tlp:
+    post:
+      tags:
+        - Administrator
+        - TLP
+      summary: Add third-party library to list of remote video segments
+      description: UC.16
+      operationId: addTLP
+      parameters:
+        - in: body
+          name: id
+          description: Add third-party library by id
+          required: true
+          schema:
+            $ref: "#/definitions/TLP"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        200:
+          description: third-party library added
+        400:
+          description: invalid input, object invalid
+    delete:
+      tags:
+        - Administrator
+        - TLP
+      summary: Remove third-party library to list of remote video segments
+      description: UC.17
+      operationId: removeTLP
+      parameters:
+        - in: body
+          name: id
+          description: Remove third-party library by id
+          required: true
+          schema:
+            $ref: "#/definitions/DeleteRequest"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        200:
+          description: third-party library deleted
+        400:
+          description: invalid input, object invalid
+
 definitions:
-  CalculationRequest:
+  VideoRequest:
     type: object
     required:
-      - arg1
-      - arg2
+      - name
+      - script
+      - characters
+      - video
     properties:
-      arg1:
+      name:
         type: string
-      arg2:
+      script:
+        type: string
+      characters:
+        type: string
+      video:
+        type: string
+  TLP:
+    type: object
+    required:
+      - id
+      - url
+    properties:
+      id:
+        type: integer
+      url:
         type: string
   DeleteRequest:
     type: object
     required:
-      - name
+      - id
     properties:
-      name:
+      path:
         type: string
-  ConstantRequest:
+      id:
+        type: integer
+  Playlist:
     type: object
     required:
       - name
-      - value
+      - id
+      - videos
     properties:
       name:
         type: string
-      value:
+      id:
+        type: integer
+      videos:
+        type: array
+        items:
+          $ref: "#/definitions/Video"
+  Playlists:
+    type: object
+    required:
+      - playlists
+    properties:
+      playlists:
+        type: array
+        items:
+          $ref: "#/definitions/Playlist"
+  Video:
+    type: object
+    required:
+      - id
+      - url
+      - length
+      - characters
+      - dialogue
+      - isRemote
+      - isAvailable
+    properties:
+      id:
+        type: integer
+      url:
         type: string
-      system:
+      length:
+        type: string
+      characters:
+        type: array
+        items:
+          type: string
+      dialogue:
+        type: string
+      isRemote:
+        type: boolean
+      isAvailable:
         type: boolean
