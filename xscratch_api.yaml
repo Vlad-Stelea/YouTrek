@@ -1,0 +1,134 @@
+swagger: "2.0"
+info:
+  version: "1"
+  title: "G.API"
+  description: "API defined using swagger for Canvas assignment."
+# Added by API Auto Mocking Plugin
+host: virtserver.swaggerhub.com
+basePath: /Xscratch1/G.API/1
+schemes:
+  - https
+
+tags:
+  - name: admins
+    description: Secured Admin-only calls
+  - name: consumers
+    description: Operations available to regular consumers
+
+paths:
+  /calculator:
+    post:
+      tags:
+        - consumers
+      summary: requests sum of two values
+      description: Requests the sum of two values
+      operationId: requestSum
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: CalculationRequest
+          description: Add two values
+          required: false
+          schema:
+            $ref: "#/definitions/CalculationRequest"
+      responses:
+        200:
+          description: sum properly computed
+        400:
+          description: invalid input, object invalid
+  /constants:
+    get:
+      tags:
+        - consumers
+      summary: request a list of all constants
+      description: Returns a list of all constants
+      operationId: getConstantList
+      produces:
+        - application/json
+      parameters: []
+      responses:
+        200:
+          description: list of constants returned
+  /constant:
+    post:
+      tags:
+        - consumers
+      summary: request to create a constant
+      description: Requests to create a constant from base64 string; can either be a system constant or a user constant
+      operationId: requestCreate
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: ConstantCreateRequest
+          description: Create a constant to be stored until deleted
+          required: false
+          schema:
+            $ref: "#/definitions/ConstantRequest"
+      responses:
+        200:
+          description: constant created
+        400:
+          description: invalid input, object invalid
+        409:
+          description: valid input but duplicate constant
+  /delete:
+    post:
+      tags:
+        - consumers
+      summary: request to delete a constant
+      description: Requests to delete a constant by name.
+      operationId: requestDelete
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: DeleteConstantRequest
+          description: Delete a Constant
+          required: false
+          schema:
+            $ref: "#/definitions/DeleteRequest"
+      responses:
+        200:
+          description: constant deleted
+        400:
+          description: invalid constant
+        409:
+          description: unable to delete constant
+definitions:
+  CalculationRequest:
+    type: object
+    required:
+      - arg1
+      - arg2
+    properties:
+      arg1:
+        type: string
+      arg2:
+        type: string
+  DeleteRequest:
+    type: object
+    required:
+      - name
+    properties:
+      name:
+        type: string
+  ConstantRequest:
+    type: object
+    required:
+      - name
+      - value
+    properties:
+      name:
+        type: string
+      value:
+        type: string
+      system:
+        type: boolean
