@@ -451,7 +451,6 @@ definitions:
     required:
       - id
       - url
-      - length
       - characters
       - dialogue
       - isRemote
@@ -460,8 +459,6 @@ definitions:
       id:
         type: integer
       url:
-        type: string
-      length:
         type: string
       characters:
         type: array
