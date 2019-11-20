@@ -4,6 +4,7 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/HelloWorldFunction/pom.xml" />
+        <option value="$PROJECT_DIR$/youTrek/pom.xml" />
       </list>
     </option>
   </component>
