@@ -1,0 +1,60 @@
+<html><head></head><body>
+
+<h1>Library:/h1>
+</p><h1>Below are the library's videos:</h1>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
+<script>
+	//my best attempt at a javascript get request
+	function getRequest() {
+		$.getJSON(TEMPURL, function(result) {
+			var videos = JSON.parse(result); //parses JSON into readable format
+			createMovies(videos);
+		})
+	}
+
+	function createMovies(videos) {
+		var i=0; //Extract data from each video in array
+		for (i; i < videos.length; i++) {
+			var currentVid = videos[i];
+			document.createElement("Video" + i);
+    		x.setAttribute("src",currentVid[2]);  //currentVid[2] = url
+  			x.setAttribute("width", "320");
+  			x.setAttribute("height", "240");
+  			document.body.appendChild(currentVid);		
+		}
+	}
+</script>
+
+<body onload = getRequest()>
+
+
+<script>
+
+var num0 = document.getElementById("num0");
+num0.addEventListener("ended", function() {num1.play(); });
+var num1 = document.getElementById("num1");
+num1.addEventListener("ended", function() {num2.play(); });
+var num2 = document.getElementById("num2");
+num2.addEventListener("ended", function() {num3.play(); });
+var num3 = document.getElementById("num3");
+num3.addEventListener("ended", function() {num4.play(); });
+var num4 = document.getElementById("num4");
+num4.addEventListener("ended", function() {num5.play(); });
+var num5 = document.getElementById("num5");
+num5.addEventListener("ended", function() {num6.play(); });
+var num6 = document.getElementById("num6");
+num6.addEventListener("ended", function() {num7.play(); });
+
+
+
+
+</script>
+
+
+
+
+
+
+</body></html>
