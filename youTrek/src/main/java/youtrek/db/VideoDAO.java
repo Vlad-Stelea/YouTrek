@@ -9,13 +9,19 @@ import java.util.ArrayList;
 
 public class VideoDAO {
     java.sql.Connection conn;
-
+    private static VideoDAO instance = null;
     public VideoDAO() {
         try  {
             conn = DatabaseUtil.connect();
         } catch (Exception e) {
+            
             conn = null;
         }
+    }
+
+    public static VideoDAO getInstance() {
+        if(instance == null) instance = new VideoDAO();
+        return instance;
     }
 
     //TODO decide on where/when to add the add/remove video functions
@@ -41,7 +47,7 @@ public class VideoDAO {
         }
     }
 
-    public ArrayList<Video> getVideoSegments() throws Exception {
+    public ArrayList<Video> getVideoSegments() throws SQLException {
         try {
             ArrayList<Video> videoSegments = new ArrayList<Video>();
             Video currentVideo = null;
@@ -60,7 +66,7 @@ public class VideoDAO {
 
         catch (Exception e) {
             e.printStackTrace();
-            throw new Exception("Failed in getting constant: " + e.getMessage());
+            throw new SQLException("Failed in getting constant: " + e.getMessage());
         }
     }
 
