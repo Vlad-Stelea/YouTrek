@@ -12,7 +12,7 @@ public class DatabaseUtil {
     public final static String rdsMySqlDatabasePort = "3306";
     public final static String multiQueries = "?allowMultiQueries=true";
 
-    public final static String dbName = "chekovdb";    // default created from MySQL WorkBench
+    public final static String dbSchema = "v2"; // TODO update this every time we switch schema!
 
     // pooled across all usages.
     static Connection conn;
@@ -21,16 +21,15 @@ public class DatabaseUtil {
      * Singleton access to DB connection to share resources effectively across multiple accesses.
      */
     protected static Connection connect() throws Exception {
-        if (conn != null) { return conn; }
+        if (conn != null) return conn;
 
         try {
-            //System.out.println("start connecting......");
             Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection(
-                    jdbcTag + rdsMySqlDatabaseUrl + ":" + rdsMySqlDatabasePort + "/" + dbName + multiQueries,
-                    dbUsername,
-                    dbPassword);
-            //System.out.println("Database has been connected successfully.");
+
+            // Heineman example reformatted
+            String jdbcUrl2 =  jdbcTag + rdsMySqlDatabaseUrl + ":" + rdsMySqlDatabasePort + "/" + dbSchema + multiQueries;
+            conn = DriverManager.getConnection(jdbcUrl2, dbUsername, dbPassword);
+
             return conn;
         } catch (Exception ex) {
             throw new Exception("Failed in database connection");

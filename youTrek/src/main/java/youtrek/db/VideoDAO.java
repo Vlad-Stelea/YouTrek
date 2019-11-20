@@ -1,10 +1,11 @@
 package youtrek.db;
 
 import youtrek.models.Video;
+import youtrek.db.DatabaseUtil;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
+
 
 public class VideoDAO {
     java.sql.Connection conn;
