@@ -64,6 +64,29 @@ tags:
 
 paths:
   /videos:
+    get:
+      tags:
+        - Participant
+        - Video
+      summary: Show list of local video segments uploaded to library. Optional filtering
+      description: UC.10
+      operationId: showLocalLibrarySegments
+      parameters:
+        - in: query
+          name: filter
+          description: String to filter videos by. Filters on any attribute
+          schema:
+            type: string
+          required: false
+      produces:
+        - application/json
+      responses:
+        200:
+          description: Local videos returned
+          schema:
+            $ref: "#/definitions/ListOfVideos"
+        400:
+          description: Invalid request
     post:
       tags:
         - Administrator
@@ -90,7 +113,34 @@ paths:
             $ref: "#/definitions/Video"
         400:
           description: invalid input, object invalid
-    delete:
+  /video/{id}/availability:
+    post:
+      tags:
+        - Administrator
+        - Video
+      Summary: Set availability
+      parameters:
+        - in: path
+          name: id
+          description: Video ID to mark/unmark
+          schema:
+            type: integer
+          required: true
+        - in: body
+          name: MarkRequest
+          description: Whether or not to mark as available
+          schema:
+            $ref: "#/definitions/MarkRequest"
+          required: true
+      responses:
+        200:
+          description: Video mark status set
+          schema:
+            $ref: "#/definitions/Video"
+        400:
+          description: invalid input, object invalid
+  /videos/delete:
+    post:
       tags:
         - Administrator
         - Participant
@@ -116,22 +166,6 @@ paths:
             $ref: "#/definitions/ListOfVideos"
         400:
           description: invalid input, object invalid
-    get:
-      tags:
-        - Participant
-        - Video
-      summary: Show list of local video segments uploaded to library
-      description: UC.10
-      operationId: showLocalLibrarySegments
-      produces:
-        - application/json
-      responses:
-        200:
-          description: Local videos returned
-          schema:
-            $ref: "#/definitions/ListOfVideos"
-        400:
-          description: Invalid request
 
   /playlists:
     get:
@@ -178,7 +212,8 @@ paths:
             $ref: "#/definitions/Playlist"
         400:
           description: Error getting playlists
-    delete:
+  /playlists/delete:
+    post:
       tags:
         - Participant
         - Playlist
@@ -260,7 +295,8 @@ paths:
             $ref: "#/definitions/Playlist"
         400:
           description: invalid input, object invalid
-    delete:
+  /playlists/{id}/video/delete:
+    post:
       tags:
         - Participant
         - Playlist
@@ -320,7 +356,8 @@ paths:
             $ref: "#/definitions/TLP"
         400:
           description: invalid input, object invalid
-    delete:
+  /tlp/delete:
+    post:
       tags:
         - Administrator
         - TLP
@@ -360,7 +397,9 @@ definitions:
       dialogue:
         type: string
       characters:
-        type: string
+        type: array
+        items:
+          type: string
       video:
         type: string
   TLP:
@@ -392,10 +431,10 @@ definitions:
   Playlist:
     type: object
     properties:
-      name:
-        type: string
       id:
         type: integer
+      name:
+        type: string
       videos:
         type: array
         items:
@@ -445,3 +484,10 @@ definitions:
         type: array
         items:
           $ref: "#/definitions/Video"
+  MarkRequest:
+    type: object
+    required:
+      - isAvailable
+    properties:
+      isAvailable:
+        type: boolean
