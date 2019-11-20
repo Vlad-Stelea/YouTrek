@@ -9,11 +9,11 @@ Globals:
   Function:
     Timeout: 20
 Resources:
-  HelloWorldFunction:
+  youTrek:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: HelloWorldFunction
-      Handler: helloworld.App::handleRequest
+      CodeUri: youTrek
+      Handler: youtrek.handlers.TestHandler::handleRequest
       Runtime: java8
       MemorySize: 512
       Environment:
