@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/HelloWorldFunction/HelloWorld.iml" filepath="$PROJECT_DIR$/HelloWorldFunction/HelloWorld.iml" />
       <module fileurl="file://$PROJECT_DIR$/YouTrek.iml" filepath="$PROJECT_DIR$/YouTrek.iml" />
+      <module fileurl="file://$PROJECT_DIR$/HelloWorldFunction/youTrek.iml" filepath="$PROJECT_DIR$/HelloWorldFunction/youTrek.iml" />
     </modules>
   </component>
 </project>
