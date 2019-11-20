@@ -3,7 +3,7 @@ info:
   version: "1"
   title: "XSCRATCH API"
   description: "API defined using swagger for gr-Xenophobe."
-host: currentlyUnknown.com
+# host: currentlyUnknown.com
 basePath: /Xscratch1/G.API/1
 schemes:
   - https
@@ -75,8 +75,7 @@ paths:
         - in: query
           name: filter
           description: String to filter videos by. Filters on any attribute
-          schema:
-            type: string
+          type: string
           required: false
       produces:
         - application/json
@@ -118,14 +117,13 @@ paths:
       tags:
         - Administrator
         - Video
-      Summary: Set availability
+      summary: Set availability
       parameters:
         - in: path
           name: id
-          description: Video ID to mark/unmark
-          schema:
-            type: integer
           required: true
+          description: Video ID to mark/unmark
+          type: integer
         - in: body
           name: MarkRequest
           description: Whether or not to mark as available
@@ -491,3 +489,5 @@ definitions:
     properties:
       isAvailable:
         type: boolean
+# Added by API Auto Mocking Plugin
+host: virtserver.swaggerhub.com
