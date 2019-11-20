@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/YouTrek.iml" filepath="$PROJECT_DIR$/YouTrek.iml" />
-      <module fileurl="file://$PROJECT_DIR$/HelloWorldFunction/youTrek.iml" filepath="$PROJECT_DIR$/HelloWorldFunction/youTrek.iml" />
+      <module fileurl="file://$PROJECT_DIR$/youTrek/youTrek.iml" filepath="$PROJECT_DIR$/youTrek/youTrek.iml" />
     </modules>
   </component>
 </project>
