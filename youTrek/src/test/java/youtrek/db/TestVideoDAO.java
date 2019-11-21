@@ -1,6 +1,7 @@
 package youtrek.db;
 
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 import youtrek.models.Video;
@@ -21,7 +22,7 @@ public class TestVideoDAO {
     @Test
     public void testGetVideos() throws Exception {
         VideoDAO dao = new VideoDAO();
-        ArrayList<Video> videos = dao.getVideoSegments();
-        assertTrue(videos.size() > 0);
+        ListOfVideos videos = dao.getVideoSegments();
+        assertNotNull(videos);
     }
 }
