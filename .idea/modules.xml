@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/youTrek/HelloWorld.iml" filepath="$PROJECT_DIR$/youTrek/HelloWorld.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/YouTrek.iml" filepath="$PROJECT_DIR$/.idea/YouTrek.iml" />
+      <module fileurl="file://$PROJECT_DIR$/youTrek/youTrek.iml" filepath="$PROJECT_DIR$/youTrek/youTrek.iml" />
     </modules>
   </component>
 </project>
