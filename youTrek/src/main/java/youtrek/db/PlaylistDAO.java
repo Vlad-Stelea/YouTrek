@@ -1,10 +1,12 @@
 package youtrek.db;
 
+import youtrek.models.ListOfPlaylists;
 import youtrek.models.Playlist;
 
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class PlaylistDAO {
 
@@ -22,6 +24,7 @@ public class PlaylistDAO {
         if(instance == null) instance = new PlaylistDAO();
         return instance;
     }
+
 
     public Playlist getPlaylist(int playlist_id) throws Exception {
         try {
@@ -44,7 +47,29 @@ public class PlaylistDAO {
         }
     }
 
-    //TODO finish/check
+    public ListOfPlaylists listPlaylists() throws SQLException {
+        try {
+            ListOfPlaylists playlists = new ListOfPlaylists();
+            Playlist currentPlaylist = null;
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM playlists;");
+            ResultSet resultSet = ps.executeQuery();
+
+            while (resultSet.next()) {
+                currentPlaylist = generatePlaylist(resultSet);
+                playlists.appendPlaylist(currentPlaylist);
+            }
+            resultSet.close();
+            ps.close();
+
+            return playlists;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new SQLException("Failed in getting list of videos: " + e.getMessage());
+        }
+    }
+
+    //TODO finish & check
     public void appendVideo(int video_id, int playlist_id) throws Exception {
         try {
             Playlist pl = null;

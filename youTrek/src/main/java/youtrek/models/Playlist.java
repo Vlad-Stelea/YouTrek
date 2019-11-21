@@ -13,7 +13,7 @@ public class Playlist {
 
     // TODO decide if we want this
     public void appendVideo(Video video) {
-        videos.videos.add(video);
+        videos.appendVideo((video));
     }
 
     public boolean equals(Object o) {

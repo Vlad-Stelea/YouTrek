@@ -7,8 +7,7 @@ INSERT INTO tlps (id, base_url) values (NULL, 'https://xscratch-videos.s3.us-eas
 
 -- Video Inserts (TODO after TA verifies our segments)
 -- Test video for initial DB test (TODO remove after getting the rest of them
-INSERT INTO videos (id, name, is_remote, is_available, url, dialogue, tcp_id) values (NULL, 'testVid', false, false, '/C2_Mental_Disease.ogg', 'Mental disease has affected the entire crew', NULL);
-
+INSERT INTO videos (id, name, is_remote, is_available, url, dialogue, tlp_id) values (NULL, 'testVid', false, false, '/C2-Mental_Disease.ogg', 'Mental disease has affected the entire crew', NULL);
 
 -- Character Inserts
 -- TODO inserts for potential missing characters

@@ -23,8 +23,7 @@ public class GetVideoHandler implements RequestHandler<GetVideosRequest, GetVide
         headers.put("Content-Type", "application/json");
         headers.put("X-Custom-Header", "application/json");
         try{
-            List<Video> videoList = VideoDAO.getInstance().getVideoSegments();
-            lov = new ListOfVideos(videoList);
+            lov = VideoDAO.getInstance().getVideoSegments();
             return new GetVideosResponse(lov, headers, 200);
         } catch(SQLException e) {
             lov = new ListOfVideos();

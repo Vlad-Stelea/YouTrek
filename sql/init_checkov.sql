@@ -1,5 +1,14 @@
 -- Initialize DB Schema
 
+-- DROP TABLES
+DROP TABLE vcjoin;
+DROP TABLE pvjoin;
+DROP TABLE videos;
+DROP TABLE tlps;
+DROP TABLE playlists;
+DROP TABLE characters;
+
+
 CREATE TABLE IF NOT EXISTS tlps (
 	id INT NOT NULL AUTO_INCREMENT,
 	base_url VARCHAR(255),

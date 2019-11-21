@@ -1,5 +1,7 @@
 package youtrek.db;
 
+import youtrek.models.ListOfPlaylists;
+import youtrek.models.ListOfVideos;
 import youtrek.models.Video;
 import youtrek.db.DatabaseUtil;
 
@@ -46,16 +48,16 @@ public class VideoDAO {
         }
     }
 
-    public ArrayList<Video> getVideoSegments() throws SQLException {
+    public ListOfVideos getVideoSegments() throws SQLException {
         try {
-            ArrayList<Video> videoSegments = new ArrayList<Video>();
+            ListOfVideos videoSegments = new ListOfVideos();
             Video currentVideo = null;
             PreparedStatement ps = conn.prepareStatement("SELECT * FROM videos;");
             ResultSet resultSet = ps.executeQuery();
 
             while (resultSet.next()) {
                 currentVideo = generateVideo(resultSet);
-                videoSegments.add(currentVideo);
+                videoSegments.appendVideo(currentVideo);
             }
             resultSet.close();
             ps.close();
