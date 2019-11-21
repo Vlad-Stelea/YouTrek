@@ -1,6 +1,6 @@
 <html><head></head><body>
 
-<h1>Library:/h1>
+<h1>Library:
 </p><h1>Below are the library's videos:</h1>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
@@ -8,21 +8,28 @@
 <script>
 	//my best attempt at a javascript get request
 	function getRequest() {
-		$.getJSON(TEMPURL, function(result) {
-			var videos = JSON.parse(result); //parses JSON into readable format
-			createMovies(videos);
-		})
+		$.ajax({
+   		type: 'GET',
+   		crossDomain: true,
+   		dataType: 'application/json',
+   		url: "https://fv9h3awn2g.execute-api.us-east-2.amazonaws.com/beta/videos",
+   		success: function(jsondata){
+   			console.log(JSON.parse(jsondata));
+   			//var videos = JSON.parse(jsondata); //parses JSON into readable format
+			//createMovies(videos);
+   }
+})
 	}
 
 	function createMovies(videos) {
 		var i=0; //Extract data from each video in array
 		for (i; i < videos.length; i++) {
 			var currentVid = videos[i];
-			document.createElement("Video" + i);
-    		x.setAttribute("src",currentVid[2]);  //currentVid[2] = url
+			var x = document.createElement("Video");
+    		x.setAttribute("src","https://xscratch-videos.s3.us-east-2.amazonaws.com" + currentVid[2]);
   			x.setAttribute("width", "320");
   			x.setAttribute("height", "240");
-  			document.body.appendChild(currentVid);		
+  			document.body.appendChild(x);		
 		}
 	}
 </script>
