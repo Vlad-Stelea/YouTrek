@@ -1,0 +1,35 @@
+#/bin/sh
+
+# This code will execute after any successful push to master
+branch=$(git symbolic-ref --short -q HEAD)
+if [[ $branch =~ "build" ]]
+then
+	echo "Successful push on branch master! Deploying Lambdas..."
+else
+	echo "Pushing on branch other than master... not redeploying"
+	exit 0
+fi
+
+# create a zip archive of our updated code
+#zip -r youtrek.zip .././*
+
+# keep a list of all lambda fns to redeploy (Java Class, w/out suffix Handler)
+functions=()
+
+# iterate through handler files to find lambda function names
+for file in ../youTrek/src/main/java/youtrek/handlers/*.java; do
+	class=$(echo $file | cut -d "/" -f8 | cut -d "." -f1)
+	# ignore files which contain 'Test' (left over from HelloWorld)
+	if [[ $class =~ "Test" ]]
+	then
+		continue;
+	fi
+	fn=${class/%"Handler"}
+	functions=("${functions[@]}" $fn)
+done
+
+# for each handler class, deploy to aws lambda
+for handler in "${functions[@]}"; do
+	echo $handler
+done
+
