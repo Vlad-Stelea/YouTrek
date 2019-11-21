@@ -7,10 +7,8 @@ import youtrek.http.GetVideosResponse;
 import youtrek.models.ListOfVideos;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertTrue;
 
 public class TestGetVideoHandler {
     GetVideoHandler handler;
