@@ -4,8 +4,8 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
+import youtrek.models.ListOfVideos;
 import youtrek.models.Video;
-import java.util.ArrayList;
 
 
 public class TestVideoDAO {
