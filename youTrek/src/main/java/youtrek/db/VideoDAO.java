@@ -39,11 +39,10 @@ public class VideoDAO {
             ps.close();
 
             return video;
-        }
 
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            throw new Exception("Failed in getting constant: " + e.getMessage());
+            throw new Exception("Failed in getting video: " + e.getMessage());
         }
     }
 
@@ -62,16 +61,15 @@ public class VideoDAO {
             ps.close();
 
             return videoSegments;
-        }
 
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            throw new SQLException("Failed in getting constant: " + e.getMessage());
+            throw new SQLException("Failed in getting list of videos: " + e.getMessage());
         }
     }
 
 
-    public Video generateVideo(ResultSet rset) throws Exception {
+    private Video generateVideo(ResultSet rset) throws Exception {
         int id = rset.getInt("id");
         String name = rset.getString("name");
         String url = rset.getString("url");
