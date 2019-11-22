@@ -11,9 +11,15 @@ import java.util.Base64;
 public class KeyManager {
 
     private final String[] secret;
+    private static KeyManager manager;
 
-    KeyManager() {
+    private KeyManager() {
         secret = getConnectionInfo();
+    }
+
+    public static KeyManager getInstance() {
+        if (manager == null) manager = new KeyManager();
+        return manager;
     }
 
     String getHost() {

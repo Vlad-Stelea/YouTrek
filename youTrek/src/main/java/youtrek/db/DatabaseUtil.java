@@ -28,7 +28,7 @@ public class DatabaseUtil {
         try {
             Class.forName("com.mysql.jdbc.Driver");
 
-            KeyManager km = new KeyManager();
+            KeyManager km = KeyManager.getInstance();
 
             // Use with secrets manager
             String jdbcUrl1 =  jdbcTag + km.getHost() + ":" + rdsMySqlDatabasePort + "/" + dbSchema + multiQueries;
