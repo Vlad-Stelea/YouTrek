@@ -7,17 +7,17 @@ import youtrek.http.GetVideosRequest;
 import youtrek.http.GetVideosResponse;
 import youtrek.models.ListOfVideos;
 import youtrek.models.Video;
-
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class GetVideoHandler implements RequestHandler<GetVideosRequest, GetVideosResponse> {
     @Override
-    public GetVideosResponse handleRequest(GetVideosRequest o, Context context) {
+    public GetVideosResponse handleRequest(GetVideosRequest request, Context context) {
         ListOfVideos lov;
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
