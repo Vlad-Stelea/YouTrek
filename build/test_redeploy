@@ -1,5 +1,0 @@
-#/bin/bash
-
-aws lambda update-function-code \
-	--function-name GetVideo \
-	--zip-file fileb://../youTrek/target/YouTrek-1.0.jar

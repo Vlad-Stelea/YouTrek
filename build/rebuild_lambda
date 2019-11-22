@@ -3,15 +3,18 @@
 # Source code for automatically rebuilding/deploying lambda functions after successful push to master
 # This code should exist in .git/hooks/post-update 
 
+echo "Redeploy script starting..."
+
 # This code will execute after any successful push to master
 branch=$(git symbolic-ref --short -q HEAD)
-if [[ $branch =~ "build" ]] # note that this should be "master" in .git/hooks
-then
-	echo "Successful push on branch master! Deploying Lambdas..."
-else
-	echo "Pushing on branch other than master... not redeploying"
-	exit 0
-fi
+# uncomment these lines to restrict which branch it may run on
+# if [[ $branch =~ "master" ]] # note that this should be "master" in .git/hooks
+# then
+# 	echo "Successful push on branch master! Deploying Lambdas..."
+# else
+# 	echo "Pushing on branch other than master... not redeploying"
+# 	exit 0
+# fi
 
 # Rebuild our code with Maven and check that build succeeded 
 build_status=$(mvn package -f ../youTrek/ | grep BUILD | cut -d " " -f3) 
