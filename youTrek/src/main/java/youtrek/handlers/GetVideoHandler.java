@@ -20,13 +20,24 @@ public class GetVideoHandler implements RequestHandler<GetVideosRequest, GetVide
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
         headers.put("X-Custom-Header", "application/json");
-        try{
-            List<Video> videoList = VideoDAO.getInstance().getVideoSegments();
-            lov = new ListOfVideos(videoList);
-            return new GetVideosResponse(lov, headers, 200);
-        } catch(SQLException e) {
-            lov = new ListOfVideos();
-            return new GetVideosResponse(lov, headers, 400);
+        if(request.hasFilter()) {
+            try {
+                ListOfVideos videoSegments = VideoDAO.getInstance().getVideoSegments(request.getFilter());
+                //TODO implement if needs to filter by something
+                return new GetVideosResponse(videoSegments, headers, 200);
+            }catch (SQLException e) {
+                lov = new ListOfVideos();
+                return new GetVideosResponse(lov, headers, 400)
+            }
+        } else {
+            try {
+                List<Video> videoList = VideoDAO.getInstance().getVideoSegments();
+                lov = new ListOfVideos(videoList);
+                return new GetVideosResponse(lov, headers, 200);
+            } catch (SQLException e) {
+                lov = new ListOfVideos();
+                return new GetVideosResponse(lov, headers, 400);
+            }
         }
     }
 }
