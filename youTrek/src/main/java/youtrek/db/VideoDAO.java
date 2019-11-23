@@ -1,5 +1,6 @@
 package youtrek.db;
 
+import youtrek.models.ListOfVideos;
 import youtrek.models.Video;
 import youtrek.db.DatabaseUtil;
 
@@ -67,6 +68,28 @@ public class VideoDAO {
         catch (Exception e) {
             e.printStackTrace();
             throw new SQLException("Failed in getting constant: " + e.getMessage());
+        }
+    }
+
+    public ListOfVideos getVideoSegments(String filter) throws SQLException {
+        try {
+            ResultSet rs = DatabaseUtil.runQuery("SELECT videos.id, videos.name, url, dialogue, date_created, tlp_id, is_remote, is_available\n" +
+                    "FROM videos\n" +
+                    "    INNER JOIN vcjoin on videos.id = vcjoin.video_id\n" +
+                    "    INNER Join characters on vcjoin.character_id = characters.id");
+            ListOfVideos videoSegments = new ListOfVideos();
+            while(rs.next()) {
+                Video video = generateVideo(rs);
+                videoSegments.equals(video);
+            }
+            rs.close();
+
+            return videoSegments;
+        }catch(Exception e) {
+            e.printStackTrace();
+            throw new SQLException(new StringBuilder().
+                    append("Failed in getting constant: ").
+                    append(e.getStackTrace()).toString());
         }
     }
 

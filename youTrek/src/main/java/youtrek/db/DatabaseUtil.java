@@ -2,6 +2,8 @@ package youtrek.db;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 public class DatabaseUtil {
     public final static String rdsMySqlDatabaseUrl = "chekovdb.cgfw4tm7ipq1.us-east-2.rds.amazonaws.com";
@@ -34,5 +36,12 @@ public class DatabaseUtil {
         } catch (Exception ex) {
             throw new Exception("Failed in database connection");
         }
+    }
+
+    protected static ResultSet runQuery(String query) throws Exception {
+        PreparedStatement ps = connect().prepareStatement(query);
+        ResultSet rs = ps.executeQuery();
+        ps.close();
+        return rs;
     }
 }
