@@ -1,0 +1,44 @@
+<html>
+
+<head></head>
+
+<body>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
+
+	<h1>Library:</p>
+		<div class="topnav">
+  <input type="text" placeholder="Search..">
+</div> 
+		<h1>Below are the library's videos:</h1>
+		<div id="divVideo">
+
+		</div>
+		<script>
+			//my best attempt at a javascript get request
+			async function getRequest() {
+				const response = await fetch('	https://fv9h3awn2g.execute-api.us-east-2.amazonaws.com/beta/videos');
+				const myJson = await response.json();
+				console.log(JSON.parse(myJson.body));
+				createMovies(JSON.parse(myJson.body).videos);
+			}
+
+			function createMovies(videos) {
+				var i = 0; //Extract data from each video in array
+				for (i; i < videos.length; i++) {
+					var currentVid = videos[i];
+					var x = $("#divVideo");
+					x.append("<video controls=' ' width='320' height='240'>  <source src = https://xscratch-videos.s3.us-east-2.amazonaws.com" + currentVid.url + " type='video/ogg'> /></video>");
+					$("#divVideo video")[0].load();
+				}
+			}
+		</script>
+
+		<body onload=getRequest()>
+
+
+		</body>
+
+</html>
