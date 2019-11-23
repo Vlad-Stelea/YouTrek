@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class VideoDAO {
     java.sql.Connection conn;
     private static VideoDAO instance = null;
-    public VideoDAO() {
+    private VideoDAO() {
         try  {
             conn = DatabaseUtil.connect();
         } catch (Exception e) {
