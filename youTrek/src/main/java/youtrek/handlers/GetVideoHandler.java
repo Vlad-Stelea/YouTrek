@@ -6,11 +6,8 @@ import youtrek.db.VideoDAO;
 import youtrek.http.GetVideosRequest;
 import youtrek.http.GetVideosResponse;
 import youtrek.models.ListOfVideos;
-import youtrek.models.Video;
-
 import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class GetVideoHandler implements RequestHandler<GetVideosRequest, GetVideosResponse> {
@@ -21,8 +18,7 @@ public class GetVideoHandler implements RequestHandler<GetVideosRequest, GetVide
         headers.put("Content-Type", "application/json");
         headers.put("X-Custom-Header", "application/json");
         try{
-            List<Video> videoList = VideoDAO.getInstance().getVideoSegments();
-            lov = new ListOfVideos(videoList);
+            lov = VideoDAO.getInstance().getVideoSegments();
             return new GetVideosResponse(lov, headers, 200);
         } catch(SQLException e) {
             lov = new ListOfVideos();

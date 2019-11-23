@@ -13,4 +13,8 @@ public class ListOfVideos {
     public ListOfVideos(List<Video> videos) {
         this.videos = videos;
     }
+
+    public void appendVideo(Video video) {
+        videos.add(video);
+    }
 }
