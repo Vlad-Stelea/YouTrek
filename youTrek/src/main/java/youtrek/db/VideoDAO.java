@@ -5,7 +5,6 @@ import youtrek.models.Video;
 
 import java.sql.*;
 
-
 public class VideoDAO {
     java.sql.Connection conn;
     private static VideoDAO instance = null;

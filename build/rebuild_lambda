@@ -1,0 +1,54 @@
+#/bin/sh
+
+# Source code for automatically rebuilding/deploying lambda functions after successful push to master
+# This code should exist in .git/hooks/post-update 
+
+echo "Redeploy script starting..."
+
+# This code will execute after any successful push to master
+branch=$(git symbolic-ref --short -q HEAD)
+# uncomment these lines to restrict which branch it may run on
+# if [[ $branch =~ "master" ]] # note that this should be "master" in .git/hooks
+# then
+# 	echo "Successful push on branch master! Deploying Lambdas..."
+# else
+# 	echo "Pushing on branch other than master... not redeploying"
+# 	exit 0
+# fi
+
+# Rebuild our code with Maven and check that build succeeded 
+build_status=$(mvn package -f ../youTrek/ | grep BUILD | cut -d " " -f3) 
+if [[ $build_status =~ "SUCCESS" ]]
+then
+	echo "Maven build success!"
+else
+	echo "Maven build failed, exiting pre-deployment"
+	exit 0
+fi
+
+target_jar='../youTrek/target/YouTrek-1.0.jar'
+
+# keep a list of all lambda fns to redeploy (Java Class, w/out suffix Handler)
+functions=()
+
+# iterate through handler files to find lambda function names
+for file in ../youTrek/src/main/java/youtrek/handlers/*.java; do
+	class=$(echo $file | cut -d "/" -f8 | cut -d "." -f1)
+	# ignore classes which contain 'Test' (left over from HelloWorld)
+	if [[ $class =~ "Test" ]]
+	then
+		continue;
+	fi
+	fn=${class/%"Handler"}
+	functions=("${functions[@]}" $fn)
+done
+
+# for each lambda function, redeploy to aws
+for lambda in "${functions[@]}"; do
+	aws lambda update-function-code \
+		--function-name $lambda \
+		--zip-file fileb://../youTrek/target/youTrek-1.0.jar
+done
+
+echo "Done with redeployment. See AWS CLI error/success messages above."
+

@@ -3,12 +3,9 @@ package youtrek.http;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import youtrek.models.ListOfPlaylists;
-import youtrek.models.Video;
-import youtrek.models.adapters.ListOfVideosAdapter;
 
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class ListPlaylistsResponse {
