@@ -8,6 +8,12 @@
         v-model="this.search"
         @keydown.enter="searchVideos($event.target.value)"
       />
+       <button 
+        id= 'searchButton' 
+        type="submit"
+        onclick = "getSearchRequest()"
+        ><i class="fa fa-search"></i>
+       </button>
     </div>
     <h1>Below are the library's videos:</h1>
     <div id="Overlay"></div>
