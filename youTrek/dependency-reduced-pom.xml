@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>youtrek</groupId>
   <artifactId>youTrek</artifactId>
-  <name>A sample Hello World created for SAM CLI.</name>
+  <name>CS3733 Group Project</name>
   <version>1.0</version>
   <build>
     <plugins>
