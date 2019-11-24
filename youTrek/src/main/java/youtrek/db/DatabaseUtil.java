@@ -41,10 +41,4 @@ public class DatabaseUtil {
         }
     }
 
-    protected static ResultSet runQuery(String query) throws Exception {
-        PreparedStatement ps = connect().prepareStatement(query);
-        ResultSet rs = ps.executeQuery();
-        ps.close();
-        return rs;
-    }
 }

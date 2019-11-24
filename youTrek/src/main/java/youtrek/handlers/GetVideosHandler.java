@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GetVideoHandler implements RequestHandler<GetVideosRequest, GetVideosResponse> {
+public class GetVideosHandler implements RequestHandler<GetVideosRequest, GetVideosResponse> {
     @Override
     public GetVideosResponse handleRequest(GetVideosRequest request, Context context) {
         ListOfVideos lov;

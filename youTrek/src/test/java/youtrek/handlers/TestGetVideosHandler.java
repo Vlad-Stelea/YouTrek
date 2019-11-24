@@ -10,14 +10,14 @@ import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
-public class TestGetVideoHandler {
-    GetVideoHandler handler;
+public class TestGetVideosHandler {
+    GetVideosHandler handler;
     ListOfVideos lov;
     GetVideosRequest request;
 
     @Before
     public void setup() {
-        handler = new GetVideoHandler();
+        handler = new GetVideosHandler();
         lov = new ListOfVideos(new ArrayList<>());
         request = new GetVideosRequest();
     }
