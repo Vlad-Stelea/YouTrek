@@ -107,11 +107,11 @@ export default {
 }
 
 .sidebar-item {
-  font-size: 2rem;
+  font-size: 1.5rem;
   text-align: center;
-  margin-top: 2rem;
-  padding-top: 0.2rem;
-  padding-bottom: 0.2rem;
+  margin-top: 1rem;
+  padding-top: 0.3rem;
+  padding-bottom: 0.3rem;
   background-color: #312f2c;
   color: #f2f2f2;
 }

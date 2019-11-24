@@ -32,6 +32,11 @@ export default {
     return JSON.parse(response.data.body).videos
   },
 
+  async searchVideos (searchString) {
+    const response = await this.execute('get', '/videos?filter=' + searchString)
+    return JSON.parse(response.data.body).videos
+  },
+
   async getPlaylists () {
     const response = await this.execute('get', '/playlists')
     return JSON.parse(response.data.body).playlists

@@ -2,7 +2,7 @@
   <div id="videopage">
     <h1>Library:</h1>
     <div class="topnav">
-      <input type="text" placeholder="Search.." />
+      <input type="text" placeholder="Search.." @input="searchVideos($event.target.value)" />
     </div>
     <h1>Below are the library's videos:</h1>
     <div id="Overlay"></div>
@@ -35,6 +35,12 @@ export default {
   methods: {
     async loadVideos () {
       this.videos = await api.getVideos()
+      this.videos.forEach(el => {
+        el.url = 'https://xscratch-videos.s3.us-east-2.amazonaws.com' + el.url
+      })
+    },
+    async searchVideos (searchString) {
+      this.videos = await api.searchVideos(searchString)
       this.videos.forEach(el => {
         el.url = 'https://xscratch-videos.s3.us-east-2.amazonaws.com' + el.url
       })
