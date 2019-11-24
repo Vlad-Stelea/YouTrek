@@ -6,6 +6,7 @@
     </div>
     <div id="sidebar">
       <div class="sidebar-item">My Videos</div>
+      <div class="sidebar-item" ><router-link to="/AdminPage">Admin Page</router-link></div>
       <div style="height: 60px;"></div>
       <div class="sidebar-item" v-for="p in playlists" v-bind:key="p.id">{{p.name}}</div>
     </div>
