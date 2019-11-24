@@ -5,11 +5,6 @@ import java.sql.DriverManager;
 
 public class DatabaseUtil {
 
-    // TODO note that these fields can be completely removed if we want to commit to secrets manager
-//    public final static String rdsMySqlDatabaseUrl = "chekovdb.cgfw4tm7ipq1.us-east-2.rds.amazonaws.com";
-//    public final static String dbUsername = "admin";
-//    public final static String dbPassword = "password";
-
     public final static String jdbcTag = "jdbc:mysql://";
     public final static String rdsMySqlDatabasePort = "3306";
     public final static String multiQueries = "?allowMultiQueries=true";
@@ -28,7 +23,7 @@ public class DatabaseUtil {
         try {
             Class.forName("com.mysql.jdbc.Driver");
 
-            KeyManager km = new KeyManager();
+            KeyManager km = KeyManager.getInstance();
 
             // Use with secrets manager
             String jdbcUrl1 =  jdbcTag + km.getHost() + ":" + rdsMySqlDatabasePort + "/" + dbSchema + multiQueries;

@@ -17,7 +17,7 @@ import java.util.Map;
 
 public class GetVideoHandler implements RequestHandler<GetVideosRequest, GetVideosResponse> {
     @Override
-    public GetVideosResponse handleRequest(GetVideosRequest o, Context context) {
+    public GetVideosResponse handleRequest(GetVideosRequest request, Context context) {
         ListOfVideos lov;
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");

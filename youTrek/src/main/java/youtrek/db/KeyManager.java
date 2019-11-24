@@ -16,6 +16,17 @@ public class KeyManager {
         secret = getConnectionInfo();
     }
 
+    private static KeyManager manager;
+
+    private KeyManager() {
+        secret = getConnectionInfo();
+    }
+
+    public static KeyManager getInstance() {
+        if (manager == null) manager = new KeyManager();
+        return manager;
+    }
+
     String getHost() {
         if (secret == null) return null;
         return secret[0];

@@ -3,6 +3,7 @@ package youtrek.http;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import youtrek.models.ListOfVideos;
+
 import youtrek.models.Video;
 import youtrek.models.adapters.ListOfVideosAdapter;
 

@@ -7,7 +7,8 @@ import youtrek.db.DatabaseUtil;
 
 import java.sql.*;
 import java.util.ArrayList;
-
+import youtrek.models.ListOfVideos;
+import youtrek.models.Video;
 
 public class VideoDAO {
     java.sql.Connection conn;
