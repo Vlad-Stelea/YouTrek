@@ -3,11 +3,15 @@ package youtrek.db;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
+import youtrek.models.ListOfVideos;
 import youtrek.models.Video;
 import java.util.ArrayList;
 
 
 public class TestVideoDAO {
+
+    private String filter = "Crew";
+
     @Test
     public void testGetVideo() throws Exception {
         VideoDAO dao = VideoDAO.getInstance();
@@ -23,5 +27,20 @@ public class TestVideoDAO {
         VideoDAO dao = VideoDAO.getInstance();
         ArrayList<Video> videos = dao.getVideoSegments();
         assertTrue(videos.size() > 0);
+    }
+
+    @Test
+    public void testGetVideosFiltered() throws Exception {
+        VideoDAO dao = VideoDAO.getInstance();
+        ListOfVideos videos = dao.getVideoSegments(filter);
+        assertAllVideosFiltered(videos, filter);
+    }
+
+    private void assertAllVideosFiltered(ListOfVideos videos, String filter) {
+        for(Video curVideo : videos) {
+            //TODO Add support for checking
+            assertTrue(curVideo.name.toLowerCase().contains(filter.toLowerCase())
+                    || curVideo.dialogue.toLowerCase().contains(filter.toLowerCase()));
+        }
     }
 }

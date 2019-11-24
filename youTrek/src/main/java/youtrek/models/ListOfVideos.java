@@ -1,9 +1,10 @@
 package youtrek.models;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-public class ListOfVideos {
+public class ListOfVideos implements Iterable<Video> {
     List<Video> videos;
 
     public ListOfVideos() {
@@ -16,5 +17,10 @@ public class ListOfVideos {
 
     public void addVideo(Video video) {
         this.videos.add(video);
+    }
+
+    @Override
+    public Iterator<Video> iterator() {
+        return videos.iterator();
     }
 }
