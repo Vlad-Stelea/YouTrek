@@ -2,6 +2,8 @@ package youtrek.db;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 public class DatabaseUtil {
 
@@ -38,4 +40,5 @@ public class DatabaseUtil {
             throw new Exception("Failed in database connection");
         }
     }
+
 }
