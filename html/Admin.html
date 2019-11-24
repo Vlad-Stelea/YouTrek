@@ -1,0 +1,75 @@
+<html>
+
+<head></head>
+
+<body>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<style> 
+		body {
+			background-color: black;
+		}
+		h1 {
+			font-family: : Arial, Helvetica, sans-serif;
+			color: #f90;
+		}
+		div {
+			color: #f90;
+		}
+		#divVideo { 
+			position:relative;
+			overflow: hidden;
+		 	display: inline-block;
+		 }
+		.vidContainer {
+			float: left;
+			width: 320;
+		}
+		.titleContainer {
+			text-align:center;
+		}
+		.buttonContainer
+	</style>
+
+	<h1> Admin Library:</p>
+		<div class="topnav">
+  			<input type="text" placeholder="Search..">
+		</div> 
+	<h1>Below are the library's videos:</h1>
+		<div id="Overlay">
+
+		</div>
+
+		<div id="divVideo">
+
+		</div>
+
+
+		<script>
+			//my best attempt at a javascript get request
+			async function getRequest() {
+				const response = await fetch('	https://fv9h3awn2g.execute-api.us-east-2.amazonaws.com/beta/videos');
+				const myJson = await response.json();
+				console.log(JSON.parse(myJson.body));
+				createMovies(JSON.parse(myJson.body).videos);
+			}
+
+			function createMovies(videos) {
+				var i = 0; //Extract data from each video in array
+				for (i; i < videos.length; i++) {
+					var currentVid = videos[i];
+					var y = $('#Overlay');
+					
+					var x = $("#divVideo");
+					x.append("<div class = vidContainer> <div> <div class = titleContainer>" + currentVid.name + "</div> <video controls=' ' width='320' height='240'>  <source src = https://xscratch-videos.s3.us-east-2.amazonaws.com" + currentVid.url + " type='video/ogg'> /></video> </div> <div class = buttonContainer> <button buttontype = 'button' >Mark Remote</button> <button buttontype = 'button' >Mark Local Only</button> </div>");
+					$("#divVideo video")[0].load();
+				}
+			}
+		</script>
+
+		<body onload=getRequest()>
+
+
+		</body>
+
+</html>
