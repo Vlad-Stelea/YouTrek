@@ -18,9 +18,6 @@
         <video controls=" " width="320" height="240">
           <source v-bind:src="video.url" type="video/ogg" />/>
         </video>
-        <div class="AdminControlContainer">
-          <button buttontype="button">Mark Local Only</button>
-          <button buttontype="button">Mark Remote</button>
       </div>
     </div>
   </div>
