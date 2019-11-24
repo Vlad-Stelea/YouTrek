@@ -27,7 +27,7 @@ public class GetVideoHandler implements RequestHandler<GetVideosRequest, GetVide
                 return new GetVideosResponse(videoSegments, headers, 200);
             }catch (SQLException e) {
                 lov = new ListOfVideos();
-                return new GetVideosResponse(lov, headers, 400)
+                return new GetVideosResponse(lov, headers, 400);
             }
         } else {
             try {

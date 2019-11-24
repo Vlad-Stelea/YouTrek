@@ -73,17 +73,21 @@ public class VideoDAO {
 
     public ListOfVideos getVideoSegments(String filter) throws SQLException {
         try {
-            ResultSet rs = DatabaseUtil.runQuery("SELECT videos.id, videos.name, url, dialogue, date_created, tlp_id, is_remote, is_available\n" +
+            String query = "SELECT DISTINCT videos.id, videos.name, url, dialogue, date_created, tlp_id, is_remote, is_available\n" +
                     "FROM videos\n" +
                     "    INNER JOIN vcjoin on videos.id = vcjoin.video_id\n" +
-                    "    INNER Join characters on vcjoin.character_id = characters.id");
+                    "    INNER Join characters on vcjoin.character_id = characters.id\n" +
+                    "WHERE dialogue LIKE '%%s%' OR videos.name LIKE '%%s%' OR characters.name LIKE '%%s%';".replaceAll("%s", filter);
+
             ListOfVideos videoSegments = new ListOfVideos();
+            PreparedStatement ps = conn.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
             while(rs.next()) {
                 Video video = generateVideo(rs);
-                videoSegments.equals(video);
+                videoSegments.addVideo(video);
             }
             rs.close();
-
+            ps.close();
             return videoSegments;
         }catch(Exception e) {
             e.printStackTrace();
@@ -95,8 +99,8 @@ public class VideoDAO {
 
 
     public Video generateVideo(ResultSet rset) throws Exception {
-        int id = rset.getInt("id");
-        String name = rset.getString("name");
+        int id = rset.getInt("videos.id");
+        String name = rset.getString("videos.name");
         String url = rset.getString("url");
         String dialogue = rset.getString("dialogue");
         Date dateCreated = rset.getDate("date_created");
