@@ -6,13 +6,9 @@ import youtrek.db.VideoDAO;
 import youtrek.http.GetVideosRequest;
 import youtrek.http.GetVideosResponse;
 import youtrek.models.ListOfVideos;
-import youtrek.models.Video;
 
-import java.sql.Date;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class GetVideoHandler implements RequestHandler<GetVideosRequest, GetVideosResponse> {

@@ -11,11 +11,6 @@ import java.util.Base64;
 public class KeyManager {
 
     private final String[] secret;
-
-    KeyManager() {
-        secret = getConnectionInfo();
-    }
-
     private static KeyManager manager;
 
     private KeyManager() {

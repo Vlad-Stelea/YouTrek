@@ -1,14 +1,9 @@
 package youtrek.db;
 
-import youtrek.models.ListOfPlaylists;
 import youtrek.models.ListOfVideos;
 import youtrek.models.Video;
-import youtrek.db.DatabaseUtil;
 
 import java.sql.*;
-import java.util.ArrayList;
-import youtrek.models.ListOfVideos;
-import youtrek.models.Video;
 
 public class VideoDAO {
     java.sql.Connection conn;
