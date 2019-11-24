@@ -29,7 +29,7 @@ public class PlaylistDAO {
             /* create playlist */
             Playlist p1 = null;
             int insert_id = -1;
-            PreparedStatement ps = conn.prepareStatement("INSERT INTO PLAYLISTS (NAME) VALUES (?);", PreparedStatement.RETURN_GENERATED_KEYS);
+            PreparedStatement ps = conn.prepareStatement("INSERT INTO playlists (NAME) VALUES (?);", PreparedStatement.RETURN_GENERATED_KEYS);
             ps.setString(1, name);
             int rcode = ps.executeUpdate();
             /* query for playlist just inserted */

@@ -2,13 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="203a1404-a705-4a76-b3ed-a62a28af58c5" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/youTrek/src/main/java/youtrek/handlers/AppendVideoHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/youTrek/src/main/java/youtrek/handlers/CreatePlaylistHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/youTrek/src/main/java/youtrek/http/CreatePlaylistRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/youTrek/src/main/java/youtrek/http/CreatePlaylistResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/youTrek/src/test/java/youtrek/handlers/TestCreatePlaylistHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/youTrek/src/main/java/youtrek/db/PlaylistDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/youTrek/src/main/java/youtrek/db/PlaylistDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/youTrek/src/test/java/youtrek/db/TestPlaylistDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/youTrek/src/test/java/youtrek/db/TestPlaylistDAO.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -17,7 +13,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageViewManager">
-    <option name="myElementSize" value="271" />
+    <option name="myElementSize" value="83" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -64,7 +60,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.All in youTrek (2)">
+  <component name="RunManager" selected="JUnit.All in youTrek (3)">
     <configuration name="All in youTrek (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="youTrek" />
       <option name="PACKAGE_NAME" value="" />
@@ -81,7 +77,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="All in youTrek" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="All in youTrek (3)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="youTrek" />
       <option name="PACKAGE_NAME" value="" />
       <option name="TEST_OBJECT" value="package" />
@@ -89,7 +85,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TestGetPlaylistHandler" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TestCreatePlaylistHandler" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="youTrek" />
       <extension name="coverage">
         <pattern>
@@ -98,7 +94,7 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="youtrek.handlers" />
-      <option name="MAIN_CLASS_NAME" value="youtrek.handlers.TestGetPlaylistHandler" />
+      <option name="MAIN_CLASS_NAME" value="youtrek.handlers.TestCreatePlaylistHandler" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -122,11 +118,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.All in youTrek (3)" />
+        <item itemvalue="JUnit.TestCreatePlaylistHandler" />
         <item itemvalue="JUnit.All in youTrek (2)" />
         <item itemvalue="JUnit.TestPlaylist.testAppendVideo" />
         <item itemvalue="JUnit.All in youTrek (1)" />
-        <item itemvalue="JUnit.All in youTrek" />
-        <item itemvalue="JUnit.TestGetPlaylistHandler" />
       </list>
     </recent_temporary>
   </component>
@@ -140,7 +136,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1574625580754</updated>
-      <workItem from="1574625583467" duration="6824000" />
+      <workItem from="1574625583467" duration="10447000" />
     </task>
     <servers />
   </component>
@@ -162,5 +158,6 @@
     <SUITE FILE_PATH="coverage/YouTrek$All_in_youTrek__1_.ic" NAME="All in youTrek (1) Coverage Results" MODIFIED="1574630507621" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/YouTrek$All_in_youTrek__2_.ic" NAME="All in youTrek (2) Coverage Results" MODIFIED="1574631171022" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/YouTrek$All_in_youTrek.ic" NAME="All in youTrek Coverage Results" MODIFIED="1574630304148" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/YouTrek$All_in_youTrek__3_.ic" NAME="All in youTrek (3) Coverage Results" MODIFIED="1574636314357" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>
