@@ -5,10 +5,23 @@
       <button id="uploadButton">+ Upload Video</button>
     </div>
     <div id="sidebar">
-      <div class="sidebar-item">My Videos</div>
-      <div class="sidebar-item" ><router-link to="/AdminPage">Admin Page</router-link></div>
+      <router-link :to="{ name: 'videos'}">
+        <div class="sidebar-item">My Videos</div>
+      </router-link>
+      <router-link to="/AdminPage">
+        <div class="sidebar-item">Admin Page</div>
+      </router-link>
       <div style="height: 60px;"></div>
-      <div class="sidebar-item" v-for="p in playlists" v-bind:key="p.id">{{p.name}}</div>
+      <router-link
+        :to="{ name: 'playlist', params: { playlistID: p.id }}"
+        v-for="p in playlists"
+        v-bind:key="p.id"
+      >
+        <div class="sidebar-item">{{p.name}}</div>
+      </router-link>
+      <!-- <div class="sidebar-item" v-for="p in playlists" v-bind:key="p.id">
+        <router-link :to="{ name: 'playlist', params: { playlistID: p.id }}">{{p.name}}</router-link>
+      </div>-->
     </div>
     <div id="content">
       <router-view />
