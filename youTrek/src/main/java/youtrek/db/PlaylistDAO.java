@@ -24,6 +24,31 @@ public class PlaylistDAO {
         return instance;
     }
 
+    public Playlist createPlaylist(String name) throws SQLException {
+        try {
+            /* create playlist */
+            Playlist p1 = null;
+            int insert_id = -1;
+            PreparedStatement ps = conn.prepareStatement("INSERT INTO PLAYLISTS (NAME) VALUES (?);", PreparedStatement.RETURN_GENERATED_KEYS);
+            ps.setString(1, name);
+            int rcode = ps.executeUpdate();
+            /* query for playlist just inserted */
+            ResultSet rset = ps.getGeneratedKeys();
+            if (rset.next()) {
+                insert_id = rset.getInt(1);
+            }
+            if (insert_id != -1) {
+                return getPlaylist(insert_id);
+            }
+            else {
+                /* figure out how we want to do this error handling */
+                return null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new SQLException("Failed in creating playlist: " + e.getMessage());
+        }
+    }
 
     public Playlist getPlaylist(int playlist_id) throws SQLException {
         try {

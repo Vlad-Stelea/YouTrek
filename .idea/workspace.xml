@@ -2,18 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="203a1404-a705-4a76-b3ed-a62a28af58c5" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/youTrek/src/main/java/youtrek/handlers/GetPlaylistHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/youTrek/src/main/java/youtrek/http/GetPlaylistRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/youTrek/src/main/java/youtrek/http/GetPlaylistResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/youTrek/src/test/java/youtrek/handlers/TestGetPlaylistHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/youTrek/src/test/java/youtrek/handlers/TestListPlaylistsHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/youTrek/src/main/java/youtrek/handlers/AppendVideoHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/youTrek/src/main/java/youtrek/handlers/CreatePlaylistHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/youTrek/src/main/java/youtrek/http/CreatePlaylistRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/youTrek/src/main/java/youtrek/http/CreatePlaylistResponse.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/youTrek/.aws-sam/build/template.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/youTrek/.aws-sam/build/template.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/youTrek/src/main/java/youtrek/db/PlaylistDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/youTrek/src/main/java/youtrek/db/PlaylistDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/youTrek/src/main/java/youtrek/handlers/ListPlaylistsHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/youTrek/src/main/java/youtrek/handlers/ListPlaylistsHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/youTrek/src/main/java/youtrek/models/Playlist.java" beforeDir="false" afterPath="$PROJECT_DIR$/youTrek/src/main/java/youtrek/models/Playlist.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/youTrek/src/test/java/youtrek/db/TestPlaylistDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/youTrek/src/test/java/youtrek/db/TestPlaylistDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/youTrek/src/test/java/youtrek/models/TestPlaylist.java" beforeDir="false" afterPath="$PROJECT_DIR$/youTrek/src/test/java/youtrek/models/TestPlaylist.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -22,7 +17,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageViewManager">
-    <option name="myElementSize" value="241" />
+    <option name="myElementSize" value="271" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -145,7 +140,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1574625580754</updated>
-      <workItem from="1574625583467" duration="4296000" />
+      <workItem from="1574625583467" duration="6824000" />
     </task>
     <servers />
   </component>

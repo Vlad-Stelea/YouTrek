@@ -21,4 +21,6 @@ public class TestPlaylistDAO {
         System.out.println(pl.id + "\t" + pl.name);
         assertNotNull(pl);
     }
+
+    //TODO figure out how to test delete/add functions
 }
