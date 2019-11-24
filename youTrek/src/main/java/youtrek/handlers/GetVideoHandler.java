@@ -6,6 +6,7 @@ import youtrek.db.VideoDAO;
 import youtrek.http.GetVideosRequest;
 import youtrek.http.GetVideosResponse;
 import youtrek.models.ListOfVideos;
+
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
