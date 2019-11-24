@@ -21,7 +21,6 @@ public class GetVideoHandler implements RequestHandler<GetVideosRequest, GetVide
         if(request.hasFilter()) {
             try {
                 ListOfVideos videoSegments = VideoDAO.getInstance().getVideoSegments(request.getFilter());
-                //TODO implement if needs to filter by something
                 return new GetVideosResponse(videoSegments, headers, 200);
             }catch (SQLException e) {
                 lov = new ListOfVideos();
