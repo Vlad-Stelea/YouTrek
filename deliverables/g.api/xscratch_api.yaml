@@ -1,0 +1,490 @@
+swagger: "2.0"
+info:
+  version: "1"
+  title: "XSCRATCH API"
+  description: "API defined using swagger for gr-Xenophobe."
+# host: currentlyUnknown.com
+basePath: /Xscratch1/G.API/1
+schemes:
+  - https
+
+# Consumer
+# UC.1 Create playlist
+# post /playlist
+# UC.2 Show list of existing playlists
+# get /playlist
+# UC.3 Delete playlist
+# delete /playlist
+# UC.4 Show ordered list of video segments in playlist
+# get /playlist/videos
+# UC.5 Play playlist
+# Frontend
+# UC.6 Upload new local video segments
+# post /video
+# UC.7 Delete local video segment
+# delete /video
+# UC.8 Append video segment to end of existing playlist
+# post /playlist/video
+# UC.9 Remove video segment from existing playlist
+# delete /playlist/video
+# UC.10 Show list of video segments uploaded to library
+# get /videos
+# UC.11 Show list of video segments that match search criteria
+# Frontend
+# UC.12 Preview video
+# Frontend
+
+# Admin
+# UC.13 Mark Local Segment
+# post /video/availability
+# UC.14 Unmark Local Segment
+# post /video/availability
+# UC.15 Delete Local Video Segment
+# delete /video (Same as UC 7)
+# UC.16 Register third-party site
+# post /tlp
+# UC.17: Unregister third-party site
+# delete /tlp
+# UC.18 Preview video
+# Frontend
+
+tags:
+  - name: Administrator
+    description: Endpoints available to Administators
+  - name: Participant
+    description: Endpoints available to Participants
+  - name: Video
+    description: Managing videos in the library
+  - name: Playlist
+    description: Managing playlists and their videos
+  - name: TLP
+    description: Managing third party libraries
+
+# Actual API
+
+paths:
+  /videos:
+    get:
+      tags:
+        - Participant
+        - Video
+      summary: Show list of local video segments uploaded to library. Optional filtering
+      description: UC.10
+      operationId: showLocalLibrarySegments
+      parameters:
+        - in: query
+          name: filter
+          description: String to filter videos by. Filters on any attribute
+          type: string
+          required: false
+      produces:
+        - application/json
+      responses:
+        200:
+          description: Local videos returned
+          schema:
+            $ref: "#/definitions/ListOfVideos"
+        400:
+          description: Invalid request
+    post:
+      tags:
+        - Administrator
+        - Participant
+        - Video
+      summary: Upload new local video segment
+      description: UC.6
+      operationId: uploadLocalSegment
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: VideoPostRequest
+          description: Video and metadata for storage
+          required: true
+          schema:
+            $ref: "#/definitions/VideoRequest"
+      responses:
+        200:
+          description: Video uploaded
+          schema:
+            $ref: "#/definitions/Video"
+        400:
+          description: invalid input, object invalid
+  /video/{id}/availability:
+    post:
+      tags:
+        - Administrator
+        - Video
+      summary: Set availability
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: Video ID to mark/unmark
+          type: integer
+        - in: body
+          name: MarkRequest
+          description: Whether or not to mark as available
+          schema:
+            $ref: "#/definitions/MarkRequest"
+          required: true
+      responses:
+        200:
+          description: Video mark status set
+          schema:
+            $ref: "#/definitions/Video"
+        400:
+          description: invalid input, object invalid
+  /videos/delete:
+    post:
+      tags:
+        - Administrator
+        - Participant
+        - Video
+      summary: Delete local video segment
+      description: UC.7
+      operationId: deleteLocalSegment
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: DeleteRequest
+          description: Video id to delete
+          required: true
+          schema:
+            $ref: "#/definitions/DeleteRequest"
+      responses:
+        200:
+          description: Video deleted
+          schema:
+            $ref: "#/definitions/ListOfVideos"
+        400:
+          description: invalid input, object invalid
+
+  /playlists:
+    get:
+      tags:
+        - Participant
+        - Playlist
+      summary: Get list of all playlists
+      description: UC.2
+      operationId: listPlaylists
+      produces:
+        - application/json
+      responses:
+        200:
+          description: list of playlists returned
+          schema:
+            $ref: "#/definitions/ListOfPlaylists"
+        400:
+          description: Invalid Request
+    post:
+      tags:
+        - Participant
+        - Playlist
+      summary: Create new playlist
+      description: UC.1
+      operationId: createPlaylist
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: PlaylistPostRequest
+          description: New playlist with title
+          required: true
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+      responses:
+        200:
+          description: New Playlist Success
+          schema:
+            $ref: "#/definitions/Playlist"
+        400:
+          description: Error getting playlists
+  /playlists/delete:
+    post:
+      tags:
+        - Participant
+        - Playlist
+      summary: Delete playlist
+      description: UC.3
+      operationId: deletePlaylist
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: DeleteRequest
+          description: Playlist id to delete
+          required: true
+          schema:
+            $ref: "#/definitions/DeleteRequest"
+      responses:
+        200:
+          description: Playlist deleted
+          schema:
+            $ref: "#/definitions/ListOfPlaylists"
+        400:
+          description: invalid input, object invalid
+
+  /playlists/{id}:
+    get:
+      tags:
+        - Participant
+        - Playlist
+      summary: Get playlist data
+      description: UC.4
+      operationId: getPlaylist
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: integer
+          description: The playlist id
+      responses:
+        200:
+          description: list of constants returned
+          schema:
+            $ref: "#/definitions/Playlist"
+
+  /playlists/{id}/video:
+    post:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: integer
+          description: Playlist ID to take action on
+        - in: body
+          name: VideoID
+          description: Video ID to append
+          required: true
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+      tags:
+        - Participant
+        - Playlist
+      summary: Append video segment to existing playlist
+      description: UC.8
+      operationId: appendVideoSegment
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        200:
+          description: Video appended
+          schema:
+            $ref: "#/definitions/Playlist"
+        400:
+          description: invalid input, object invalid
+  /playlists/{id}/video/delete:
+    post:
+      tags:
+        - Participant
+        - Playlist
+      summary: Remove video segment from existing playlist
+      description: UC.9
+      operationId: deleteVideoSegment
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: integer
+          description: Playlist ID to take action on
+        - in: body
+          name: DeleteRequest
+          description: Video id to remove from playlist
+          required: true
+          schema:
+            $ref: "#/definitions/DeleteRequest"
+      responses:
+        200:
+          description: Video deleted. Returning new state of playlist
+          schema:
+            $ref: "#/definitions/Playlist"
+        400:
+          description: invalid input, object invalid
+
+  /tlp:
+    post:
+      tags:
+        - Administrator
+        - TLP
+      summary: Add third-party library to list of remote video segments
+      description: UC.16
+      operationId: addTLP
+      parameters:
+        - in: body
+          name: id
+          description: Add third-party library by id
+          required: true
+          schema:
+            type: object
+            properties:
+              url:
+                type: string
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        200:
+          description: third-party library added
+          schema:
+            $ref: "#/definitions/TLP"
+        400:
+          description: invalid input, object invalid
+  /tlp/delete:
+    post:
+      tags:
+        - Administrator
+        - TLP
+      summary: Remove third-party library to list of remote video segments
+      description: UC.17
+      operationId: removeTLP
+      parameters:
+        - in: body
+          name: id
+          description: Remove third-party library by id
+          required: true
+          schema:
+            $ref: "#/definitions/DeleteRequest"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        200:
+          description: third-party library deleted
+          schema:
+            $ref: "#/definitions/ListOfTLPs"
+        400:
+          description: invalid input, object invalid
+
+definitions:
+  VideoRequest:
+    type: object
+    required:
+      - name
+      - dialogue
+      - characters
+      - video
+    properties:
+      name:
+        type: string
+      dialogue:
+        type: string
+      characters:
+        type: array
+        items:
+          type: string
+      video:
+        type: string
+  TLP:
+    type: object
+    required:
+      - id
+      - url
+    properties:
+      id:
+        type: integer
+      url:
+        type: string
+  ListOfTLPs:
+    type: object
+    required:
+      - tlps
+    properties:
+      tlps:
+        type: array
+        items:
+          $ref: "#/definitions/TLP"
+  DeleteRequest:
+    type: object
+    required:
+      - id
+    properties:
+      id:
+        type: integer
+  Playlist:
+    type: object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      videos:
+        type: array
+        items:
+          $ref: "#/definitions/Video"
+  ListOfPlaylists:
+    type: object
+    required:
+      - playlists
+    properties:
+      playlists:
+        type: array
+        items:
+          $ref: "#/definitions/Playlist"
+  Video:
+    type: object
+    required:
+      - id
+      - url
+      - characters
+      - dialogue
+      - isRemote
+      - isAvailable
+    properties:
+      id:
+        type: integer
+      url:
+        type: string
+      characters:
+        type: array
+        items:
+          type: string
+      dialogue:
+        type: string
+      isRemote:
+        type: boolean
+      isAvailable:
+        type: boolean
+  ListOfVideos:
+    type: object
+    required:
+      - videos
+    properties:
+      videos:
+        type: array
+        items:
+          $ref: "#/definitions/Video"
+  MarkRequest:
+    type: object
+    required:
+      - isAvailable
+    properties:
+      isAvailable:
+        type: boolean
+# Added by API Auto Mocking Plugin
+host: virtserver.swaggerhub.com

@@ -15,12 +15,12 @@ public class ListOfVideos implements Iterable<Video> {
         this.videos = videos;
     }
 
-    public void addVideo(Video video) {
-        this.videos.add(video);
-    }
-
     @Override
     public Iterator<Video> iterator() {
         return videos.iterator();
+    }
+
+    public void appendVideo(Video video) {
+        videos.add(video);
     }
 }

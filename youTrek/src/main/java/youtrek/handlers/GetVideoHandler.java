@@ -10,7 +10,6 @@ import youtrek.models.Video;
 
 import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class GetVideoHandler implements RequestHandler<GetVideosRequest, GetVideosResponse> {
@@ -31,13 +30,13 @@ public class GetVideoHandler implements RequestHandler<GetVideosRequest, GetVide
             }
         } else {
             try {
-                List<Video> videoList = VideoDAO.getInstance().getVideoSegments();
-                lov = new ListOfVideos(videoList);
-                return new GetVideosResponse(lov, headers, 200);
+                ListOfVideos videoList = VideoDAO.getInstance().getVideoSegments();
+                return new GetVideosResponse(videoList, headers, 200);
             } catch (SQLException e) {
                 lov = new ListOfVideos();
                 return new GetVideosResponse(lov, headers, 400);
             }
+
         }
     }
 }

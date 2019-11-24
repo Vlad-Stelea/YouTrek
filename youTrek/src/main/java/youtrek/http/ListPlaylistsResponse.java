@@ -2,27 +2,22 @@ package youtrek.http;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import youtrek.models.ListOfVideos;
-
+import youtrek.models.ListOfPlaylists;
 import youtrek.models.Video;
 import youtrek.models.adapters.ListOfVideosAdapter;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-
-import java.util.Collections;
-import java.util.HashMap;
-
 import java.util.Map;
 
-public class GetVideosResponse {
-    final ListOfVideos videos;
+public class ListPlaylistsResponse {
+    final ListOfPlaylists playlists;
     private final Map<String, String> headers;
     private final int statusCode;
 
-    public GetVideosResponse(ListOfVideos videos, final Map<String, String> headers, final int statusCode) {
-        this.videos = videos;
+    public ListPlaylistsResponse(ListOfPlaylists playlists, final Map<String, String> headers, final int statusCode) {
+        this.playlists = playlists;
         this.statusCode = statusCode;
         this.headers = Collections.unmodifiableMap(new HashMap<>(headers));
     }
@@ -30,8 +25,8 @@ public class GetVideosResponse {
     public String getBody() {
         Gson gson = new GsonBuilder().
                 //registerTypeAdapter(ListOfVideos.class, new ListOfVideosAdapter()).
-                create();
-        return gson.toJson(this.videos);
+                        create();
+        return gson.toJson(this.playlists);
     }
 
     public Map<String, String> getHeaders() {

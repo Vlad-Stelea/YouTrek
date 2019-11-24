@@ -2,10 +2,8 @@ package youtrek.db;
 
 import youtrek.models.ListOfVideos;
 import youtrek.models.Video;
-import youtrek.db.DatabaseUtil;
 
 import java.sql.*;
-import java.util.ArrayList;
 
 
 public class VideoDAO {
@@ -40,34 +38,32 @@ public class VideoDAO {
             ps.close();
 
             return video;
-        }
 
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            throw new Exception("Failed in getting constant: " + e.getMessage());
+            throw new Exception("Failed in getting video: " + e.getMessage());
         }
     }
 
-    public ArrayList<Video> getVideoSegments() throws SQLException {
+    public ListOfVideos getVideoSegments() throws SQLException {
         try {
-            ArrayList<Video> videoSegments = new ArrayList<Video>();
+            ListOfVideos videoSegments = new ListOfVideos();
             Video currentVideo = null;
             PreparedStatement ps = conn.prepareStatement("SELECT * FROM videos;");
             ResultSet resultSet = ps.executeQuery();
 
             while (resultSet.next()) {
                 currentVideo = generateVideo(resultSet);
-                videoSegments.add(currentVideo);
+                videoSegments.appendVideo(currentVideo);
             }
             resultSet.close();
             ps.close();
 
             return videoSegments;
-        }
 
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            throw new SQLException("Failed in getting constant: " + e.getMessage());
+            throw new SQLException("Failed in getting list of videos: " + e.getMessage());
         }
     }
 
@@ -84,7 +80,7 @@ public class VideoDAO {
             ResultSet rs = ps.executeQuery();
             while(rs.next()) {
                 Video video = generateVideo(rs);
-                videoSegments.addVideo(video);
+                videoSegments.appendVideo(video);
             }
             rs.close();
             ps.close();
@@ -96,7 +92,6 @@ public class VideoDAO {
                     append(e.getStackTrace()).toString());
         }
     }
-
 
     public Video generateVideo(ResultSet rset) throws Exception {
         int id = rset.getInt("videos.id");
