@@ -2,7 +2,7 @@
   <div id="videopage">
     <h1>Library:</h1>
     <div class="topnav">
-      <input type="text" placeholder="Search.." @input="searchVideos($event.target.value)" />
+      <input type="text" placeholder="Search.." @keydown.enter="searchVideos($event.target.value)" />
     </div>
     <h1>Below are the library's videos:</h1>
     <div id="Overlay"></div>
