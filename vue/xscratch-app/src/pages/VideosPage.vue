@@ -2,18 +2,10 @@
   <div id="videopage">
     <h1>Library:</h1>
     <div class="topnav">
-      <input
-        type="text"
-        placeholder="Search.."
-        v-model="this.search"
-        @keydown.enter="searchVideos($event.target.value)"
-      />
-       <button 
-        id= 'searchButton' 
-        type="submit"
-        onclick = "getSearchRequest()"
-        ><i class="fa fa-search"></i>
-       </button>
+      <input type="text" placeholder="Search.." v-model="search" @keydown.enter="searchVideos()" />
+      <button id="searchButton" type="submit" @click="searchVideos()">
+        <i class="fa fa-search"></i>
+      </button>
     </div>
     <h1>Below are the library's videos:</h1>
     <div id="Overlay"></div>
@@ -51,8 +43,9 @@ export default {
         el.url = 'https://xscratch-videos.s3.us-east-2.amazonaws.com' + el.url
       })
     },
-    async searchVideos (searchString) {
-      this.videos = await api.searchVideos(searchString)
+    async searchVideos () {
+      console.log(this.search)
+      this.videos = await api.searchVideos(this.search)
       this.videos.forEach(el => {
         el.url = 'https://xscratch-videos.s3.us-east-2.amazonaws.com' + el.url
       })
