@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
+/* use case 2 */
 public class ListPlaylistsHandler implements RequestHandler<ListPlaylistsRequest, ListPlaylistsResponse> {
     @Override
     public ListPlaylistsResponse handleRequest(ListPlaylistsRequest o, Context context) {

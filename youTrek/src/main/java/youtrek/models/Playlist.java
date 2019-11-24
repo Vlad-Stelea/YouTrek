@@ -3,7 +3,7 @@ package youtrek.models;
 public class Playlist {
     public final int id;
     public final String name;
-    public ListOfVideos videos; // TODO decide if we want this
+    public ListOfVideos videos;
 
     public Playlist(int id, String name) {
         this.id = id;
@@ -11,7 +11,6 @@ public class Playlist {
         this.videos = new ListOfVideos();
     }
 
-    // TODO decide if we want this
     public void appendVideo(Video video) {
         videos.appendVideo((video));
     }

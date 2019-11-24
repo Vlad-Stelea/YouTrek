@@ -25,7 +25,7 @@ public class PlaylistDAO {
     }
 
 
-    public Playlist getPlaylist(int playlist_id) throws Exception {
+    public Playlist getPlaylist(int playlist_id) throws SQLException {
         try {
             Playlist pl = null;
             PreparedStatement ps = conn.prepareStatement("SELECT * FROM playlists WHERE id=?;");
@@ -42,7 +42,7 @@ public class PlaylistDAO {
 
         } catch (Exception e) {
             e.printStackTrace();
-            throw new Exception("Failed in getting playlist: " + e.getMessage());
+            throw new SQLException("Failed in getting playlist: " + e.getMessage());
         }
     }
 
@@ -64,12 +64,11 @@ public class PlaylistDAO {
 
         } catch (Exception e) {
             e.printStackTrace();
-            throw new SQLException("Failed in getting list of videos: " + e.getMessage());
+            throw new SQLException("Failed in getting list of playlists: " + e.getMessage());
         }
     }
 
-    //TODO finish & check
-    public void appendVideo(int video_id, int playlist_id) throws Exception {
+    public void appendVideo(int video_id, int playlist_id) throws SQLException {
         try {
             Playlist pl = null;
             PreparedStatement ps = conn.prepareStatement("INSERT INTO pvjoin (video_id, playlist_id) values (?, ?);");
@@ -85,7 +84,7 @@ public class PlaylistDAO {
 
         } catch (Exception e) {
             e.printStackTrace();
-            throw new Exception("Failed in adding video to playlist: " + e.getMessage());
+            throw new SQLException("Failed in adding video to playlist: " + e.getMessage());
         }
     }
 
