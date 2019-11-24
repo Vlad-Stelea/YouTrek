@@ -5,39 +5,36 @@
 <body>
 	<script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
 	<style> 
 		body {
 			background-color: black;
 		}
-
 		h1 {
 			font-family: : Arial, Helvetica, sans-serif;
 			color: #f90;
 		}
-
-		.divVideo { position:relative; }
-		.divVideo video {
-    		position:relative;
-    		z-index:0;
-		}
-		.Overlay {
+		div {
 			color: #f90;
-    		position:absolute;
-    		top:50%;
-  	 		left:50%;
-  			z-index:1;
-			}		
-
+		}
+		#divVideo { 
+			position:relative;
+			overflow: hidden;
+		 	display: inline-block;
+		 }
+		.vidContainer {
+			float: left;
+			width: 320;
+		}
+		.titleContainer {
+			text-align:center;
+		}
 	</style>
 
 	<h1>Library:</p>
 		<div class="topnav">
   			<input type="text" placeholder="Search..">
 		</div> 
-
-
-		<h1>Below are the library's videos:</h1>
+	<h1>Below are the library's videos:</h1>
 		<div id="Overlay">
 
 		</div>
@@ -46,12 +43,6 @@
 
 		</div>
 
-
-
-
-		<style>
-
-		</style>
 
 		<script>
 			//my best attempt at a javascript get request
@@ -67,9 +58,9 @@
 				for (i; i < videos.length; i++) {
 					var currentVid = videos[i];
 					var y = $('#Overlay');
-					y.append("test");
+					
 					var x = $("#divVideo");
-					x.append("<video controls=' ' width='320' height='240'>  <source src = https://xscratch-videos.s3.us-east-2.amazonaws.com" + currentVid.url + " type='video/ogg'> /></video>");
+					x.append("<div class = vidContainer> <div> <div class = titleContainer>" + currentVid.name + "</div> <video controls=' ' width='320' height='240'>  <source src = https://xscratch-videos.s3.us-east-2.amazonaws.com" + currentVid.url + " type='video/ogg'> /></video> </div> </div>");
 					$("#divVideo video")[0].load();
 				}
 			}
