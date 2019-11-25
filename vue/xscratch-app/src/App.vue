@@ -8,7 +8,7 @@
       <router-link :to="{ name: 'videos'}">
         <div class="sidebar-item">My Videos</div>
       </router-link>
-      <router-link to="admin">
+      <router-link :to="{ name: 'admin'}">
         <div class="sidebar-item">Admin Page</div>
       </router-link>
       <div style="height: 60px;"></div>

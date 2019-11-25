@@ -40,5 +40,10 @@ export default {
   async getPlaylists () {
     const response = await this.execute('get', '/playlists')
     return JSON.parse(response.data.body).playlists
+  },
+
+  async getPlaylist (id) {
+    const response = await this.execute('get', '/playlists/' + id)
+    return JSON.parse(response.data.body)
   }
 }
