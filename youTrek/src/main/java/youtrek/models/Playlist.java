@@ -15,6 +15,10 @@ public class Playlist {
         videos.appendVideo((video));
     }
 
+    public void setVideos(ListOfVideos videos) {
+        this.videos = videos;
+    }
+
     public boolean equals(Object o) {
         if (o == null) return false;
         else if (o instanceof Playlist) {

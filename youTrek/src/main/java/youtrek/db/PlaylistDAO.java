@@ -1,8 +1,11 @@
 package youtrek.db;
 
 import youtrek.models.ListOfPlaylists;
+import youtrek.models.ListOfVideos;
 import youtrek.models.Playlist;
+import youtrek.models.Video;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -93,6 +96,29 @@ public class PlaylistDAO {
         }
     }
 
+    public ListOfVideos getPlayListVideos(int playlist_id) throws SQLException {
+        try {
+            ListOfVideos videoSegments = new ListOfVideos();
+            Video currentVideo = null;
+            PreparedStatement ps = conn.prepareStatement("select * from videos join pvjoin on videos.id=pvjoin.video_id where playlist_id=? order by video_order;");
+            ps.setInt(1, playlist_id);
+            ResultSet resultSet = ps.executeQuery();
+
+            while (resultSet.next()) {
+                currentVideo = generateVideo(resultSet);
+                videoSegments.appendVideo(currentVideo);
+            }
+            resultSet.close();
+            ps.close();
+
+            return videoSegments;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new SQLException("Failed in getting playlist videos: " + e.getMessage());
+        }
+    }
+
     public void appendVideo(int video_id, int playlist_id) throws SQLException {
         try {
             Playlist pl = null;
@@ -118,5 +144,19 @@ public class PlaylistDAO {
         String name = rset.getString("name");
         Playlist pl = new Playlist(id,name);
         return pl;
+    }
+
+    //TODO clean
+    public Video generateVideo(ResultSet rset) throws Exception {
+        int id = rset.getInt("videos.id");
+        String name = rset.getString("videos.name");
+        String url = rset.getString("url");
+        String dialogue = rset.getString("dialogue");
+        Date dateCreated = rset.getDate("date_created");
+        int tlpId = rset.getInt("tlp_id");
+        boolean isRemote = rset.getBoolean("is_remote");
+        boolean isAvailable = rset.getBoolean("is_available");
+        Video video = new Video(id,name, url, dialogue, dateCreated, tlpId, isRemote, isAvailable);
+        return video;
     }
 }

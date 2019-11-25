@@ -20,6 +20,7 @@ public class GetPlaylistHandler implements RequestHandler<GetPlaylistRequest, Ge
         headers.put("X-Custom-Header", "application/json");
         try{
             pl = PlaylistDAO.getInstance().getPlaylist(o.getId());
+            pl.setVideos(PlaylistDAO.getInstance().getPlayListVideos(o.getId()));
             return new GetPlaylistResponse(pl, headers, 200);
         } catch(SQLException e) {
             pl = new Playlist(-1, "N/A");

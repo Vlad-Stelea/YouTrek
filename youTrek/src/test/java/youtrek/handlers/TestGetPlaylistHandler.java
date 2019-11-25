@@ -18,6 +18,7 @@ public class TestGetPlaylistHandler {
     public void setup() {
         handler = new GetPlaylistHandler();
         request = new GetPlaylistRequest();
+        request.setId(3);
     }
 
     @Test
