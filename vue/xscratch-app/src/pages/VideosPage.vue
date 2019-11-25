@@ -4,7 +4,8 @@
     <div class="topnav">
       <input type="text" placeholder="Search.." v-model="search" @keydown.enter="searchVideos()" />
       <button id="searchButton" type="submit" @click="searchVideos()">
-        <i class="fa fa-search"></i>
+        <i class="fa fa-coffee"></i>
+        <font-awesome-icon icon="coffee" />
       </button>
     </div>
     <h1>Below are the library's videos:</h1>

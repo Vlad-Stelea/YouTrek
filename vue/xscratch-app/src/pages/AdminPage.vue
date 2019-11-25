@@ -5,6 +5,7 @@
       <input type="text" placeholder="Search.." v-model="search" @keydown.enter="searchVideos()" />
       <button id="searchButton" type="submit" @click="searchVideos()">
         <i class="fa fa-search"></i>
+        <font-awesome-icon icon="coffee" />
       </button>
     </div>
     <h1>Below are the library's videos:</h1>
@@ -18,6 +19,7 @@
         <video controls=" " width="320" height="240">
           <source v-bind:src="video.url" type="video/ogg" />/>
         </video>
+        <div class = buttonContainer> <button buttontype = 'button' >Mark Remote</button> <button buttontype = 'button' >Mark Local Only</button> </div>
       </div>
     </div>
   </div>
@@ -77,5 +79,9 @@ div {
 
 #adminpage {
   padding-right: 40px;
+}
+
+.buttonContainer {
+  text-align:center;
 }
 </style>
