@@ -4,9 +4,6 @@
     <list default="true" id="203a1404-a705-4a76-b3ed-a62a28af58c5" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/youTrek/src/main/java/youtrek/db/PlaylistDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/youTrek/src/main/java/youtrek/db/PlaylistDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/youTrek/src/main/java/youtrek/handlers/GetPlaylistHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/youTrek/src/main/java/youtrek/handlers/GetPlaylistHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/youTrek/src/main/java/youtrek/models/Playlist.java" beforeDir="false" afterPath="$PROJECT_DIR$/youTrek/src/main/java/youtrek/models/Playlist.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/youTrek/src/test/java/youtrek/handlers/TestGetPlaylistHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/youTrek/src/test/java/youtrek/handlers/TestGetPlaylistHandler.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -145,7 +142,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1574625580754</updated>
-      <workItem from="1574625583467" duration="12608000" />
+      <workItem from="1574625583467" duration="13587000" />
     </task>
     <servers />
   </component>
@@ -173,7 +170,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/youTrek/src/main/java/youtrek/db/PlaylistDAO.java</url>
-          <line>100</line>
+          <line>101</line>
           <option name="timeStamp" value="7" />
         </line-breakpoint>
       </breakpoints>

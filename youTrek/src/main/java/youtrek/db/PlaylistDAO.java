@@ -83,6 +83,7 @@ public class PlaylistDAO {
 
             while (resultSet.next()) {
                 currentPlaylist = generatePlaylist(resultSet);
+                currentPlaylist.setVideos(getPlayListVideos(currentPlaylist.id));
                 playlists.appendPlaylist(currentPlaylist);
             }
             resultSet.close();
