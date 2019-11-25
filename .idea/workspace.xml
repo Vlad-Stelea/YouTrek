@@ -2,13 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="203a1404-a705-4a76-b3ed-a62a28af58c5" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/youTrek/src/main/java/youtrek/http/AppendVideoRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/youTrek/src/main/java/youtrek/http/AppendVideoResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/youTrek/src/test/java/youtrek/handlers/TestAppendVideoHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/youTrek/.aws-sam/build/template.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/youTrek/.aws-sam/build/template.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/youTrek/src/main/java/youtrek/db/PlaylistDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/youTrek/src/main/java/youtrek/db/PlaylistDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/youTrek/src/main/java/youtrek/handlers/AppendVideoHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/youTrek/src/main/java/youtrek/handlers/AppendVideoHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/rebuild_specific_lambda" beforeDir="false" afterPath="$PROJECT_DIR$/build/rebuild_specific_lambda" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -146,7 +141,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1574625580754</updated>
-      <workItem from="1574625583467" duration="17500000" />
+      <workItem from="1574625583467" duration="17995000" />
     </task>
     <servers />
   </component>
