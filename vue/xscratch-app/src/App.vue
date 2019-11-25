@@ -8,7 +8,7 @@
       <router-link :to="{ name: 'videos'}">
         <div class="sidebar-item">My Videos</div>
       </router-link>
-      <router-link to="/AdminPage">
+      <router-link to="admin">
         <div class="sidebar-item">Admin Page</div>
       </router-link>
       <div style="height: 60px;"></div>
@@ -128,6 +128,11 @@ export default {
   padding-bottom: 0.3rem;
   background-color: #312f2c;
   color: #f2f2f2;
+  text-decoration: none;
+}
+
+a {
+  text-decoration: none;
 }
 
 .sidebar-item:hover {

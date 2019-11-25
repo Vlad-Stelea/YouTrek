@@ -1,5 +1,5 @@
 <template>
-  <div id="videopage">
+  <div id="adminpage">
     <h1>Library:</h1>
     <div class="topnav">
       <input type="text" placeholder="Search.." v-model="search" @keydown.enter="searchVideos()" />
@@ -75,7 +75,7 @@ div {
   text-align: center;
 }
 
-#videopage {
+#adminpage {
   padding-right: 40px;
 }
 </style>
