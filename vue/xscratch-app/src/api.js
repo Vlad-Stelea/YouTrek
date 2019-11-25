@@ -45,5 +45,13 @@ export default {
   async getPlaylist (id) {
     const response = await this.execute('get', '/playlists/' + id)
     return JSON.parse(response.data.body)
+  },
+
+  async createPlaylist (title) {
+    const body = {
+      'name': title
+    }
+    const response = await this.execute('post', '/playlists', body)
+    return JSON.parse(response.data.body)
   }
 }

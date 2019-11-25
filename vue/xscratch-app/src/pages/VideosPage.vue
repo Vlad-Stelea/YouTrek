@@ -14,11 +14,14 @@
     <div id="divVideo">
       <div v-for="video in videos" v-bind:key="video.name" class="vidContainer">
         <div class="titleContainer">
-          <h3>{{video.name}}</h3>
+          <h2>{{video.name}}</h2>
         </div>
         <video controls=" " width="320" height="240">
           <source v-bind:src="video.url" type="video/ogg" />/>
         </video>
+        <div class="titleContainer">
+          <h4>{{video.dialogue}}</h4>
+        </div>
       </div>
     </div>
   </div>
@@ -63,10 +66,10 @@ export default {
 <style>
 h1 {
   font-family: Arial, Helvetica, sans-serif;
-  color: #f90;
+  color: #0cad0b;
 }
 div {
-  color: #f90;
+  color: #0cad0b;
 }
 #divVideo {
   position: relative;

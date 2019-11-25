@@ -1,6 +1,12 @@
 <template>
   <div id="videopage" v-on:playlist-change="loadPlaylist">
-    <h1>{{playlist.name}}</h1>
+    <h1>
+      {{playlist.name}}
+      <button>
+        <font-awesome-icon icon="trash" />
+      </button>
+    </h1>
+
     <div v-if="loading">Loading....</div>
 
     <div v-if="!loading && videos.length == 0">No videos in this playlist</div>
@@ -54,10 +60,10 @@ export default {
 <style>
 h1 {
   font-family: Arial, Helvetica, sans-serif;
-  color: #f90;
+  color: #0cad0b;
 }
 div {
-  color: #f90;
+  color: #0cad0b;
 }
 #divVideo {
   position: relative;

@@ -12,6 +12,7 @@
         <div class="sidebar-item">Admin Page</div>
       </router-link>
       <div style="height: 60px;"></div>
+      <div class="sidebar-item" id="newPlaylist">+ New Playlist</div>
       <router-link
         :to="{ name: 'playlist', params: { playlistID: p.id }}"
         v-for="p in playlists"
@@ -78,7 +79,7 @@ export default {
 }
 
 #header h1 {
-  color: #f90;
+  color: #0cad0b;
   text-align: center;
   font-weight: 400;
   font-size: 2.5rem;
@@ -87,7 +88,7 @@ export default {
 
 #header #uploadButton {
   color: #f2f2f2;
-  background-color: #f90;
+  background-color: #0cad0b;
   font-weight: 300;
   font-size: 2rem;
   border: none;
@@ -131,11 +132,20 @@ export default {
   text-decoration: none;
 }
 
+#newPlaylist {
+  color: #0cad0b;
+}
+
+#newPlaylist:hover {
+  color: #f2f2f2;
+  text-decoration: underline;
+}
+
 a {
   text-decoration: none;
 }
 
 .sidebar-item:hover {
-  background-color: #f90;
+  background-color: #0cad0b;
 }
 </style>

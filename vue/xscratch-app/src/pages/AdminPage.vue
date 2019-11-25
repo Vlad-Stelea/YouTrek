@@ -1,6 +1,16 @@
 <template>
   <div id="adminpage">
-    <h1>Library:</h1>
+    <h1>Third Party Libraries:</h1>
+    <div class="topnav">
+      <input type="text" placeholder="Add Library URL" />
+      <button id="searchButton" type="submit">
+        <font-awesome-icon icon="plus" />
+      </button>
+    </div>
+
+    <hr />
+
+    <h1>Local Video Library:</h1>
     <div class="topnav">
       <input type="text" placeholder="Search.." v-model="search" @keydown.enter="searchVideos()" />
       <button id="searchButton" type="submit" @click="searchVideos()">
@@ -8,8 +18,6 @@
         <font-awesome-icon icon="coffee" />
       </button>
     </div>
-    <h1>Below are the library's videos:</h1>
-    <div id="Overlay"></div>
 
     <div id="divVideo">
       <div v-for="video in videos" v-bind:key="video.name" class="vidContainer">
@@ -19,7 +27,10 @@
         <video controls=" " width="320" height="240">
           <source v-bind:src="video.url" type="video/ogg" />/>
         </video>
-        <div class = buttonContainer> <button buttontype = 'button' >Mark Remote</button> <button buttontype = 'button' >Mark Local Only</button> </div>
+        <div class="buttonContainer">
+          <button buttontype="button">Mark Remote</button>
+          <button buttontype="button">Mark Local Only</button>
+        </div>
       </div>
     </div>
   </div>
@@ -32,7 +43,8 @@ export default {
   data: function () {
     return {
       videos: [],
-      search: ''
+      search: '',
+      tlds: []
     }
   },
   created: function () {
@@ -59,10 +71,10 @@ export default {
 <style>
 h1 {
   font-family: Arial, Helvetica, sans-serif;
-  color: #f90;
+  color: #0cad0b;
 }
 div {
-  color: #f90;
+  color: #0cad0b;
 }
 #divVideo {
   position: relative;
@@ -82,6 +94,6 @@ div {
 }
 
 .buttonContainer {
-  text-align:center;
+  text-align: center;
 }
 </style>
