@@ -120,19 +120,37 @@ public class PlaylistDAO {
         }
     }
 
-    public void appendVideo(int video_id, int playlist_id) throws SQLException {
+    // helper to find the current number of video segments in playlist
+    public int getCurrentPlaylistIndex(int playlist_id) throws SQLException {
         try {
-            Playlist pl = null;
-            PreparedStatement ps = conn.prepareStatement("INSERT INTO pvjoin (video_id, playlist_id) values (?, ?);");
-            ps.setInt(1, video_id);
-            ps.setInt(2, playlist_id);
+            int videoCount = 0;
+            PreparedStatement ps = conn.prepareStatement("SELECT count(video_order) FROM pvjoin WHERE playlist_id=?;");
+            ps.setInt(1, playlist_id);
             ResultSet resultSet = ps.executeQuery();
 
             while (resultSet.next()) {
-                pl = generatePlaylist(resultSet);
+                videoCount = resultSet.getInt(1);
             }
-            resultSet.close();
+
+            return videoCount;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new SQLException("Failed in adding video to playlist: " + e.getMessage());
+        }
+
+    }
+
+    public Playlist appendVideo(int video_id, int playlist_id) throws SQLException {
+        try {
+            PreparedStatement ps = conn.prepareStatement("INSERT INTO pvjoin (video_id, playlist_id, video_order) values (?, ?, ?);");
+            ps.setInt(1, video_id);
+            ps.setInt(2, playlist_id);
+            ps.setInt(3, getCurrentPlaylistIndex(playlist_id)+1); // next video order value
+            int rcode = ps.executeUpdate();
             ps.close();
+
+            return getPlaylist(playlist_id);  // return altered playlist
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -147,7 +165,6 @@ public class PlaylistDAO {
         return pl;
     }
 
-    //TODO clean
     public Video generateVideo(ResultSet rset) throws Exception {
         int id = rset.getInt("videos.id");
         String name = rset.getString("videos.name");

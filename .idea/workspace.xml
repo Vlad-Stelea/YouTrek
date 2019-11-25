@@ -2,8 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="203a1404-a705-4a76-b3ed-a62a28af58c5" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/youTrek/src/main/java/youtrek/http/AppendVideoRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/youTrek/src/main/java/youtrek/http/AppendVideoResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/youTrek/src/test/java/youtrek/handlers/TestAppendVideoHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/youTrek/.aws-sam/build/template.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/youTrek/.aws-sam/build/template.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/youTrek/src/main/java/youtrek/db/PlaylistDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/youTrek/src/main/java/youtrek/db/PlaylistDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/youTrek/src/main/java/youtrek/handlers/AppendVideoHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/youTrek/src/main/java/youtrek/handlers/AppendVideoHandler.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -59,7 +64,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.TestGetPlaylistHandler">
+  <component name="RunManager" selected="JUnit.TestAppendVideoHandler">
     <configuration name="All in youTrek (2)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="youTrek" />
       <option name="PACKAGE_NAME" value="" />
@@ -72,6 +77,21 @@
       <module name="youTrek" />
       <option name="PACKAGE_NAME" value="" />
       <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestAppendVideoHandler" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="youTrek" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="youtrek.handlers.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="youtrek.handlers" />
+      <option name="MAIN_CLASS_NAME" value="youtrek.handlers.TestAppendVideoHandler" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -106,29 +126,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TestPlaylist.testAppendVideo" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="youTrek" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="youtrek.models.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="youtrek.models" />
-      <option name="MAIN_CLASS_NAME" value="youtrek.models.TestPlaylist" />
-      <option name="METHOD_NAME" value="testAppendVideo" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.TestAppendVideoHandler" />
         <item itemvalue="JUnit.TestGetPlaylistHandler" />
         <item itemvalue="JUnit.All in youTrek (3)" />
         <item itemvalue="JUnit.TestCreatePlaylistHandler" />
         <item itemvalue="JUnit.All in youTrek (2)" />
-        <item itemvalue="JUnit.TestPlaylist.testAppendVideo" />
       </list>
     </recent_temporary>
   </component>
@@ -142,7 +146,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1574625580754</updated>
-      <workItem from="1574625583467" duration="13587000" />
+      <workItem from="1574625583467" duration="17500000" />
     </task>
     <servers />
   </component>
@@ -167,11 +171,6 @@
           <url>file://$PROJECT_DIR$/youTrek/src/test/java/youtrek/handlers/TestGetPlaylistHandler.java</url>
           <line>25</line>
           <option name="timeStamp" value="6" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/youTrek/src/main/java/youtrek/db/PlaylistDAO.java</url>
-          <line>101</line>
-          <option name="timeStamp" value="7" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

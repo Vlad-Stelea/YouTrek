@@ -2,7 +2,7 @@ Resources:
   Function:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: youtrek.handlers.CreatePlaylistHandler
+      Handler: youtrek.handlers.AppendVideoHandler
       CodeUri: Function
       Runtime: java8
       Timeout: 300
