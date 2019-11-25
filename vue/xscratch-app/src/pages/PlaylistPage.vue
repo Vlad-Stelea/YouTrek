@@ -1,7 +1,9 @@
 <template>
   <div id="videopage" v-on:playlist-change="loadPlaylist">
     <h1>{{playlist.name}}</h1>
-    <div id="Overlay"></div>
+    <div v-if="loading">Loading....</div>
+
+    <div v-if="!loading && videos.length == 0">No videos in this playlist</div>
 
     <div id="divVideo">
       <div v-for="video in videos" v-bind:key="video.name" class="vidContainer">
@@ -22,6 +24,7 @@ import api from '@/api'
 export default {
   data: function () {
     return {
+      loading: true,
       playlist: {},
       videos: []
     }
@@ -36,11 +39,13 @@ export default {
   },
   methods: {
     async loadPlaylist () {
+      this.loading = true
       this.playlist = await api.getPlaylist(this.$route.params.playlistID)
       this.videos = this.playlist.videos.videos
       this.videos.forEach(el => {
         el.url = 'https://xscratch-videos.s3.us-east-2.amazonaws.com' + el.url
       })
+      this.loading = false
     }
   }
 }

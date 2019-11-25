@@ -9,7 +9,7 @@
       </button>
     </div>
     <h1>Below are the library's videos:</h1>
-    <div id="Overlay"></div>
+    <div v-if="loading">Loading...</div>
 
     <div id="divVideo">
       <div v-for="video in videos" v-bind:key="video.name" class="vidContainer">
@@ -30,6 +30,7 @@ import api from '@/api'
 export default {
   data: function () {
     return {
+      loading: true,
       videos: [],
       search: ''
     }
@@ -39,17 +40,21 @@ export default {
   },
   methods: {
     async loadVideos () {
+      this.loading = true
       this.videos = await api.getVideos()
       this.videos.forEach(el => {
         el.url = 'https://xscratch-videos.s3.us-east-2.amazonaws.com' + el.url
       })
+      this.loading = false
     },
     async searchVideos () {
+      this.loading = true
       console.log(this.search)
       this.videos = await api.searchVideos(this.search)
       this.videos.forEach(el => {
         el.url = 'https://xscratch-videos.s3.us-east-2.amazonaws.com' + el.url
       })
+      this.loading = false
     }
   }
 }
