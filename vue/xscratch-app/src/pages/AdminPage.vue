@@ -1,26 +1,35 @@
 <template>
-  <div id="videopage">
-    <h1>Library:</h1>
+  <div id="adminpage">
+    <h1>Third Party Libraries:</h1>
+    <div class="topnav">
+      <input type="text" placeholder="Add Library URL" />
+      <button id="searchButton" type="submit">
+        <font-awesome-icon icon="plus" />
+      </button>
+    </div>
+
+    <hr />
+
+    <h1>Local Video Library:</h1>
     <div class="topnav">
       <input type="text" placeholder="Search.." v-model="search" @keydown.enter="searchVideos()" />
       <button id="searchButton" type="submit" @click="searchVideos()">
-        <i class="fa fa-coffee"></i>
+        <i class="fa fa-search"></i>
         <font-awesome-icon icon="coffee" />
       </button>
     </div>
-    <h1>Below are the library's videos:</h1>
-    <div v-if="loading">Loading...</div>
 
     <div id="divVideo">
       <div v-for="video in videos" v-bind:key="video.name" class="vidContainer">
         <div class="titleContainer">
-          <h2>{{video.name}}</h2>
+          <h3>{{video.name}}</h3>
         </div>
         <video controls=" " width="320" height="240">
           <source v-bind:src="video.url" type="video/ogg" />/>
         </video>
-        <div class="titleContainer">
-          <h4>{{video.dialogue}}</h4>
+        <div class="buttonContainer">
+          <button buttontype="button">Mark Remote</button>
+          <button buttontype="button">Mark Local Only</button>
         </div>
       </div>
     </div>
@@ -33,9 +42,9 @@ import api from '@/api'
 export default {
   data: function () {
     return {
-      loading: true,
       videos: [],
-      search: ''
+      search: '',
+      tlds: []
     }
   },
   created: function () {
@@ -43,21 +52,17 @@ export default {
   },
   methods: {
     async loadVideos () {
-      this.loading = true
       this.videos = await api.getVideos()
       this.videos.forEach(el => {
         el.url = 'https://xscratch-videos.s3.us-east-2.amazonaws.com' + el.url
       })
-      this.loading = false
     },
     async searchVideos () {
-      this.loading = true
       console.log(this.search)
       this.videos = await api.searchVideos(this.search)
       this.videos.forEach(el => {
         el.url = 'https://xscratch-videos.s3.us-east-2.amazonaws.com' + el.url
       })
-      this.loading = false
     }
   }
 }
@@ -84,7 +89,11 @@ div {
   text-align: center;
 }
 
-#videopage {
+#adminpage {
   padding-right: 40px;
+}
+
+.buttonContainer {
+  text-align: center;
 }
 </style>

@@ -5,9 +5,24 @@
       <button id="uploadButton">+ Upload Video</button>
     </div>
     <div id="sidebar">
-      <div class="sidebar-item">My Videos</div>
+      <router-link :to="{ name: 'videos'}">
+        <div class="sidebar-item">My Videos</div>
+      </router-link>
+      <router-link :to="{ name: 'admin'}">
+        <div class="sidebar-item">Admin Page</div>
+      </router-link>
       <div style="height: 60px;"></div>
-      <div class="sidebar-item" v-for="p in playlists" v-bind:key="p.id">{{p.name}}</div>
+      <div class="sidebar-item" id="newPlaylist">+ New Playlist</div>
+      <router-link
+        :to="{ name: 'playlist', params: { playlistID: p.id }}"
+        v-for="p in playlists"
+        v-bind:key="p.id"
+      >
+        <div class="sidebar-item">{{p.name}}</div>
+      </router-link>
+      <!-- <div class="sidebar-item" v-for="p in playlists" v-bind:key="p.id">
+        <router-link :to="{ name: 'playlist', params: { playlistID: p.id }}">{{p.name}}</router-link>
+      </div>-->
     </div>
     <div id="content">
       <router-view />
@@ -64,7 +79,7 @@ export default {
 }
 
 #header h1 {
-  color: #f90;
+  color: #0cad0b;
   text-align: center;
   font-weight: 400;
   font-size: 2.5rem;
@@ -73,7 +88,7 @@ export default {
 
 #header #uploadButton {
   color: #f2f2f2;
-  background-color: #f90;
+  background-color: #0cad0b;
   font-weight: 300;
   font-size: 2rem;
   border: none;
@@ -114,9 +129,23 @@ export default {
   padding-bottom: 0.3rem;
   background-color: #312f2c;
   color: #f2f2f2;
+  text-decoration: none;
+}
+
+#newPlaylist {
+  color: #0cad0b;
+}
+
+#newPlaylist:hover {
+  color: #f2f2f2;
+  text-decoration: underline;
+}
+
+a {
+  text-decoration: none;
 }
 
 .sidebar-item:hover {
-  background-color: #f90;
+  background-color: #0cad0b;
 }
 </style>
