@@ -4,6 +4,8 @@ import youtrek.models.ListOfVideos;
 import youtrek.models.Video;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class VideoDAO {
     java.sql.Connection conn;
@@ -102,6 +104,36 @@ public class VideoDAO {
         boolean isRemote = rset.getBoolean("is_remote");
         boolean isAvailable = rset.getBoolean("is_available");
         Video video = new Video(id,name, url, dialogue, dateCreated, tlpId, isRemote, isAvailable);
+        List<String> characters = getCharacters(id);
+        video.addCharacters(characters);
         return video;
+    }
+
+    List<String> getCharacters(int videoId) throws SQLException{
+        try {
+            String query = "SELECT *\n" +
+                    "FROM characters\n" +
+                    "LEFT JOIN vcjoin v on characters.id = v.character_id\n" +
+                    "where v.video_id = ?;";
+            List<String> characters = new ArrayList<>();
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setInt(1, videoId);
+            ResultSet resultSet = ps.executeQuery();
+
+            while(resultSet.next()) {
+                String character = resultSet.getString("name");
+                characters.add(character);
+            }
+
+            resultSet.close();
+            ps.close();
+
+            return characters;
+        }catch(SQLException e) {
+            e.printStackTrace();
+            throw new SQLException(new StringBuilder().
+                    append("Failed in getting constant: ").
+                    append(e.getStackTrace()).toString());
+        }
     }
 }
