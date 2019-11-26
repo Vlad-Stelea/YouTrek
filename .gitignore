@@ -33,3 +33,6 @@ hs_err_pid*
 
 # IntelliJ bad
 .idea/*
+#.idea/libraries
+
+.DS_Store
