@@ -28,7 +28,7 @@ public class VideoDAO {
     public Video getVideo(int id) throws Exception {
         try {
             Video video = null;
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM videos WHERE id=?;");
+            PreparedStatement ps = conn.prepareStatement(SqlStatementProvider.GET_VIDEOS_GIVEN_ID);
             ps.setInt(1,  id);
             ResultSet resultSet = ps.executeQuery();
 
@@ -50,7 +50,7 @@ public class VideoDAO {
         try {
             ListOfVideos videoSegments = new ListOfVideos();
             Video currentVideo = null;
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM videos;");
+            PreparedStatement ps = conn.prepareStatement(SqlStatementProvider.GET_ALL_VIDEOS);
             ResultSet resultSet = ps.executeQuery();
 
             while (resultSet.next()) {
@@ -70,15 +70,16 @@ public class VideoDAO {
 
     public ListOfVideos getVideoSegments(String filter) throws SQLException {
         try {
-            String query = "SELECT DISTINCT videos.id, videos.name, url, dialogue, date_created, tlp_id, is_remote, is_available\n" +
-                    "FROM videos\n" +
-                    "    INNER JOIN vcjoin on videos.id = vcjoin.video_id\n" +
-                    "    INNER Join characters on vcjoin.character_id = characters.id\n" +
-                    "WHERE dialogue LIKE '%%s%' OR videos.name LIKE '%%s%' OR characters.name LIKE '%%s%';".replaceAll("%s", filter);
-
+            String query = SqlStatementProvider.GET_ALL_VIDEOS_GIVEN_FILTER;
+            String modifiedFilter = new StringBuffer().append("%").append(filter).append("%").toString();
             ListOfVideos videoSegments = new ListOfVideos();
+
             PreparedStatement ps = conn.prepareStatement(query);
+            ps.setString(1, modifiedFilter);
+            ps.setString(2, modifiedFilter);
+            ps.setString(3, modifiedFilter);
             ResultSet rs = ps.executeQuery();
+            
             while(rs.next()) {
                 Video video = generateVideo(rs);
                 videoSegments.appendVideo(video);
@@ -111,10 +112,7 @@ public class VideoDAO {
 
     List<String> getCharacters(int videoId) throws SQLException{
         try {
-            String query = "SELECT *\n" +
-                    "FROM characters\n" +
-                    "LEFT JOIN vcjoin v on characters.id = v.character_id\n" +
-                    "where v.video_id = ?;";
+            String query = SqlStatementProvider.GET_CHARACTERS_GIVEN_VIDEO_ID;
             List<String> characters = new ArrayList<>();
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, videoId);
