@@ -2,7 +2,7 @@
   <div id="app">
     <div id="header">
       <h1>youTrek</h1>
-      <button id="uploadButton">+ Upload Video</button>
+      <b-button id="uploadButton">+ Upload Video</b-button>
     </div>
     <div id="sidebar">
       <router-link :to="{ name: 'videos'}">
@@ -25,7 +25,7 @@
       </div>-->
     </div>
     <div id="content">
-      <router-view />
+      <router-view class="pt-3" />
     </div>
   </div>
 </template>
@@ -90,7 +90,7 @@ export default {
   color: #f2f2f2;
   background-color: #0cad0b;
   font-weight: 300;
-  font-size: 2rem;
+  font-size: 1.5rem;
   border: none;
   border-radius: 5px;
   padding: 5px 15px;
