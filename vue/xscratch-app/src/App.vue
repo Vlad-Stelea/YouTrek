@@ -13,6 +13,7 @@
       </router-link>
       <div style="height: 60px;"></div>
       <div class="sidebar-item" id="newPlaylist">+ New Playlist</div>
+      <div class="sidebar-item" v-if="loadingPlaylists">Loading...</div>
       <router-link
         :to="{ name: 'playlist', params: { playlistID: p.id }}"
         v-for="p in playlists"
@@ -37,7 +38,8 @@ export default {
   name: 'App',
   data: function () {
     return {
-      playlists: []
+      playlists: [],
+      loadingPlaylists: true
     }
   },
   created: function () {
@@ -45,8 +47,10 @@ export default {
   },
   methods: {
     async loadPlaylists () {
+      this.loadingPlaylists = true
       this.playlists = await api.getPlaylists()
       console.log(this.playlists)
+      this.loadingPlaylists = false
     }
   }
 }
