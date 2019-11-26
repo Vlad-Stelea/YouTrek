@@ -8,9 +8,13 @@ import org.junit.Test;
 import youtrek.models.ListOfVideos;
 import youtrek.models.Video;
 
+import java.util.stream.Collectors;
+
 public class TestVideoDAO {
 
-    private String filter = "Crew";
+    private String dialogueFilter = "Crew";
+    private String characterFilter = "Spock";
+    private String titleFilter = "testVid";
 
     @Test
     public void testGetVideo() throws Exception {
@@ -30,7 +34,22 @@ public class TestVideoDAO {
     }
 
     @Test
-    public void testGetVideosFiltered() throws Exception {
+    public void testGetVideosFilteredByDialogue() throws Exception {
+        testVideosFitlered(dialogueFilter);
+    }
+
+    @Test
+    public void testGetVideosFilteredByTitle() throws Exception {
+        testVideosFitlered(titleFilter);
+    }
+
+    @Test
+    public void testVideosFilteredByCharacters() throws Exception {
+        testVideosFitlered(characterFilter);
+    }
+
+    //Helper methods
+    private void testVideosFitlered(String filter) throws Exception {
         VideoDAO dao = VideoDAO.getInstance();
         ListOfVideos videos = dao.getVideoSegments(filter);
         assertAllVideosFiltered(videos, filter);
@@ -38,9 +57,13 @@ public class TestVideoDAO {
 
     private void assertAllVideosFiltered(ListOfVideos videos, String filter) {
         for(Video curVideo : videos) {
-            //TODO Add support for checking
             assertTrue(curVideo.name.toLowerCase().contains(filter.toLowerCase())
-                    || curVideo.dialogue.toLowerCase().contains(filter.toLowerCase()));
+                    || curVideo.dialogue.toLowerCase().contains(filter.toLowerCase())
+                    || curVideo.characters.stream()
+                        .map(String::toLowerCase) //Make sure all characters are in lowercase
+                        .collect(Collectors.toList())
+                        .contains(filter.toLowerCase())
+            );
         }
     }
 }

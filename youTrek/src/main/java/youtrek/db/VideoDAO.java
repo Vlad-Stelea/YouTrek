@@ -79,7 +79,7 @@ public class VideoDAO {
             ps.setString(2, modifiedFilter);
             ps.setString(3, modifiedFilter);
             ResultSet rs = ps.executeQuery();
-            
+
             while(rs.next()) {
                 Video video = generateVideo(rs);
                 videoSegments.appendVideo(video);
@@ -95,7 +95,7 @@ public class VideoDAO {
         }
     }
 
-    public Video generateVideo(ResultSet rset) throws Exception {
+    Video generateVideo(ResultSet rset) throws Exception {
         int id = rset.getInt("videos.id");
         String name = rset.getString("videos.name");
         String url = rset.getString("url");
