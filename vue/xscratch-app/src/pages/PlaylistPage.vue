@@ -2,7 +2,10 @@
   <div id="videopage" v-on:playlist-change="loadPlaylist">
     <h1>
       {{playlist.name}}
-      <b-button v-if="!loading" class="ml-4" variant="outline-danger">
+      <b-button v-b-modal.play v-if="!loading" class="ml-4" variant="success">
+        <font-awesome-icon icon="play-circle" />
+      </b-button>
+      <b-button v-if="!loading" variant="outline-danger">
         <font-awesome-icon icon="trash" />
       </b-button>
     </h1>
@@ -34,11 +37,13 @@
         </video>
       </b-card>
     </div>
+    <PlayPlaylist :playlist="playlist" :videos="videos" id="play" />
   </div>
 </template>
 
 <script>
 import api from '@/api'
+import PlayPlaylist from '@/components/PlayPlaylist'
 
 export default {
   data: function () {
@@ -47,6 +52,9 @@ export default {
       playlist: {},
       videos: []
     }
+  },
+  components: {
+    PlayPlaylist
   },
   mounted: function () {
     this.loadPlaylist()
@@ -93,5 +101,21 @@ div {
 
 #videopage {
   padding-right: 40px;
+}
+.card-header {
+  font-size: 2rem;
+  align-content: baseline;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+.card-body {
+  padding: 0px;
+  border: none;
+}
+.card {
+  border: none;
+}
+.card-footer {
+  margin-top: -5px;
 }
 </style>

@@ -25,7 +25,7 @@
       </div>-->
     </div>
     <div id="content">
-      <router-view />
+      <router-view class="pt-3" />
     </div>
   </div>
 </template>

@@ -1,6 +1,6 @@
 <template>
   <div id="adminpage">
-    <h1 class="pt-3">Third Party Libraries:</h1>
+    <h1>Third Party Libraries:</h1>
     <div class="topnav">
       <b-input-group prepend="Add URL" class="mt-3 w-25">
         <b-form-input id="search-bar"></b-form-input>

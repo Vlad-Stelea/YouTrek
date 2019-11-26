@@ -1,6 +1,6 @@
 <template>
   <div id="videopage">
-    <h1 class="pt-3">Library:</h1>
+    <h1>Library:</h1>
     <div class="topnav pb-4">
       <b-input-group prepend="Search" class="mt-3 w-25">
         <b-form-input id="search-bar" v-model="search" @keydown.enter="searchVideos()"></b-form-input>
