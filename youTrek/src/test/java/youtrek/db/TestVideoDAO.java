@@ -1,7 +1,7 @@
 package youtrek.db;
 
 import static org.junit.Assert.assertTrue;
-
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
@@ -11,10 +11,10 @@ import youtrek.models.Video;
 import java.util.stream.Collectors;
 
 public class TestVideoDAO {
-
-    private String dialogueFilter = "Crew";
-    private String characterFilter = "Spock";
-    private String titleFilter = "testVid";
+    private final String dialogueFilter = "Crew";
+    private final String characterFilter = "Spock";
+    private final String titleFilter = "testVid";
+    private final int id = 1;
 
     @Test
     public void testGetVideo() throws Exception {
@@ -46,6 +46,13 @@ public class TestVideoDAO {
     @Test
     public void testVideosFilteredByCharacters() throws Exception {
         testVideosFitlered(characterFilter);
+    }
+
+    @Test
+    public void testGetVideoById() throws Exception {
+        VideoDAO dao = VideoDAO.getInstance();
+        Video video = dao.getVideo(id);
+        assertEquals(id, video.id);
     }
 
     //Helper methods
