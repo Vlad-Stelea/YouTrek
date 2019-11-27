@@ -2,7 +2,7 @@
   <div id="app">
     <div id="header">
       <h1>youTrek</h1>
-      <b-button id="uploadButton">+ Upload Video</b-button>
+      <b-button id="uploadButton" v-b-modal.upload>+ Upload Video</b-button>
     </div>
     <div id="sidebar">
       <router-link :to="{ name: 'videos'}">
@@ -28,14 +28,19 @@
     <div id="content">
       <router-view class="pt-3" />
     </div>
+    <UploadVideo />
   </div>
 </template>
 
 <script>
+import UploadVideo from '@/components/UploadVideo'
 import api from '@/api'
 
 export default {
   name: 'App',
+  components: {
+    UploadVideo
+  },
   data: function () {
     return {
       playlists: [],

@@ -165,7 +165,6 @@ export default {
       this.playingID = 0
       this.playing = false
       this.loop = false
-      this.hiddenControls = false
     },
     toggleLoop () {
       this.loop = !this.loop

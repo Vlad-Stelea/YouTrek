@@ -1,5 +1,5 @@
 <template>
-  <div id="videopage" v-on:playlist-change="loadPlaylist">
+  <div :id="playlist.name + playlist.id" v-on:playlist-change="loadPlaylist">
     <h1>
       {{playlist.name}}
       <b-button v-b-modal.play v-if="!loading" class="ml-4" variant="success">
