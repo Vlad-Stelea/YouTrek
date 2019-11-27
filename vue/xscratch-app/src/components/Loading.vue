@@ -57,7 +57,7 @@ export default {
     getMessage (t) {
       if (this.sequence === 'murder') {
         if (t < 6) return 'Loading'
-        if (t < 8) return '404. Resource not found.'
+        if (t < 7.5) return '404. Resource not found.'
         if (t < 11) return '404. Resource not found. Kidding. Not sure why this is taking so long'
         if (t < 14) return 'I think AWS murdered my backend'
         if (t < 15) return 'Guys?'

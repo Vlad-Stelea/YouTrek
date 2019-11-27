@@ -42,7 +42,7 @@
       </b-col>
     </b-row>
     <h4 class="py-3" v-if="activeSearch">Searching for "{{activeSearch}}"</h4>
-    <div v-if="loading">Loading...</div>
+    <Loading key="admin-videos" :active="loading" sequence="murder" />
 
     <div id="divVideo">
       <b-card
@@ -81,19 +81,23 @@
 </template>
 
 <script>
+import Loading from '@/components/Loading'
 import api from '@/api'
 
 export default {
+  components: {
+    Loading
+  },
   data: function () {
     return {
       videos: [],
       search: '',
       tlds: [],
       activeSearch: '',
-      loading: ''
+      loading: false
     }
   },
-  created: function () {
+  mounted: function () {
     this.loadVideos()
   },
   methods: {
