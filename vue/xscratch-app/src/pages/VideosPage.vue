@@ -24,7 +24,7 @@
       </b-col>
     </b-row>
     <h4 class="py-3" v-if="activeSearch">Searching for "{{activeSearch}}"</h4>
-    <Loading key="videos" :active="loading" sequence="murder" />
+    <Loading key="videos" :active="loading" sequence="tea" />
 
     <div id="divVideo">
       <b-card
