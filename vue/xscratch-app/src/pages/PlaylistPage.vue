@@ -10,7 +10,7 @@
       </b-button>
     </h1>
 
-    <div v-if="loading">Loading....</div>
+    <Loading :key="playlist.name" :active="loading" sequence="playlist" />
 
     <div v-if="!loading && videos.length == 0">No videos in this playlist</div>
 
@@ -42,8 +42,9 @@
 </template>
 
 <script>
-import api from '@/api'
 import PlayPlaylist from '@/components/PlayPlaylist'
+import Loading from '@/components/Loading'
+import api from '@/api'
 
 export default {
   data: function () {
@@ -54,7 +55,8 @@ export default {
     }
   },
   components: {
-    PlayPlaylist
+    PlayPlaylist,
+    Loading
   },
   mounted: function () {
     this.loadPlaylist()

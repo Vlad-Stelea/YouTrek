@@ -13,7 +13,12 @@
       </router-link>
       <div style="height: 60px;"></div>
       <div class="sidebar-item" id="newPlaylist">+ New Playlist</div>
-      <div class="sidebar-item" v-if="loadingPlaylists">Loading...</div>
+      <Loading
+        class="sidebar-item"
+        key="playlists"
+        :active="loadingPlaylists"
+        sequence="playlists"
+      />
       <router-link
         :to="{ name: 'playlist', params: { playlistID: p.id }}"
         v-for="p in playlists"
@@ -34,20 +39,22 @@
 
 <script>
 import UploadVideo from '@/components/UploadVideo'
+import Loading from '@/components/Loading'
 import api from '@/api'
 
 export default {
   name: 'App',
   components: {
-    UploadVideo
+    UploadVideo,
+    Loading
   },
   data: function () {
     return {
       playlists: [],
-      loadingPlaylists: true
+      loadingPlaylists: false
     }
   },
-  created: function () {
+  mounted: function () {
     this.loadPlaylists()
   },
   methods: {
@@ -131,7 +138,7 @@ export default {
 }
 
 .sidebar-item {
-  font-size: 1.5rem;
+  font-size: 1.5rem !important;
   text-align: center;
   margin-top: 1rem;
   padding-top: 0.3rem;
