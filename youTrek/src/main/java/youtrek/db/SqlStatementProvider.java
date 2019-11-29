@@ -14,4 +14,8 @@ public class SqlStatementProvider {
             "FROM characters\n" +
             "LEFT JOIN vcjoin v on characters.id = v.character_id\n" +
             "where v.video_id = ?;";
+
+    public final static String CREATE_VIDEO =
+            "INSERT INTO videos(name, is_remote, is_available, url, dialogue, date_created, tlp_id)\n" +
+            "VALUE (?, false, true, ?, ?, NOW(), NULL);";
 }
