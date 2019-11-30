@@ -18,4 +18,11 @@ public class SqlStatementProvider {
     public final static String CREATE_VIDEO =
             "INSERT INTO videos(name, is_remote, is_available, url, dialogue, date_created, tlp_id)\n" +
             "VALUE (?, false, true, ?, ?, NOW(), NULL);";
+
+    public final static String CREATE_CHARACTER =
+            "INSERT INTO characters(name)\n" +
+                    "VALUE (?);";
+
+    public final static String GET_ALL_CHARACTERS =
+            "SELECT  * FROM characters;";
 }
