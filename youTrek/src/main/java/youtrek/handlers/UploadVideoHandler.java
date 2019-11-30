@@ -8,7 +8,9 @@ import youtrek.http.UploadVideoPostRequest;
 import youtrek.http.UploadVideoResponse;
 import youtrek.models.Character;
 import youtrek.models.Video;
+import youtrek.s3.S3Util;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -21,7 +23,12 @@ public class UploadVideoHandler implements RequestHandler<UploadVideoPostRequest
         headers.put("X-Custom-Header", "application/json");
         CharacterDAO charDao = CharacterDAO.getInstance();
         try {
-            //TODO insert video into s3 bucket
+            //Upload video into s3 bucket
+            String location = new StringBuilder().append("/")
+                    .append(uploadVideoPostRequest.getName())
+                    .append(".ogg").toString();
+            S3Util.getInstance().uploadVideoToBucket(location, uploadVideoPostRequest.getName(), uploadVideoPostRequest.getVideo());
+
             //Insert into the videos table
             Video insertVideo = new Video(uploadVideoPostRequest.getName(), "testurl.og", uploadVideoPostRequest.getDialogue());
             int insertedVideoId = VideoDAO.getInstance().createVideo(insertVideo);
@@ -34,11 +41,13 @@ public class UploadVideoHandler implements RequestHandler<UploadVideoPostRequest
             //Insert unknown characters into the characters table
             List<Integer> uploadedCharacterIds = charDao.insertCharacters(kUC.unKnownCharacters);
 
-            //TODO insert into vcjoin
+            //TODO Insert into vcjoin
 
 
         } catch(SQLException e) {
             //TODO handle case where video data is not fully uploaded
+        } catch(IOException e) {
+            //TODO handle error with uploading video to s3
         }
         return null;
     }
