@@ -27,8 +27,7 @@ public class UploadVideoHandler implements RequestHandler<UploadVideoPostRequest
         try {
             //Upload video into s3 bucket
             String videoKey =
-                    generateUniqueBucketKeyForVideo() +
-                    ".ogg";
+                    generateUniqueBucketKeyForVideo() + ".ogg";
             S3Util.getInstance().uploadVideoToBucket(BUCKET_LOCATION, videoKey, uploadVideoPostRequest.getVideo());
 
             //Insert into the videos table
@@ -49,13 +48,11 @@ public class UploadVideoHandler implements RequestHandler<UploadVideoPostRequest
             //Insert the video and character ids into the join table
             VCJoinDAO.getInstance().insertVideoCharactersPair(insertVideo.id, alreadyKnownCharIds);
 
-        } catch(SQLException e) {
-            //TODO handle case where video data is not fully uploaded
-            //TODO Remove all inserted items incase of error
-        } catch(IOException e) {
-            //TODO handle error with uploading video to s3
+            Video insertedVideo = VideoDAO.getInstance().getVideo(insertVideo.id);
+            return new UploadVideoResponse(insertedVideo, headers, 400);
+        } catch (Exception e) {
+            return new UploadVideoResponse(null, headers, 400);
         }
-        return null;
     }
 
     List<Character> convertNamesToCharacters(List<String> names) {
