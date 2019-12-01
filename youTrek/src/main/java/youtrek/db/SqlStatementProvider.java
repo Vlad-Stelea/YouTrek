@@ -25,4 +25,7 @@ public class SqlStatementProvider {
 
     public final static String GET_ALL_CHARACTERS =
             "SELECT  * FROM characters;";
+
+    public final static String INSERT_VIDEO_CHARACTER_PAIR =
+            "INSERT INTO vcjoin(video_id, character_id) VALUE (?, ?);";
 }

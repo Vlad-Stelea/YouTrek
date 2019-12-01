@@ -3,6 +3,7 @@ package youtrek.handlers;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import youtrek.db.CharacterDAO;
+import youtrek.db.VCJoinDAO;
 import youtrek.db.VideoDAO;
 import youtrek.http.UploadVideoPostRequest;
 import youtrek.http.UploadVideoResponse;
@@ -16,7 +17,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class UploadVideoHandler implements RequestHandler<UploadVideoPostRequest, UploadVideoResponse> {
-    final String BUCKET_LOCATION = "xscratch-videos";
+    private final String BUCKET_LOCATION = "xscratch-videos";
     @Override
     public UploadVideoResponse handleRequest(UploadVideoPostRequest uploadVideoPostRequest, Context context) {
         Map<String, String> headers = new HashMap<>();
@@ -31,8 +32,8 @@ public class UploadVideoHandler implements RequestHandler<UploadVideoPostRequest
             S3Util.getInstance().uploadVideoToBucket(BUCKET_LOCATION, videoKey, uploadVideoPostRequest.getVideo());
 
             //Insert into the videos table
-            Video insertVideo = new Video(uploadVideoPostRequest.getName(), "testurl.og", uploadVideoPostRequest.getDialogue());
-            int insertedVideoId = VideoDAO.getInstance().createVideo(insertVideo);
+            Video insertVideo = new Video(uploadVideoPostRequest.getName(), "/" + videoKey, uploadVideoPostRequest.getDialogue());
+            insertVideo.id = VideoDAO.getInstance().createVideo(insertVideo);
 
             //Get which Characters are already in the characters table
             List<Character> videoCharacters = convertNamesToCharacters(uploadVideoPostRequest.getCharacters());
@@ -41,10 +42,16 @@ public class UploadVideoHandler implements RequestHandler<UploadVideoPostRequest
 
             //Insert unknown characters into the characters table
             List<Integer> uploadedCharacterIds = charDao.insertCharacters(kUC.unKnownCharacters);
+            List<Integer> alreadyKnownCharIds = kUC.knownCharacters.stream().map(character -> character.id).collect(Collectors.toList());
+            //Combine the two character id lists
+            alreadyKnownCharIds.addAll(uploadedCharacterIds);
 
-            //TODO Insert into vcjoin
+            //Insert the video and character ids into the join table
+            VCJoinDAO.getInstance().insertVideoCharactersPair(insertVideo.id, alreadyKnownCharIds);
+
         } catch(SQLException e) {
             //TODO handle case where video data is not fully uploaded
+            //TODO Remove all inserted items incase of error
         } catch(IOException e) {
             //TODO handle error with uploading video to s3
         }
