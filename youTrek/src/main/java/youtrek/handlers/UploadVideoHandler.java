@@ -16,6 +16,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class UploadVideoHandler implements RequestHandler<UploadVideoPostRequest, UploadVideoResponse> {
+    final String BUCKET_LOCATION = "xscratch-videos";
     @Override
     public UploadVideoResponse handleRequest(UploadVideoPostRequest uploadVideoPostRequest, Context context) {
         Map<String, String> headers = new HashMap<>();
@@ -24,10 +25,10 @@ public class UploadVideoHandler implements RequestHandler<UploadVideoPostRequest
         CharacterDAO charDao = CharacterDAO.getInstance();
         try {
             //Upload video into s3 bucket
-            String location = new StringBuilder().append("/")
-                    .append(uploadVideoPostRequest.getName())
-                    .append(".ogg").toString();
-            S3Util.getInstance().uploadVideoToBucket(location, uploadVideoPostRequest.getName(), uploadVideoPostRequest.getVideo());
+            String videoKey =
+                    generateUniqueBucketKeyForVideo() +
+                    ".ogg";
+            S3Util.getInstance().uploadVideoToBucket(BUCKET_LOCATION, videoKey, uploadVideoPostRequest.getVideo());
 
             //Insert into the videos table
             Video insertVideo = new Video(uploadVideoPostRequest.getName(), "testurl.og", uploadVideoPostRequest.getDialogue());
@@ -42,8 +43,6 @@ public class UploadVideoHandler implements RequestHandler<UploadVideoPostRequest
             List<Integer> uploadedCharacterIds = charDao.insertCharacters(kUC.unKnownCharacters);
 
             //TODO Insert into vcjoin
-
-
         } catch(SQLException e) {
             //TODO handle case where video data is not fully uploaded
         } catch(IOException e) {
@@ -76,6 +75,10 @@ public class UploadVideoHandler implements RequestHandler<UploadVideoPostRequest
         }
 
         return new KnownUnknownCharacters(knownCharacters, unkownCharacters);
+    }
+
+    String generateUniqueBucketKeyForVideo() {
+        return UUID.randomUUID().toString();
     }
 
     //Data class to store which characters are known and unknown
