@@ -66,6 +66,8 @@ public class PlaylistDAO {
             resultSet.close();
             ps.close();
 
+            pl.setVideos(getPlaylistVideos(playlist_id));
+
             return pl;
 
         } catch (Exception e) {
@@ -83,7 +85,7 @@ public class PlaylistDAO {
 
             while (resultSet.next()) {
                 currentPlaylist = generatePlaylist(resultSet);
-                currentPlaylist.setVideos(getPlayListVideos(currentPlaylist.id));
+                currentPlaylist.setVideos(getPlaylistVideos(currentPlaylist.id));
                 playlists.appendPlaylist(currentPlaylist);
             }
             resultSet.close();
@@ -110,7 +112,7 @@ public class PlaylistDAO {
         }
     }
 
-    public ListOfVideos getPlayListVideos(int playlist_id) throws SQLException {
+    public ListOfVideos getPlaylistVideos(int playlist_id) throws SQLException {
         try {
             ListOfVideos videoSegments = new ListOfVideos();
             Video currentVideo = null;
@@ -160,9 +162,14 @@ public class PlaylistDAO {
             ps.setInt(1, video_id);
             ps.setInt(2, playlist_id);
             ps.setInt(3, getCurrentPlaylistIndex(playlist_id)+1); // next video order value
+            conn.setAutoCommit(false);
             int rcode = ps.executeUpdate();
-            ps.close();
-
+            if (rcode > 0) {
+                conn.commit();
+            }
+            else {
+                System.out.println("Table not altered");
+            }
             return getPlaylist(playlist_id);  // return altered playlist
 
         } catch (Exception e) {

@@ -34,9 +34,13 @@ public class TestPlaylistDAO {
     @Test
     public void testPlaylistVideos() throws SQLException {
         PlaylistDAO dao = PlaylistDAO.getInstance();
+        Playlist test = null;
+        test = dao.createPlaylist("SomeTestPlaylist");
+        dao.appendVideo(1, test.id);
+        dao.appendVideo(2, test.id);
         ListOfVideos videos = null;
-        videos = dao.getPlayListVideos(1);
-        assertNotNull(videos);
+        videos = dao.getPlaylistVideos(test.id);
+        assertEquals(2, videos.getNumVideos());
     }
 
     @Test
@@ -67,18 +71,14 @@ public class TestPlaylistDAO {
     @Test
     public void testAppendVideo() throws Exception {
         PlaylistDAO dao = PlaylistDAO.getInstance();
-        Playlist test = null;
+        Playlist test;
         test = dao.createPlaylist("SomeTestPlaylist");
-        ListOfVideos plVideos = dao.getPlayListVideos(test.id);
-        int numVideos = plVideos.getNumVideos();
 
-        dao.appendVideo(1, test.id);
-        dao.appendVideo(2, test.id);
+        Playlist pl1video = dao.appendVideo(1, test.id);
+        assertEquals(1, pl1video.videos.getNumVideos());
 
-        ListOfVideos pl2Videos = dao.getPlayListVideos(test.id);
-        int numVideos2 = pl2Videos.getNumVideos();
-
-        assertEquals(numVideos + 2, numVideos2);
+        Playlist pl2video = dao.appendVideo(2, test.id);
+        assertEquals(2, pl2video.videos.getNumVideos());
     }
 
     @Test

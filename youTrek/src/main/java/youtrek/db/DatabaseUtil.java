@@ -16,7 +16,7 @@ public class DatabaseUtil {
     /**
      * Useful for setting schema to test DB for junit
      */
-    static void setSchema(String schema) {
+    public static void setSchema(String schema) {
         dbSchema = schema;
     }
 

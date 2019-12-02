@@ -5,16 +5,19 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/youTrek/src/main/java/youtrek/db/DatabaseUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/youTrek/src/main/java/youtrek/db/DatabaseUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/youTrek/src/main/java/youtrek/db/PlaylistDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/youTrek/src/main/java/youtrek/db/PlaylistDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/youTrek/src/main/java/youtrek/models/ListOfPlaylists.java" beforeDir="false" afterPath="$PROJECT_DIR$/youTrek/src/main/java/youtrek/models/ListOfPlaylists.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/youTrek/src/main/java/youtrek/models/ListOfVideos.java" beforeDir="false" afterPath="$PROJECT_DIR$/youTrek/src/main/java/youtrek/models/ListOfVideos.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/youTrek/src/main/java/youtrek/handlers/GetPlaylistHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/youTrek/src/main/java/youtrek/handlers/GetPlaylistHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/youTrek/src/test/java/youtrek/db/TestPlaylistDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/youTrek/src/test/java/youtrek/db/TestPlaylistDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/youTrek/src/test/java/youtrek/db/TestVideoDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/youTrek/src/test/java/youtrek/db/TestVideoDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/youTrek/src/test/java/youtrek/handlers/TestAppendVideoHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/youTrek/src/test/java/youtrek/handlers/TestAppendVideoHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/youTrek/src/test/java/youtrek/handlers/TestCreatePlaylistHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/youTrek/src/test/java/youtrek/handlers/TestCreatePlaylistHandler.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CoverageViewManager">
+    <option name="myElementSize" value="43" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -51,6 +54,21 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="TestCreatePlaylistHandler" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="youTrek" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="youtrek.handlers.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="youtrek.handlers" />
+      <option name="MAIN_CLASS_NAME" value="youtrek.handlers.TestCreatePlaylistHandler" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="TestPlaylistDAO" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="youTrek" />
       <extension name="coverage">
@@ -66,7 +84,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TestPlaylistDAO.testCreatePlaylist" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TestPlaylistDAO.testAppendVideo" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="youTrek" />
       <extension name="coverage">
         <pattern>
@@ -76,13 +94,13 @@
       </extension>
       <option name="PACKAGE_NAME" value="youtrek.db" />
       <option name="MAIN_CLASS_NAME" value="youtrek.db.TestPlaylistDAO" />
-      <option name="METHOD_NAME" value="testCreatePlaylist" />
+      <option name="METHOD_NAME" value="testAppendVideo" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TestPlaylistDAO.testGetPlaylist" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TestPlaylistDAO.testPlaylistVideos" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="youTrek" />
       <extension name="coverage">
         <pattern>
@@ -92,23 +110,8 @@
       </extension>
       <option name="PACKAGE_NAME" value="youtrek.db" />
       <option name="MAIN_CLASS_NAME" value="youtrek.db.TestPlaylistDAO" />
-      <option name="METHOD_NAME" value="testGetPlaylist" />
+      <option name="METHOD_NAME" value="testPlaylistVideos" />
       <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="TestVideoDAO" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="youTrek" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="youtrek.db.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="youtrek.db" />
-      <option name="MAIN_CLASS_NAME" value="youtrek.db.TestVideoDAO" />
-      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -116,10 +119,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.All in youTrek" />
+        <item itemvalue="JUnit.TestCreatePlaylistHandler" />
         <item itemvalue="JUnit.TestPlaylistDAO" />
-        <item itemvalue="JUnit.TestPlaylistDAO.testCreatePlaylist" />
-        <item itemvalue="JUnit.TestPlaylistDAO.testGetPlaylist" />
-        <item itemvalue="JUnit.TestVideoDAO" />
+        <item itemvalue="JUnit.TestPlaylistDAO.testAppendVideo" />
+        <item itemvalue="JUnit.TestPlaylistDAO.testPlaylistVideos" />
       </list>
     </recent_temporary>
   </component>
@@ -157,14 +160,14 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/youTrek/src/test/java/youtrek/db/TestPlaylistDAO.java</url>
-          <line>15</line>
-          <option name="timeStamp" value="2" />
+          <url>file://$PROJECT_DIR$/youTrek/src/main/java/youtrek/db/PlaylistDAO.java</url>
+          <line>160</line>
+          <option name="timeStamp" value="5" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/YouTrek$All_in_youTrek.ic" NAME="All in youTrek Coverage Results" MODIFIED="1575327350978" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/YouTrek$All_in_youTrek.ic" NAME="All in youTrek Coverage Results" MODIFIED="1575328925312" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>
