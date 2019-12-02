@@ -1,9 +1,6 @@
 package youtrek.db;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 
 public class DatabaseUtil {
 
@@ -13,15 +10,15 @@ public class DatabaseUtil {
 
     private static String dbSchema = "v2"; // TODO update this every time we switch schema!
 
+    // pooled across all usages.
+    static Connection conn;
+
     /**
      * Useful for setting schema to test DB for junit
      */
-    public static void setSchema(String schema) {
+    static void setSchema(String schema) {
         dbSchema = schema;
     }
-
-    // pooled across all usages.
-    static Connection conn;
 
     /**
      * Singleton access to DB connection to share resources effectively across multiple accesses.

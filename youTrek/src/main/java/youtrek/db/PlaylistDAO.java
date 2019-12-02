@@ -97,6 +97,19 @@ public class PlaylistDAO {
         }
     }
 
+    // Useful especially for cleaning up after junit tests
+    public void deletePlaylistByName(String name) throws SQLException {
+        try {
+            PreparedStatement ps = conn.prepareStatement("DELETE FROM playlists WHERE NAME=?;");
+            ps.setString(1, name);
+            int ret = ps.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new SQLException("Failed in creating playlist: " + e.getMessage());
+        }
+    }
+
     public ListOfVideos getPlayListVideos(int playlist_id) throws SQLException {
         try {
             ListOfVideos videoSegments = new ListOfVideos();
@@ -121,7 +134,7 @@ public class PlaylistDAO {
     }
 
     // helper to find the current number of video segments in playlist
-    public int getCurrentPlaylistIndex(int playlist_id) throws SQLException {
+    private int getCurrentPlaylistIndex(int playlist_id) throws SQLException {
         try {
             int videoCount = 0;
             PreparedStatement ps = conn.prepareStatement("SELECT count(video_order) FROM pvjoin WHERE playlist_id=?;");
@@ -165,7 +178,7 @@ public class PlaylistDAO {
         return pl;
     }
 
-    public Video generateVideo(ResultSet rset) throws Exception {
+    private Video generateVideo(ResultSet rset) throws Exception {
         int id = rset.getInt("videos.id");
         String name = rset.getString("videos.name");
         String url = rset.getString("url");

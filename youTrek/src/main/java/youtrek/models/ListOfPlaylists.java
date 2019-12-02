@@ -17,4 +17,8 @@ public class ListOfPlaylists {
     public void appendPlaylist(Playlist playlist) {
         playlists.add(playlist);
     }
+
+    public int getNumPlaylists() {
+        return playlists.size();
+    }
 }
