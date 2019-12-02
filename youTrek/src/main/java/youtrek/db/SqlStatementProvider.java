@@ -14,4 +14,8 @@ public class SqlStatementProvider {
             "FROM characters\n" +
             "LEFT JOIN vcjoin v on characters.id = v.character_id\n" +
             "where v.video_id = ?;";
+
+    public final static String DELETE_VIDEO_GIVEN_ID =
+            "DELETE FROM " +
+            "videos WHERE id = ?;";
 }
