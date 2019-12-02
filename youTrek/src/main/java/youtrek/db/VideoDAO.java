@@ -90,7 +90,38 @@ public class VideoDAO {
         }catch(Exception e) {
             e.printStackTrace();
             throw new SQLException(new StringBuilder().
-                    append("Failed in getting constant: ").
+                    append("Failed in getting videos: ").
+                    append(e.getStackTrace()).toString());
+        }
+    }
+
+    /**
+     * Inserts the passed in video object to the database
+     * @param video the video to store in the database
+     * @return The id of the newly passed in video object
+     * @throws SQLException
+     */
+    public int createVideo(Video video) throws SQLException{
+        try {
+            String query = SqlStatementProvider.CREATE_VIDEO;
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setString(1, video.name);
+            ps.setString(2, video.url);
+            ps.setString(3, video.dialogue);
+            ps.executeUpdate();
+
+            ResultSet rs = ps.getGeneratedKeys();
+            rs.next();
+            int id = rs.getInt(1);
+
+            rs.close();
+            ps.close();
+
+            return id;
+        }catch(Exception e) {
+            e.printStackTrace();
+            throw new SQLException(new StringBuilder().
+                    append("Failed in creating video: ").
                     append(e.getStackTrace()).toString());
         }
     }

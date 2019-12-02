@@ -5,11 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Video {
-    public final int id;
+    public int id;
     public final String name;
     public final String url;
     public final String dialogue;
-    public final Date dateCreated;
+    public  Date dateCreated;
     public int tlpId; //TODO check if this should be marked final
     public boolean isRemote;
     public boolean isAvailable;
@@ -38,6 +38,15 @@ public class Video {
         this.isRemote = isRemote;
         this.isAvailable = isAvailable;
         this.characters = new ArrayList<>();
+    }
+
+    public Video(String name, String url, String dialogue) {
+        this.name = name;
+        this.url = url;
+        this.dialogue = dialogue;
+        this.tlpId = -1;
+        this.isRemote = false;
+        this.isAvailable = true;
     }
 
     public void setIsRemote(boolean b) {
