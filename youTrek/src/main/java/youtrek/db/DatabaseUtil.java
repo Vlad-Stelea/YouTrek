@@ -7,11 +7,18 @@ import java.sql.ResultSet;
 
 public class DatabaseUtil {
 
-    public final static String jdbcTag = "jdbc:mysql://";
-    public final static String rdsMySqlDatabasePort = "3306";
-    public final static String multiQueries = "?allowMultiQueries=true";
+    private final static String jdbcTag = "jdbc:mysql://";
+    private final static String rdsMySqlDatabasePort = "3306";
+    private final static String multiQueries = "?allowMultiQueries=true";
 
-    public final static String dbSchema = "v2"; // TODO update this every time we switch schema!
+    private static String dbSchema = "v2"; // TODO update this every time we switch schema!
+
+    /**
+     * Useful for setting schema to test DB for junit
+     */
+    public static void setSchema(String schema) {
+        dbSchema = schema;
+    }
 
     // pooled across all usages.
     static Connection conn;

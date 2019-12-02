@@ -1,17 +1,38 @@
 package youtrek.db;
 
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotNull;
+
+import org.junit.Before;
 import org.junit.Test;
+
 import youtrek.models.ListOfPlaylists;
 import youtrek.models.Playlist;
 
-import static org.junit.Assert.assertNotNull;
-
 public class TestPlaylistDAO {
+
+    @Before
+    public void setTestSchema() {
+        DatabaseUtil.setSchema("testing");
+    }
+
     @Test
     public void testListPlaylists() throws Exception {
         PlaylistDAO dao = PlaylistDAO.getInstance();
         ListOfPlaylists playlists = dao.listPlaylists();
         assertNotNull(playlists);
+    }
+
+    @Test
+    public void testPlaylistVideos() {
+        PlaylistDAO dao = PlaylistDAO.getInstance();
+        Playlist pl = null;
+    }
+
+    @Test
+    public void testCreatePlaylist() {
+        PlaylistDAO dao = PlaylistDAO.getInstance();
+        Playlist pl = null;
     }
 
     @Test
