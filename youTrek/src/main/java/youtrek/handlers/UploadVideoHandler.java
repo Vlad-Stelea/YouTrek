@@ -34,19 +34,13 @@ public class UploadVideoHandler implements RequestHandler<UploadVideoPostRequest
             Video insertVideo = new Video(uploadVideoPostRequest.getName(), "/" + videoKey, uploadVideoPostRequest.getDialogue());
             insertVideo.id = VideoDAO.getInstance().createVideo(insertVideo);
 
-            //Get which Characters are already in the characters table
-            List<Character> videoCharacters = convertNamesToCharacters(uploadVideoPostRequest.getCharacters());
-            List<Character> allCharactersInTable = charDao.getCharacters();
-            KnownUnknownCharacters kUC = splitKnownAndUnknownCharacters(allCharactersInTable, videoCharacters);
-
+            //Parse the characters passed in as a string and turn them into character objects
+            List<Character> allCharacters = convertNamesToCharacters(uploadVideoPostRequest.getCharacters());
             //Insert unknown characters into the characters table
-            List<Integer> uploadedCharacterIds = charDao.insertCharacters(kUC.unKnownCharacters);
-            List<Integer> alreadyKnownCharIds = kUC.knownCharacters.stream().map(character -> character.id).collect(Collectors.toList());
-            //Combine the two character id lists
-            alreadyKnownCharIds.addAll(uploadedCharacterIds);
+            List<Integer> characterIds = charDao.insertCharacters(allCharacters);
 
             //Insert the video and character ids into the join table
-            VCJoinDAO.getInstance().insertVideoCharactersPair(insertVideo.id, alreadyKnownCharIds);
+            VCJoinDAO.getInstance().insertVideoCharactersPair(insertVideo.id, characterIds);
 
             Video insertedVideo = VideoDAO.getInstance().getVideo(insertVideo.id);
             return new UploadVideoResponse(insertedVideo, headers, 400);
@@ -59,40 +53,11 @@ public class UploadVideoHandler implements RequestHandler<UploadVideoPostRequest
         return names.stream().map(Character::new).collect(Collectors.toList());
     }
 
-    KnownUnknownCharacters splitKnownAndUnknownCharacters(List<Character> dataBaseCharacters, List<Character> requestCharacters) {
-        List<Character> knownCharacters = new ArrayList<>();
-        List<Character> unkownCharacters = new ArrayList<>();
-        Map<String, Character> allCharacters = new HashMap<>();
 
-        //Populate Name to character map
-        for(Character character : dataBaseCharacters) {
-            allCharacters.put(character.name, character);
-        }
-
-        for(Character character : requestCharacters) {
-            if(allCharacters.containsKey(character.name)) {
-                character.id = allCharacters.get(character.name).id;
-                knownCharacters.add(character);
-            } else {
-                unkownCharacters.add(character);
-            }
-        }
-
-        return new KnownUnknownCharacters(knownCharacters, unkownCharacters);
-    }
 
     String generateUniqueBucketKeyForVideo() {
         return UUID.randomUUID().toString();
     }
 
-    //Data class to store which characters are known and unknown
-    static class KnownUnknownCharacters {
-        List<Character> knownCharacters;
-        List<Character> unKnownCharacters;
 
-        public KnownUnknownCharacters(List<Character> knownCharacters, List<Character> unknownCharacters) {
-            this.knownCharacters = knownCharacters;
-            this.unKnownCharacters = unknownCharacters;
-        }
-    }
 }

@@ -1,7 +1,7 @@
 package youtrek.models;
 
 public class Character {
-    public int id;
+    public int id = -1;
     public String name;
 
     public Character(String name) {
