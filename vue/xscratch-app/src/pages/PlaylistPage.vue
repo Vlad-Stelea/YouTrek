@@ -2,9 +2,12 @@
   <div id="videopage" v-on:playlist-change="loadPlaylist">
     <h1>
       {{playlist.name}}
-      <button>
+      <b-button v-b-modal.play v-if="!loading" class="ml-4" variant="success">
+        <font-awesome-icon icon="play-circle" />
+      </b-button>
+      <b-button v-if="!loading" variant="outline-danger">
         <font-awesome-icon icon="trash" />
-      </button>
+      </b-button>
     </h1>
 
     <div v-if="loading">Loading....</div>
@@ -12,20 +15,35 @@
     <div v-if="!loading && videos.length == 0">No videos in this playlist</div>
 
     <div id="divVideo">
-      <div v-for="video in videos" v-bind:key="video.name" class="vidContainer">
-        <div class="titleContainer">
-          <h3>{{video.name}}</h3>
-        </div>
-        <video controls=" " width="320" height="240">
+      <b-card
+        v-for="video in videos"
+        v-bind:key="video.name"
+        class="vidContainer m-2"
+        v-bind:footer="video.dialogue"
+        bg-variant="dark"
+      >
+        <b-card-header>
+          <b-row align-h="between">
+            <b-col cols="auto" class="pt-1">{{video.name}}</b-col>
+            <b-col cols="auto" class="mb-1 pr-3">
+              <b-button variant="outline-danger">
+                <font-awesome-icon icon="minus-circle" />
+              </b-button>
+            </b-col>
+          </b-row>
+        </b-card-header>
+        <video style="padding-bottom: 0px;" controls=" " width="320" height="240">
           <source v-bind:src="video.url" type="video/ogg" />/>
         </video>
-      </div>
+      </b-card>
     </div>
+    <PlayPlaylist :playlist="playlist" :videos="videos" id="play" />
   </div>
 </template>
 
 <script>
 import api from '@/api'
+import PlayPlaylist from '@/components/PlayPlaylist'
 
 export default {
   data: function () {
@@ -34,6 +52,9 @@ export default {
       playlist: {},
       videos: []
     }
+  },
+  components: {
+    PlayPlaylist
   },
   mounted: function () {
     this.loadPlaylist()
@@ -80,5 +101,21 @@ div {
 
 #videopage {
   padding-right: 40px;
+}
+.card-header {
+  font-size: 2rem;
+  align-content: baseline;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+.card-body {
+  padding: 0px;
+  border: none;
+}
+.card {
+  border: none;
+}
+.card-footer {
+  margin-top: -5px;
 }
 </style>
