@@ -92,7 +92,7 @@ public class CharacterDAO {
                     append(e.getStackTrace()).toString());
         }
     }
-    
+
     Character generateCharacter(ResultSet rset) throws SQLException{
         int id = rset.getInt("id");
         String name = rset.getString("name");
