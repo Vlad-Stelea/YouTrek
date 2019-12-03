@@ -53,6 +53,22 @@ public class PlaylistDAO {
         }
     }
 
+    public ListOfPlaylists deletePlaylist(int playlist_id) throws SQLException {
+        try {
+            /* delete playlist */
+            PreparedStatement ps = conn.prepareStatement("DELETE FROM playlists WHERE id=?;");
+            ps.setInt(1, playlist_id);
+            int ret = ps.executeUpdate();
+
+            /* return list of playlist after deletion */
+            return listPlaylists();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new SQLException("Failed in creating playlist: " + e.getMessage());
+        }
+    }
+
     public Playlist getPlaylist(int playlist_id) throws SQLException {
         try {
             Playlist pl = null;
@@ -108,7 +124,7 @@ public class PlaylistDAO {
 
         } catch (Exception e) {
             e.printStackTrace();
-            throw new SQLException("Failed in creating playlist: " + e.getMessage());
+            throw new SQLException("Failed in deleting playlist: " + e.getMessage());
         }
     }
 

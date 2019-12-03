@@ -9,6 +9,7 @@ import youtrek.models.ListOfVideos;
 import youtrek.models.Playlist;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -83,7 +84,15 @@ public class TestPlaylistDAO {
 
     @Test
     public void testDeletePlaylist() throws Exception {
+        PlaylistDAO dao = PlaylistDAO.getInstance();
+        Playlist test = dao.createPlaylist("SomeTestPlaylist");
+        ListOfPlaylists playlists = dao.listPlaylists();
+        int sizePostInsert = playlists.getNumPlaylists();
 
+        playlists = dao.deletePlaylist(test.id);
+        int sizePostDelete = playlists.getNumPlaylists();
+
+        assertEquals(sizePostDelete, sizePostInsert - 1);
     }
 
     @Test
