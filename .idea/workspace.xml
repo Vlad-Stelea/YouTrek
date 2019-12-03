@@ -2,13 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d0dc16aa-b863-465c-a4bf-6cc9caf7113b" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/youTrek/src/main/java/youtrek/db/DatabaseUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/youTrek/src/main/java/youtrek/db/DatabaseUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/youTrek/src/main/java/youtrek/db/PlaylistDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/youTrek/src/main/java/youtrek/db/PlaylistDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/youTrek/src/main/java/youtrek/handlers/GetPlaylistHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/youTrek/src/main/java/youtrek/handlers/GetPlaylistHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/youTrek/src/test/java/youtrek/db/TestPlaylistDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/youTrek/src/test/java/youtrek/db/TestPlaylistDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/youTrek/src/test/java/youtrek/handlers/TestAppendVideoHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/youTrek/src/test/java/youtrek/handlers/TestAppendVideoHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/youTrek/src/test/java/youtrek/handlers/TestCreatePlaylistHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/youTrek/src/test/java/youtrek/handlers/TestCreatePlaylistHandler.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -17,7 +11,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageViewManager">
-    <option name="myElementSize" value="43" />
+    <option name="myElementSize" value="30" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -168,6 +162,6 @@
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/YouTrek$All_in_youTrek.ic" NAME="All in youTrek Coverage Results" MODIFIED="1575328925312" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/YouTrek$All_in_youTrek.ic" NAME="All in youTrek Coverage Results" MODIFIED="1575389160505" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>

@@ -82,6 +82,11 @@ public class TestPlaylistDAO {
     }
 
     @Test
+    public void testDeletePlaylist() throws Exception {
+
+    }
+
+    @Test
     public void testRemoveVideo() throws Exception {
 
     }
