@@ -27,7 +27,17 @@
           <code>SCREAMING</code>
         </b-form-invalid-feedback>
       </b-form-group>
+      <b-form-group label="Video Characters:" label-cols-sm="3" label-for="input">
+        <b-form-input v-model="upload.title" :state="titleState" placeholder="Enter video characters" />
+        <b-form-invalid-feedback :state="titleState">You must give this video characters</b-form-invalid-feedback>
+      </b-form-group>
     </form>
+    <b-form-group label ="Video File" label-cols-sm="3" label-for="input">
+      <label for = "file">Choose file to upload</label> 
+      <input type="file"
+         id="avatar" name="avatar"
+         accept=".ogg">
+         </b-form-group>
     <template #modal-footer>
       <div>
         <b-btn type="reset" @click="reset" variant="outline-danger">Reset</b-btn>
@@ -66,7 +76,7 @@ export default {
   },
   methods: {
     submit () {
-      if (this.upload.title === '' || this.upload.dialogue === '') {
+      if (this.upload.title === '' || this.upload.dialogue === '' || this.upload.characters === '' || this.upload.file === '') {
         this.failedValidation = true
         return
       }
