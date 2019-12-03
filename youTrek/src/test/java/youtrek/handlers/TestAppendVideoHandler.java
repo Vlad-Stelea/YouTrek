@@ -3,10 +3,15 @@ package youtrek.handlers;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import youtrek.db.DatabaseUtil;
+import youtrek.db.PlaylistDAO;
 import youtrek.http.AppendVideoRequest;
 import youtrek.http.AppendVideoResponse;
 import youtrek.models.Playlist;
 import youtrek.models.Video;
+
+import java.sql.SQLException;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -17,14 +22,22 @@ public class TestAppendVideoHandler {
     AppendVideoRequest request;
 
     @Before
-    public void setup() {
+    public void setup() throws SQLException {
+        DatabaseUtil.setSchema("testing");
+        PlaylistDAO dao = PlaylistDAO.getInstance();
+        pl = dao.createPlaylist("SomeTestPlaylist");
         handler = new AppendVideoHandler();
         request = new AppendVideoRequest();
         request.setVideoId(1);
-        request.setPlaylistId(5);
+        request.setPlaylistId(pl.id);
     }
 
-    /**
+    @After
+    public void deleteTestPlaylists() throws SQLException {
+        PlaylistDAO dao = PlaylistDAO.getInstance();
+        dao.deletePlaylistByName("SomeTestPlaylist");
+    }
+
      @Test
      public void testSuccesfulResponse() {
      AppendVideoResponse result = handler.handleRequest(request, null);
@@ -34,10 +47,4 @@ public class TestAppendVideoHandler {
      assertNotNull(content);
      }
 
-     // Potential fix
-     @After
-     public void clean() {
-     // sql remove from playlists where name="IntelliJ-testcase"
-     }
-    */
 }
