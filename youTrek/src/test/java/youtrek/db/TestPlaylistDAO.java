@@ -9,7 +9,6 @@ import youtrek.models.ListOfVideos;
 import youtrek.models.Playlist;
 
 import java.sql.SQLException;
-import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -63,10 +62,12 @@ public class TestPlaylistDAO {
     @Test
     public void testGetPlaylist() throws Exception {
         PlaylistDAO dao = PlaylistDAO.getInstance();
-        Playlist pl = dao.getPlaylist(1);
 
-        assertEquals("testPlaylist", pl.name);
-        assertNotNull(pl);
+        Playlist pl = dao.createPlaylist("SomeTestPlaylist");
+        Playlist pl2 = dao.getPlaylist(pl.id);
+
+        assertEquals(pl, pl2);
+        assertNotNull(pl2);
     }
 
     @Test
