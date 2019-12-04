@@ -10,7 +10,7 @@
       </b-button>
     </h1>
 
-    <Loading :key="playlist.name" :active="loading" sequence="playlist" />
+    <Loading :key="playlist.name" :active="loading" />
 
     <div v-if="!loading && videos.length == 0">No videos in this playlist</div>
 
@@ -111,7 +111,7 @@ div {
   padding-bottom: 2px;
 }
 .card-body {
-  padding: 0px;
+  padding: 0px !important;
   border: none;
 }
 .card {

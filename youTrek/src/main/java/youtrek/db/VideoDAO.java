@@ -4,6 +4,8 @@ import youtrek.models.ListOfVideos;
 import youtrek.models.Video;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class VideoDAO {
     java.sql.Connection conn;
@@ -26,7 +28,7 @@ public class VideoDAO {
     public Video getVideo(int id) throws Exception {
         try {
             Video video = null;
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM videos WHERE id=?;");
+            PreparedStatement ps = conn.prepareStatement(SqlStatementProvider.GET_VIDEOS_GIVEN_ID);
             ps.setInt(1,  id);
             ResultSet resultSet = ps.executeQuery();
 
@@ -48,7 +50,7 @@ public class VideoDAO {
         try {
             ListOfVideos videoSegments = new ListOfVideos();
             Video currentVideo = null;
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM videos;");
+            PreparedStatement ps = conn.prepareStatement(SqlStatementProvider.GET_ALL_VIDEOS);
             ResultSet resultSet = ps.executeQuery();
 
             while (resultSet.next()) {
@@ -68,15 +70,16 @@ public class VideoDAO {
 
     public ListOfVideos getVideoSegments(String filter) throws SQLException {
         try {
-            String query = "SELECT DISTINCT videos.id, videos.name, url, dialogue, date_created, tlp_id, is_remote, is_available\n" +
-                    "FROM videos\n" +
-                    "    INNER JOIN vcjoin on videos.id = vcjoin.video_id\n" +
-                    "    INNER Join characters on vcjoin.character_id = characters.id\n" +
-                    "WHERE dialogue LIKE '%%s%' OR videos.name LIKE '%%s%' OR characters.name LIKE '%%s%';".replaceAll("%s", filter);
-
+            String query = SqlStatementProvider.GET_ALL_VIDEOS_GIVEN_FILTER;
+            String modifiedFilter = new StringBuffer().append("%").append(filter).append("%").toString();
             ListOfVideos videoSegments = new ListOfVideos();
+
             PreparedStatement ps = conn.prepareStatement(query);
+            ps.setString(1, modifiedFilter);
+            ps.setString(2, modifiedFilter);
+            ps.setString(3, modifiedFilter);
             ResultSet rs = ps.executeQuery();
+
             while(rs.next()) {
                 Video video = generateVideo(rs);
                 videoSegments.appendVideo(video);
@@ -92,7 +95,7 @@ public class VideoDAO {
         }
     }
 
-    public Video generateVideo(ResultSet rset) throws Exception {
+    Video generateVideo(ResultSet rset) throws Exception {
         int id = rset.getInt("videos.id");
         String name = rset.getString("videos.name");
         String url = rset.getString("url");
@@ -102,6 +105,33 @@ public class VideoDAO {
         boolean isRemote = rset.getBoolean("is_remote");
         boolean isAvailable = rset.getBoolean("is_available");
         Video video = new Video(id,name, url, dialogue, dateCreated, tlpId, isRemote, isAvailable);
+        List<String> characters = getCharacters(id);
+        video.addCharacters(characters);
         return video;
+    }
+
+    List<String> getCharacters(int videoId) throws SQLException{
+        try {
+            String query = SqlStatementProvider.GET_CHARACTERS_GIVEN_VIDEO_ID;
+            List<String> characters = new ArrayList<>();
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setInt(1, videoId);
+            ResultSet resultSet = ps.executeQuery();
+
+            while(resultSet.next()) {
+                String character = resultSet.getString("name");
+                characters.add(character);
+            }
+
+            resultSet.close();
+            ps.close();
+
+            return characters;
+        }catch(SQLException e) {
+            e.printStackTrace();
+            throw new SQLException(new StringBuilder().
+                    append("Failed in getting constant: ").
+                    append(e.getStackTrace()).toString());
+        }
     }
 }

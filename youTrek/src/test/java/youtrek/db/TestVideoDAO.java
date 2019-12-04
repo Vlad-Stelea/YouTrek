@@ -1,16 +1,26 @@
 package youtrek.db;
 
 import static org.junit.Assert.assertTrue;
-
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import org.junit.Before;
 import org.junit.Test;
 import youtrek.models.ListOfVideos;
 import youtrek.models.Video;
 
-public class TestVideoDAO {
+import java.util.stream.Collectors;
 
-    private String filter = "Crew";
+public class TestVideoDAO {
+    private final String dialogueFilter = "Crew";
+    private final String characterFilter = "Spock";
+    private final String titleFilter = "testVid";
+    private final int id = 1;
+
+    @Before
+    public void setTestSchema() {
+        DatabaseUtil.setSchema("testing");
+    }
 
     @Test
     public void testGetVideo() throws Exception {
@@ -30,7 +40,29 @@ public class TestVideoDAO {
     }
 
     @Test
-    public void testGetVideosFiltered() throws Exception {
+    public void testGetVideosFilteredByDialogue() throws Exception {
+        testVideosFiltered(dialogueFilter);
+    }
+
+    @Test
+    public void testGetVideosFilteredByTitle() throws Exception {
+        testVideosFiltered(titleFilter);
+    }
+
+    @Test
+    public void testVideosFilteredByCharacters() throws Exception {
+        testVideosFiltered(characterFilter);
+    }
+
+    @Test
+    public void testGetVideoById() throws Exception {
+        VideoDAO dao = VideoDAO.getInstance();
+        Video video = dao.getVideo(id);
+        assertEquals(id, video.id);
+    }
+
+    //Helper methods
+    private void testVideosFiltered(String filter) throws Exception {
         VideoDAO dao = VideoDAO.getInstance();
         ListOfVideos videos = dao.getVideoSegments(filter);
         assertAllVideosFiltered(videos, filter);
@@ -38,9 +70,13 @@ public class TestVideoDAO {
 
     private void assertAllVideosFiltered(ListOfVideos videos, String filter) {
         for(Video curVideo : videos) {
-            //TODO Add support for checking
             assertTrue(curVideo.name.toLowerCase().contains(filter.toLowerCase())
-                    || curVideo.dialogue.toLowerCase().contains(filter.toLowerCase()));
+                    || curVideo.dialogue.toLowerCase().contains(filter.toLowerCase())
+                    || curVideo.characters.stream()
+                        .map(String::toLowerCase) //Make sure all characters are in lowercase
+                        .collect(Collectors.toList())
+                        .contains(filter.toLowerCase())
+            );
         }
     }
 }

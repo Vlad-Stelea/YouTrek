@@ -24,7 +24,7 @@
       </b-col>
     </b-row>
     <h4 class="py-3" v-if="activeSearch">Searching for "{{activeSearch}}"</h4>
-    <Loading key="videos" :active="loading" sequence="tea" />
+    <Loading key="videos" :active="loading" />
 
     <div id="divVideo">
       <b-card
@@ -154,7 +154,7 @@ div {
   padding-bottom: 2px;
 }
 .card-body {
-  padding: 0px;
+  padding: 0rem !important;
   border: none;
 }
 .card {

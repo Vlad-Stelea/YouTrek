@@ -6,29 +6,32 @@
     </div>
     <div id="sidebar">
       <router-link :to="{ name: 'videos'}">
-        <div class="sidebar-item">My Videos</div>
+        <div class="sidebar-item" :class="{ 'active' : 'videos' == $route.name }">My Videos</div>
       </router-link>
       <router-link :to="{ name: 'admin'}">
-        <div class="sidebar-item">Admin Page</div>
+        <div class="sidebar-item" :class="{ 'active' : 'admin' == $route.name }">Admin Page</div>
       </router-link>
       <div style="height: 60px;"></div>
-      <div class="sidebar-item" id="newPlaylist">+ New Playlist</div>
-      <Loading
-        class="sidebar-item"
-        key="playlists"
-        :active="loadingPlaylists"
-        sequence="playlists"
-      />
+      <div v-if="addingPlaylist" id="newPlaylistForm">
+        <b-input-group class="px-1">
+          <b-form-input
+            id="add-playlist-input"
+            ref="addPlaylistInput"
+            v-model="addPlaylistValue"
+            @keydown.enter="addPlaylist()"
+            @blur="cancelAddPlaylist"
+          ></b-form-input>
+        </b-input-group>
+      </div>
+      <div v-else class="sidebar-item" id="newPlaylist" @click="newPlaylistForm">+ New Playlist</div>
+      <Loading class="sidebar-item" key="playlists" :active="loadingPlaylists" />
       <router-link
         :to="{ name: 'playlist', params: { playlistID: p.id }}"
         v-for="p in playlists"
         v-bind:key="p.id"
       >
-        <div class="sidebar-item">{{p.name}}</div>
+        <div class="sidebar-item" :class="{ 'active' : p.id == $route.params.playlistID}">{{p.name}}</div>
       </router-link>
-      <!-- <div class="sidebar-item" v-for="p in playlists" v-bind:key="p.id">
-        <router-link :to="{ name: 'playlist', params: { playlistID: p.id }}">{{p.name}}</router-link>
-      </div>-->
     </div>
     <div id="content">
       <router-view class="pt-3" />
@@ -51,7 +54,9 @@ export default {
   data: function () {
     return {
       playlists: [],
-      loadingPlaylists: false
+      loadingPlaylists: false,
+      addingPlaylist: false,
+      addPlaylistValue: ''
     }
   },
   mounted: function () {
@@ -63,6 +68,22 @@ export default {
       this.playlists = await api.getPlaylists()
       console.log(this.playlists)
       this.loadingPlaylists = false
+    },
+    async newPlaylistForm () {
+      this.addingPlaylist = true
+      this.$nextTick(() => this.$refs.addPlaylistInput.focus())
+    },
+    async addPlaylist () {
+      this.addingPlaylist = false
+      this.loadingPlaylists = true
+      this.playlists = []
+      api.createPlaylist(this.addPlaylistValue).then(() => {
+        this.loadPlaylists()
+      })
+    },
+    cancelAddPlaylist () {
+      this.addingPlaylist = false
+      this.addPlaylistValue = ''
     }
   }
 }
@@ -148,6 +169,24 @@ export default {
   text-decoration: none;
 }
 
+#add-playlist-input {
+  font-size: 1.5rem !important;
+  text-align: center;
+  margin-top: 1rem;
+  margin-left: 0.2rem;
+  margin-right: 0.2rem;
+  padding-top: 0.3rem;
+  padding-bottom: 0.3rem;
+  background-color: #312f2c;
+  color: #f2f2f2;
+  text-decoration: none;
+  outline: none !important;
+  box-shadow: none !important;
+  border: none;
+  border-bottom: 1px solid #0cad0b;
+  border-radius: 0px;
+}
+
 #newPlaylist {
   color: #0cad0b;
 }
@@ -161,7 +200,11 @@ a {
   text-decoration: none;
 }
 
-.sidebar-item:hover {
+.sidebar-item:not(.active):hover {
+  background-color: #0cad0b77;
+}
+
+.active {
   background-color: #0cad0b;
 }
 </style>
