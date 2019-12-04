@@ -154,7 +154,7 @@ div {
   padding-bottom: 2px;
 }
 .card-body {
-  padding: 0px;
+  padding: 0rem !important;
   border: none;
 }
 .card {
