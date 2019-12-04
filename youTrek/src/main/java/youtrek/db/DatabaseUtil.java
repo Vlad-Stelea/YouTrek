@@ -1,20 +1,24 @@
 package youtrek.db;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 
 public class DatabaseUtil {
 
-    public final static String jdbcTag = "jdbc:mysql://";
-    public final static String rdsMySqlDatabasePort = "3306";
-    public final static String multiQueries = "?allowMultiQueries=true";
+    private final static String jdbcTag = "jdbc:mysql://";
+    private final static String rdsMySqlDatabasePort = "3306";
+    private final static String multiQueries = "?allowMultiQueries=true";
 
-    public final static String dbSchema = "v2"; // TODO update this every time we switch schema!
+    private static String dbSchema = "v2"; // TODO update this every time we switch schema!
 
     // pooled across all usages.
     static Connection conn;
+
+    /**
+     * Useful for setting schema to test DB for junit
+     */
+    public static void setSchema(String schema) {
+        dbSchema = schema;
+    }
 
     /**
      * Singleton access to DB connection to share resources effectively across multiple accesses.

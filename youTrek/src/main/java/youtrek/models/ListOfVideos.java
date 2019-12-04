@@ -23,4 +23,8 @@ public class ListOfVideos implements Iterable<Video> {
     public void appendVideo(Video video) {
         videos.add(video);
     }
+
+    public int getNumVideos() {
+        return videos.size();
+    }
 }
