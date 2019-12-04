@@ -35,7 +35,7 @@
     <b-form-group label ="Video File" label-cols-sm="3" label-for="input">
       <label for = "file">Choose file to upload</label>
       <input type="file"
-         id="avatar" name="avatar"
+         id="videoFile" name="avatar"
          accept=".ogg">
          </b-form-group>
     <template #modal-footer>
@@ -80,18 +80,22 @@ export default {
       return this.upload.characters === '' ? null : true
     }
   },
-  
+
   methods: {
     submit () {
-      if (this.upload.title === '' || this.upload.dialogue === '' || this.upload.characters === '' || this.upload.file === '') {
+      if (this.upload.title === '' || this.upload.dialogue === '' || this.upload.characters === '') {
         this.failedValidation = true
         return
       }
+      var reader = FileReader()
+      var file = this.upload.file
+      var encodedString = reader.readAsBinaryString(file)
+
       var videoBody = {
         name: this.upload.title,
         characters: this.upload.characters,
         dialogue: this.upload.dialogue,
-        video: this.upload.video
+        video: encodedString
       }
       console.log(videoBody)
       event.target.hide()
