@@ -212,7 +212,7 @@ public class PlaylistDAO {
 
         } catch (Exception e) {
             e.printStackTrace();
-            throw new SQLException("Failed in removing video to playlist: " + e.getMessage());
+            throw new SQLException("Failed in removing video from playlist: " + e.getMessage());
         }
     }
 
