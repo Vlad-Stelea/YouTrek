@@ -43,7 +43,7 @@ public class UploadVideoHandler implements RequestHandler<UploadVideoPostRequest
             VCJoinDAO.getInstance().insertVideoCharactersPair(insertVideo.id, characterIds);
 
             Video insertedVideo = VideoDAO.getInstance().getVideo(insertVideo.id);
-            return new UploadVideoResponse(insertedVideo, headers, 400);
+            return new UploadVideoResponse(insertedVideo, headers, 200);
         } catch (Exception e) {
             return new UploadVideoResponse(null, headers, 400);
         }
@@ -52,8 +52,6 @@ public class UploadVideoHandler implements RequestHandler<UploadVideoPostRequest
     List<Character> convertNamesToCharacters(List<String> names) {
         return names.stream().map(Character::new).collect(Collectors.toList());
     }
-
-
 
     String generateUniqueBucketKeyForVideo() {
         return UUID.randomUUID().toString();

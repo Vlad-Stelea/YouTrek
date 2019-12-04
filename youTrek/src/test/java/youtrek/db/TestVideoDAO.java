@@ -6,9 +6,12 @@ import static org.junit.Assert.assertNotNull;
 
 import org.junit.Before;
 import org.junit.Test;
+import youtrek.models.Character;
 import youtrek.models.ListOfVideos;
 import youtrek.models.Video;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class TestVideoDAO {
@@ -59,6 +62,15 @@ public class TestVideoDAO {
         VideoDAO dao = VideoDAO.getInstance();
         Video video = dao.getVideo(id);
         assertEquals(id, video.id);
+    }
+
+    @Test
+    public void testCreateVideo() throws Exception {
+        Video insertVideo = new Video("Test Name", "www.test.com", "TestString");
+        int insertId = VideoDAO.getInstance().createVideo(insertVideo);
+        Video acutallyInsertedVideo = VideoDAO.getInstance().getVideo(insertId);
+        assertTrue(insertVideo.equals(acutallyInsertedVideo));
+        //TODO delete the video coming in delete video PR
     }
 
     //Helper methods

@@ -60,13 +60,21 @@ public class Video {
         this.characters.addAll(characters);
     }
 
+    @Override
     public boolean equals(Object o) {
         if (o == null) return false;
         else if (o instanceof Video) {
             Video v = (Video) o;
-            return v.id == this.id;
+            return  v.name.equals(this.name)&&
+                    v.dialogue.equals(this.dialogue) &&
+                    v.url.equals(this.url);
         }
         return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return this.name.hashCode();
     }
 
 }
