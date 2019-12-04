@@ -155,7 +155,7 @@ public class PlaylistDAO {
     private int getCurrentPlaylistIndex(int playlist_id) throws SQLException {
         try {
             int videoCount = 0;
-            PreparedStatement ps = conn.prepareStatement("SELECT count(video_order) FROM pvjoin WHERE playlist_id=?;");
+            PreparedStatement ps = conn.prepareStatement("SELECT max(video_order) FROM pvjoin WHERE playlist_id=?;");
             ps.setInt(1, playlist_id);
             ResultSet resultSet = ps.executeQuery();
 
@@ -186,11 +186,33 @@ public class PlaylistDAO {
             else {
                 System.out.println("Table not altered");
             }
+            conn.setAutoCommit(true);
             return getPlaylist(playlist_id);  // return altered playlist
 
         } catch (Exception e) {
             e.printStackTrace();
             throw new SQLException("Failed in adding video to playlist: " + e.getMessage());
+        }
+    }
+
+    public Playlist removeVideoFromPlaylist(int video_id, int playlist_id) throws SQLException {
+        try {
+            PreparedStatement ps = conn.prepareStatement("delete from pvjoin where video_id=? and playlist_id=?;");
+            ps.setInt(1, video_id);
+            ps.setInt(2, playlist_id);
+            conn.setAutoCommit(false);
+            int rcode = ps.executeUpdate();
+            if (rcode > 0) {
+                conn.commit();
+            }
+            else {
+                System.out.println("Table not altered");
+            }
+            return getPlaylist(playlist_id);  // return altered playlist
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new SQLException("Failed in removing video to playlist: " + e.getMessage());
         }
     }
 

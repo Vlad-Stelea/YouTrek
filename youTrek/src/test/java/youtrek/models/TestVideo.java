@@ -1,5 +1,6 @@
 package youtrek.models;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -14,5 +15,12 @@ public class TestVideo {
         Video v2 = new Video(2, "test2", "www.chekov.com", "ahhh", new java.sql.Date(Calendar.getInstance().getTime().getTime()));
         assertTrue(v1.equals(v1));
         assertTrue(!v1.equals(v2));
+    }
+
+    @Test
+    public void testToString() {
+        Video v1 = new Video(1, "test", "www.chekov.com", "ahhh", new java.sql.Date(Calendar.getInstance().getTime().getTime()));
+        System.out.println(v1.toString());
+        assertNotNull(v1.toString());
     }
 }
