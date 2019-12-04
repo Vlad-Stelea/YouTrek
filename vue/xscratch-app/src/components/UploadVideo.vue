@@ -28,12 +28,12 @@
         </b-form-invalid-feedback>
       </b-form-group>
       <b-form-group label="Video Characters:" label-cols-sm="3" label-for="input">
-        <b-form-input v-model="upload.title" :state="titleState" placeholder="Enter video characters" />
+        <b-form-input v-model="upload.characters" :state="characterState" placeholder="Enter video characters" />
         <b-form-invalid-feedback :state="titleState">You must give this video characters</b-form-invalid-feedback>
       </b-form-group>
     </form>
     <b-form-group label ="Video File" label-cols-sm="3" label-for="input">
-      <label for = "file">Choose file to upload</label> 
+      <label for = "file">Choose file to upload</label>
       <input type="file"
          id="avatar" name="avatar"
          accept=".ogg">
@@ -72,8 +72,15 @@ export default {
         return this.upload.dialogue !== ''
       }
       return this.upload.dialogue === '' ? null : true
+    },
+    characterState () {
+      if (this.failedValidation) {
+        return this.upload.characters !== ''
+      }
+      return this.upload.characters === '' ? null : true
     }
   },
+  
   methods: {
     submit () {
       if (this.upload.title === '' || this.upload.dialogue === '' || this.upload.characters === '' || this.upload.file === '') {
