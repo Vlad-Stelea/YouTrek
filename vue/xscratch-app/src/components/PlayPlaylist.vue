@@ -2,8 +2,8 @@
   <b-modal
     id="play"
     size="lg"
-    header-bg-variant="secondary"
-    header-border-variant="secondary"
+    header-bg-variant="dark"
+    header-border-variant="dark"
     body-bg-variant="dark"
     centered
     hide-footer
@@ -215,7 +215,7 @@ export default {
   justify-content: center;
 }
 .modal-content {
-  background: none;
+  background: none !important;
 }
 
 .videoContainer.playing {

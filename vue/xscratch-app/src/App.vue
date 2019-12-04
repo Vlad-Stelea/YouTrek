@@ -6,10 +6,10 @@
     </div>
     <div id="sidebar">
       <router-link :to="{ name: 'videos'}">
-        <div class="sidebar-item" :class="{ 'active' : 'videos' == this.$route.name }">My Videos</div>
+        <div class="sidebar-item" :class="{ 'active' : 'videos' == $route.name }">My Videos</div>
       </router-link>
       <router-link :to="{ name: 'admin'}">
-        <div class="sidebar-item" :class="{ 'active' : 'admin' == this.$route.name }">Admin Page</div>
+        <div class="sidebar-item" :class="{ 'active' : 'admin' == $route.name }">Admin Page</div>
       </router-link>
       <div style="height: 60px;"></div>
       <div class="sidebar-item" id="newPlaylist">+ New Playlist</div>
@@ -19,14 +19,8 @@
         v-for="p in playlists"
         v-bind:key="p.id"
       >
-        <div
-          class="sidebar-item"
-          :class="{ 'active' : p.id == this.$route.params.playlistID}"
-        >{{p.name}}</div>
+        <div class="sidebar-item" :class="{ 'active' : p.id == $route.params.playlistID}">{{p.name}}</div>
       </router-link>
-      <!-- <div class="sidebar-item" v-for="p in playlists" v-bind:key="p.id">
-        <router-link :to="{ name: 'playlist', params: { playlistID: p.id }}">{{p.name}}</router-link>
-      </div>-->
     </div>
     <div id="content">
       <router-view class="pt-3" />
@@ -159,7 +153,7 @@ a {
   text-decoration: none;
 }
 
-.sidebar-item:hover {
+.sidebar-item:not(.active):hover {
   background-color: #0cad0b77;
 }
 
