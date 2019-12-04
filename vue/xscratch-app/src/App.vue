@@ -13,12 +13,7 @@
       </router-link>
       <div style="height: 60px;"></div>
       <div class="sidebar-item" id="newPlaylist">+ New Playlist</div>
-      <Loading
-        class="sidebar-item"
-        key="playlists"
-        :active="loadingPlaylists"
-        sequence="playlists"
-      />
+      <Loading class="sidebar-item" key="playlists" :active="loadingPlaylists" />
       <router-link
         :to="{ name: 'playlist', params: { playlistID: p.id }}"
         v-for="p in playlists"

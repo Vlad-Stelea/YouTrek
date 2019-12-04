@@ -10,7 +10,7 @@
       </b-button>
     </h1>
 
-    <Loading :key="playlist.name" :active="loading" sequence="playlist" />
+    <Loading :key="playlist.name" :active="loading" />
 
     <div v-if="!loading && videos.length == 0">No videos in this playlist</div>
 
