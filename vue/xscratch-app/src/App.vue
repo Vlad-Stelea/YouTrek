@@ -2,51 +2,59 @@
   <div id="app">
     <div id="header">
       <h1>youTrek</h1>
-      <b-button id="uploadButton">+ Upload Video</b-button>
+      <b-button id="uploadButton" v-b-modal.upload>+ Upload Video</b-button>
     </div>
     <div id="sidebar">
       <router-link :to="{ name: 'videos'}">
-        <div class="sidebar-item">My Videos</div>
+        <div class="sidebar-item" :class="{ 'active' : 'videos' == $route.name }">My Videos</div>
       </router-link>
       <router-link :to="{ name: 'admin'}">
-        <div class="sidebar-item">Admin Page</div>
+        <div class="sidebar-item" :class="{ 'active' : 'admin' == $route.name }">Admin Page</div>
       </router-link>
       <div style="height: 60px;"></div>
       <div class="sidebar-item" id="newPlaylist">+ New Playlist</div>
+      <Loading class="sidebar-item" key="playlists" :active="loadingPlaylists" />
       <router-link
         :to="{ name: 'playlist', params: { playlistID: p.id }}"
         v-for="p in playlists"
         v-bind:key="p.id"
       >
-        <div class="sidebar-item">{{p.name}}</div>
+        <div class="sidebar-item" :class="{ 'active' : p.id == $route.params.playlistID}">{{p.name}}</div>
       </router-link>
-      <!-- <div class="sidebar-item" v-for="p in playlists" v-bind:key="p.id">
-        <router-link :to="{ name: 'playlist', params: { playlistID: p.id }}">{{p.name}}</router-link>
-      </div>-->
     </div>
     <div id="content">
       <router-view class="pt-3" />
     </div>
+    <UploadVideo />
   </div>
 </template>
 
 <script>
+import UploadVideo from '@/components/UploadVideo'
+import Loading from '@/components/Loading'
 import api from '@/api'
 
 export default {
   name: 'App',
+  components: {
+    UploadVideo,
+    Loading
+  },
   data: function () {
     return {
-      playlists: []
+      playlists: [],
+      loadingPlaylists: false
     }
   },
-  created: function () {
+  mounted: function () {
     this.loadPlaylists()
   },
   methods: {
     async loadPlaylists () {
+      this.loadingPlaylists = true
       this.playlists = await api.getPlaylists()
       console.log(this.playlists)
+      this.loadingPlaylists = false
     }
   }
 }
@@ -122,7 +130,7 @@ export default {
 }
 
 .sidebar-item {
-  font-size: 1.5rem;
+  font-size: 1.5rem !important;
   text-align: center;
   margin-top: 1rem;
   padding-top: 0.3rem;
@@ -145,7 +153,11 @@ a {
   text-decoration: none;
 }
 
-.sidebar-item:hover {
+.sidebar-item:not(.active):hover {
+  background-color: #0cad0b77;
+}
+
+.active {
   background-color: #0cad0b;
 }
 </style>

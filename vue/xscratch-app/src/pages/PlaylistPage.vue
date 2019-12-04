@@ -1,5 +1,5 @@
 <template>
-  <div id="videopage" v-on:playlist-change="loadPlaylist">
+  <div :id="playlist.name + playlist.id" v-on:playlist-change="loadPlaylist">
     <h1>
       {{playlist.name}}
       <b-button v-b-modal.play v-if="!loading" class="ml-4" variant="success">
@@ -10,7 +10,7 @@
       </b-button>
     </h1>
 
-    <div v-if="loading">Loading....</div>
+    <Loading :key="playlist.name" :active="loading" />
 
     <div v-if="!loading && videos.length == 0">No videos in this playlist</div>
 
@@ -42,8 +42,9 @@
 </template>
 
 <script>
-import api from '@/api'
 import PlayPlaylist from '@/components/PlayPlaylist'
+import Loading from '@/components/Loading'
+import api from '@/api'
 
 export default {
   data: function () {
@@ -54,7 +55,8 @@ export default {
     }
   },
   components: {
-    PlayPlaylist
+    PlayPlaylist,
+    Loading
   },
   mounted: function () {
     this.loadPlaylist()
@@ -109,7 +111,7 @@ div {
   padding-bottom: 2px;
 }
 .card-body {
-  padding: 0px;
+  padding: 0px !important;
   border: none;
 }
 .card {

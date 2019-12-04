@@ -14,7 +14,7 @@ export default {
     }).then(req => {
       return req
     }).catch((error) => {
-      new Vue().$bvToast.toast(resource, {
+      new Vue().$bvToast.toast(resource + ' did not load', {
         title: 'Error',
         variant: 'danger',
         solid: true,
