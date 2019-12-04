@@ -124,7 +124,7 @@ public class PlaylistDAO {
 
         } catch (Exception e) {
             e.printStackTrace();
-            throw new SQLException("Failed in deleting playlist: " + e.getMessage());
+            throw new SQLException("Failed in creating playlist: " + e.getMessage());
         }
     }
 
