@@ -1,26 +1,104 @@
 package youtrek.db;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
+
 import youtrek.models.ListOfPlaylists;
+import youtrek.models.ListOfVideos;
 import youtrek.models.Playlist;
 
-import static org.junit.Assert.assertNotNull;
+import java.sql.SQLException;
+
+import static org.junit.Assert.*;
 
 public class TestPlaylistDAO {
+    @Before
+    public void setupTests() throws Exception {
+        DatabaseUtil.setSchema("testing");
+    }
+
+    @After
+    public void deleteTestPlaylists() throws SQLException {
+        PlaylistDAO dao = PlaylistDAO.getInstance();
+        dao.deletePlaylistByName("SomeTestPlaylist");
+    }
+
     @Test
-    public void testListPlaylists() throws Exception {
+    public void testListPlaylists() throws SQLException {
         PlaylistDAO dao = PlaylistDAO.getInstance();
         ListOfPlaylists playlists = dao.listPlaylists();
         assertNotNull(playlists);
     }
 
     @Test
-    public void testGetPlaylist() throws Exception {
+    public void testPlaylistVideos() throws SQLException {
         PlaylistDAO dao = PlaylistDAO.getInstance();
-        Playlist pl = dao.getPlaylist(1);
-        System.out.println(pl.id + "\t" + pl.name);
-        assertNotNull(pl);
+        Playlist test = null;
+        test = dao.createPlaylist("SomeTestPlaylist");
+        dao.appendVideo(1, test.id);
+        dao.appendVideo(2, test.id);
+        ListOfVideos videos = null;
+        videos = dao.getPlaylistVideos(test.id);
+        assertEquals(2, videos.getNumVideos());
     }
 
-    //TODO figure out how to test delete/add functions
+    @Test
+    public void testCreatePlaylist() throws SQLException {
+        PlaylistDAO dao = PlaylistDAO.getInstance();
+        ListOfPlaylists playlists = dao.listPlaylists();
+        int numPlaylists = playlists.getNumPlaylists();
+
+        Playlist test = null;
+        test = dao.createPlaylist("SomeTestPlaylist");
+        assertEquals("SomeTestPlaylist", test.name);
+
+        ListOfPlaylists playlists2 = dao.listPlaylists();
+        int numPlaylists2 = playlists2.getNumPlaylists();
+
+        assertEquals((numPlaylists+1), (numPlaylists2));
+    }
+
+    @Test
+    public void testGetPlaylist() throws Exception {
+        PlaylistDAO dao = PlaylistDAO.getInstance();
+
+        Playlist pl = dao.createPlaylist("SomeTestPlaylist");
+        Playlist pl2 = dao.getPlaylist(pl.id);
+
+        assertEquals(pl, pl2);
+        assertNotNull(pl2);
+    }
+
+    @Test
+    public void testAppendVideo() throws Exception {
+        PlaylistDAO dao = PlaylistDAO.getInstance();
+        Playlist test;
+        test = dao.createPlaylist("SomeTestPlaylist");
+
+        Playlist pl1video = dao.appendVideo(1, test.id);
+        assertEquals(1, pl1video.videos.getNumVideos());
+
+        Playlist pl2video = dao.appendVideo(2, test.id);
+        assertEquals(2, pl2video.videos.getNumVideos());
+    }
+
+    @Test
+    public void testDeletePlaylist() throws Exception {
+        PlaylistDAO dao = PlaylistDAO.getInstance();
+        Playlist test = dao.createPlaylist("SomeTestPlaylist");
+        ListOfPlaylists playlists = dao.listPlaylists();
+        int sizePostInsert = playlists.getNumPlaylists();
+
+        playlists = dao.deletePlaylist(test.id);
+        int sizePostDelete = playlists.getNumPlaylists();
+
+        assertEquals(sizePostDelete, sizePostInsert - 1);
+    }
+
+    @Test
+    public void testRemoveVideo() throws Exception {
+
+    }
+
 }

@@ -36,3 +36,6 @@ hs_err_pid*
 #.idea/libraries
 
 .DS_Store
+
+#Template that keeps changing but we don't need
+*/.aws-sam/build/template.yaml

@@ -4,10 +4,14 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import org.junit.Before;
 import org.junit.Test;
 import youtrek.models.ListOfVideos;
 import youtrek.models.Video;
 
+import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class TestVideoDAO {
@@ -15,6 +19,11 @@ public class TestVideoDAO {
     private final String characterFilter = "Spock";
     private final String titleFilter = "testVid";
     private final int id = 1;
+
+    @Before
+    public void setTestSchema() {
+        DatabaseUtil.setSchema("testing");
+    }
 
     @Test
     public void testGetVideo() throws Exception {
@@ -35,17 +44,17 @@ public class TestVideoDAO {
 
     @Test
     public void testGetVideosFilteredByDialogue() throws Exception {
-        testVideosFitlered(dialogueFilter);
+        testVideosFiltered(dialogueFilter);
     }
 
     @Test
     public void testGetVideosFilteredByTitle() throws Exception {
-        testVideosFitlered(titleFilter);
+        testVideosFiltered(titleFilter);
     }
 
     @Test
     public void testVideosFilteredByCharacters() throws Exception {
-        testVideosFitlered(characterFilter);
+        testVideosFiltered(characterFilter);
     }
 
     @Test
@@ -55,8 +64,39 @@ public class TestVideoDAO {
         assertEquals(id, video.id);
     }
 
+    @Test
+    public void testCreateVideo() throws Exception {
+        Video insertVideo = new Video("Test Name", "www.test.com", "TestString");
+        int insertId = VideoDAO.getInstance().createVideo(insertVideo);
+        Video acutallyInsertedVideo = VideoDAO.getInstance().getVideo(insertId);
+        assertTrue(insertVideo.equals(acutallyInsertedVideo));
+        //TODO delete the video Coming soon in delete video PR
+    }
+
+    @Test
+    public void testInsertVideoCharactersPair() throws SQLException {
+        Video toInsert = new Video("Test Name", "www.test.com", "TestString");
+        int videoId = VideoDAO.getInstance().createVideo(toInsert);
+        List<Integer> characterIds = Arrays.asList(
+                2,
+                3,
+                4
+        );
+
+        List<String> expectedCharacters = Arrays.asList(
+                "Spock",
+                "Kirk",
+                "Uhura"
+        );
+
+        VideoDAO.getInstance().insertVideoCharactersPair(videoId, characterIds);
+        Video insertedVideo = VideoDAO.getInstance().getVideo(videoId);
+        assertEquals(expectedCharacters, insertedVideo.characters);
+        //TODO delete new video inserted
+    }
+
     //Helper methods
-    private void testVideosFitlered(String filter) throws Exception {
+    private void testVideosFiltered(String filter) throws Exception {
         VideoDAO dao = VideoDAO.getInstance();
         ListOfVideos videos = dao.getVideoSegments(filter);
         assertAllVideosFiltered(videos, filter);

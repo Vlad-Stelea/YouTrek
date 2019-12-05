@@ -3,7 +3,6 @@ package youtrek.handlers;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import youtrek.db.CharacterDAO;
-import youtrek.db.VCJoinDAO;
 import youtrek.db.VideoDAO;
 import youtrek.http.UploadVideoPostRequest;
 import youtrek.http.UploadVideoResponse;
@@ -11,8 +10,6 @@ import youtrek.models.Character;
 import youtrek.models.Video;
 import youtrek.s3.S3Util;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -40,10 +37,10 @@ public class UploadVideoHandler implements RequestHandler<UploadVideoPostRequest
             List<Integer> characterIds = charDao.insertCharacters(allCharacters);
 
             //Insert the video and character ids into the join table
-            VCJoinDAO.getInstance().insertVideoCharactersPair(insertVideo.id, characterIds);
+            VideoDAO.getInstance().insertVideoCharactersPair(insertVideo.id, characterIds);
 
             Video insertedVideo = VideoDAO.getInstance().getVideo(insertVideo.id);
-            return new UploadVideoResponse(insertedVideo, headers, 400);
+            return new UploadVideoResponse(insertedVideo, headers, 200);
         } catch (Exception e) {
             return new UploadVideoResponse(null, headers, 400);
         }
@@ -52,8 +49,6 @@ public class UploadVideoHandler implements RequestHandler<UploadVideoPostRequest
     List<Character> convertNamesToCharacters(List<String> names) {
         return names.stream().map(Character::new).collect(Collectors.toList());
     }
-
-
 
     String generateUniqueBucketKeyForVideo() {
         return UUID.randomUUID().toString();

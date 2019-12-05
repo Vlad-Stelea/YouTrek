@@ -25,7 +25,7 @@ public class VideoDAO {
     }
 
     //TODO decide on where/when to add the add/remove video functions
-    public Video getVideo(int id) throws Exception {
+    public Video getVideo(int id) throws SQLException {
         try {
             Video video = null;
             PreparedStatement ps = conn.prepareStatement(SqlStatementProvider.GET_VIDEOS_GIVEN_ID);
@@ -42,7 +42,7 @@ public class VideoDAO {
 
         } catch (Exception e) {
             e.printStackTrace();
-            throw new Exception("Failed in getting video: " + e.getMessage());
+            throw new SQLException("Failed in getting video: " + e.getMessage());
         }
     }
 
@@ -126,7 +126,7 @@ public class VideoDAO {
         }
     }
 
-    public void deleteVideoWithId(int id) throws SQLException{
+    public void deleteVideoWithId(int id) throws SQLException {
         try {
             String query = SqlStatementProvider.DELETE_VIDEO_GIVEN_ID;
 
@@ -134,13 +134,39 @@ public class VideoDAO {
             ps.setInt(1, id);
             ps.executeUpdate();
             ps.close();
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             throw new SQLException(new StringBuilder().
                     append("Failed in deleting video with id: ").
                     append(id).
                     append(e.getStackTrace()).toString());
         }
+    }
+
+    public void insertVideoCharactersPair(int videoId, List<Integer> characterIds) throws SQLException {
+        try {
+            String query = SqlStatementProvider.INSERT_VIDEO_CHARACTER_PAIR;
+            Connection conn = DatabaseUtil.connect();
+            conn.setAutoCommit(false);
+
+            PreparedStatement ps = conn.prepareStatement(query);
+            for (Integer charId : characterIds) {
+                ps.setInt(1, videoId);
+                ps.setInt(2, charId);
+                ps.addBatch();
+            }
+
+            ps.executeBatch();
+            conn.commit();
+            //Set autocommit back to normal
+            conn.setAutoCommit(true);
+        } catch(Exception e) {
+            e.printStackTrace();
+            throw new SQLException(new StringBuilder().
+                    append("Failed in inserting into vcjoin: ").
+                    append(e.getStackTrace()).toString());
+        }
+
     }
 
     Video generateVideo(ResultSet rset) throws Exception {

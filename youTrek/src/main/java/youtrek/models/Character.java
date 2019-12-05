@@ -23,4 +23,9 @@ public class Character {
         if(!(o instanceof Character)) return false;
         return this.name.equals (((Character) o).name);
     }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode();
+    }
 }
