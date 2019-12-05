@@ -72,6 +72,7 @@ public class TestVideoDAO {
         assertTrue(insertVideo.equals(acutallyInsertedVideo));
 
         VideoDAO.getInstance().deleteVideoWithId(insertId);
+        //TODO delete the video Coming soon in delete video PR
     }
 
     @Test
@@ -106,6 +107,7 @@ public class TestVideoDAO {
         for(Video video : lov) {
             if(video.id == insertedId) throw new AssertionError("Video not deleted");
         }
+        //TODO delete new video inserted
     }
 
     //Helper methods

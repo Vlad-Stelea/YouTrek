@@ -95,6 +95,23 @@ public class VideoDAO {
         }
     }
 
+    public void deleteVideoWithId(int id) throws SQLException {
+        try {
+            String query = SqlStatementProvider.DELETE_VIDEO_GIVEN_ID;
+
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setInt(1, id);
+            ps.executeUpdate();
+            ps.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new SQLException(new StringBuilder().
+                    append("Failed in deleting video with id: ").
+                    append(id).
+                    append(e.getStackTrace()).toString());
+        }
+    }
+
     /**
      * Inserts the passed in video object to the database
      * @param video the video to store in the database
@@ -122,23 +139,6 @@ public class VideoDAO {
             e.printStackTrace();
             throw new SQLException(new StringBuilder().
                     append("Failed in creating video: ").
-                    append(e.getStackTrace()).toString());
-        }
-    }
-
-    public void deleteVideoWithId(int id) throws SQLException {
-        try {
-            String query = SqlStatementProvider.DELETE_VIDEO_GIVEN_ID;
-
-            PreparedStatement ps = conn.prepareStatement(query);
-            ps.setInt(1, id);
-            ps.executeUpdate();
-            ps.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new SQLException(new StringBuilder().
-                    append("Failed in deleting video with id: ").
-                    append(id).
                     append(e.getStackTrace()).toString());
         }
     }
