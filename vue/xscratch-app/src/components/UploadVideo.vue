@@ -107,6 +107,7 @@ export default {
       }
       console.log(videoBody)
       console.log(api.createVideo(videoBody))
+      api.getVideos()
       this.$bvModal.hide('Upload')
       // event.target.hide()
     },

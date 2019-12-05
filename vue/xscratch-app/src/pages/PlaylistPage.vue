@@ -5,7 +5,7 @@
       <b-button v-b-modal.play v-if="!loading" class="ml-4" variant="success">
         <font-awesome-icon icon="play-circle" />
       </b-button>
-      <b-button v-if="!loading" variant="outline-danger">
+      <b-button v-if="!loading"  @click="deletePlaylistProcess(playlist.id)" variant="outline-danger">
         <font-awesome-icon icon="trash" />
       </b-button>
     </h1>
@@ -67,6 +67,14 @@ export default {
     }
   },
   methods: {
+    async deletePlaylistProcess(id) {
+      this.videos = await api.deletePlaylist(id)
+      .catch(error => {
+        this.errors = [];
+        console.log(error);
+        });
+      this.loading = false
+    },
     async loadPlaylist () {
       this.loading = true
       this.playlist = await api.getPlaylist(this.$route.params.playlistID)

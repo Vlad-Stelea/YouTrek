@@ -54,8 +54,24 @@ export default {
     const response = await this.execute('post', '/playlists', body)
     return JSON.parse(response.data.body)
   },
+
   async createVideo (videoBody) {
     const response = await this.execute('post', '/videos', videoBody)
+    return JSON.parse(response.data.body)
+  },
+
+  async deletePlaylist (id) {
+    const response = await this.execute('post', '/playlists/delete', id)
+    return JSON.parse(response.data.body)
+  },
+
+  async deleteVideo (id) {
+    const response = await this.execute('get', '/videos/delete', id)
+    return JSON.parse(response.data.body).videos
+  },
+
+  async registerTLP (id) {
+    const response = await this.execute('post', '/tlp', id)
     return JSON.parse(response.data.body)
   }
 }
