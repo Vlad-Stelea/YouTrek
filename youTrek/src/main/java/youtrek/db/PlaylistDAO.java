@@ -32,7 +32,7 @@ public class PlaylistDAO {
             /* create playlist */
             Playlist p1 = null;
             int insert_id = -1;
-            PreparedStatement ps = conn.prepareStatement("INSERT INTO playlists (NAME) VALUES (?);", PreparedStatement.RETURN_GENERATED_KEYS);
+            PreparedStatement ps = conn.prepareStatement(SqlStatementProvider.CREATE_PLAYLIST_GIVEN_NAME, PreparedStatement.RETURN_GENERATED_KEYS);
             ps.setString(1, name);
             int rcode = ps.executeUpdate();
             /* query for playlist just inserted */
@@ -56,7 +56,7 @@ public class PlaylistDAO {
     public ListOfPlaylists deletePlaylist(int playlist_id) throws SQLException {
         try {
             /* delete playlist */
-            PreparedStatement ps = conn.prepareStatement("DELETE FROM playlists WHERE id=?;");
+            PreparedStatement ps = conn.prepareStatement(SqlStatementProvider.DELETE_PLAYLIST_GIVEN_ID);
             ps.setInt(1, playlist_id);
             int ret = ps.executeUpdate();
 
@@ -72,7 +72,7 @@ public class PlaylistDAO {
     public Playlist getPlaylist(int playlist_id) throws SQLException {
         try {
             Playlist pl = null;
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM playlists WHERE id=?;");
+            PreparedStatement ps = conn.prepareStatement(SqlStatementProvider.GET_PLAYLIST_GIVEN_ID);
             ps.setInt(1,  playlist_id);
             ResultSet resultSet = ps.executeQuery();
 
@@ -96,7 +96,7 @@ public class PlaylistDAO {
         try {
             ListOfPlaylists playlists = new ListOfPlaylists();
             Playlist currentPlaylist = null;
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM playlists;");
+            PreparedStatement ps = conn.prepareStatement(SqlStatementProvider.GET_ALL_PLAYLISTS);
             ResultSet resultSet = ps.executeQuery();
 
             while (resultSet.next()) {
@@ -118,7 +118,7 @@ public class PlaylistDAO {
     // Useful especially for cleaning up after junit tests
     public void deletePlaylistByName(String name) throws SQLException {
         try {
-            PreparedStatement ps = conn.prepareStatement("DELETE FROM playlists WHERE NAME=?;");
+            PreparedStatement ps = conn.prepareStatement(SqlStatementProvider.DELETE_PLAYLIST_GIVEN_NAME);
             ps.setString(1, name);
             int ret = ps.executeUpdate();
 
@@ -132,7 +132,7 @@ public class PlaylistDAO {
         try {
             ListOfVideos videoSegments = new ListOfVideos();
             Video currentVideo = null;
-            PreparedStatement ps = conn.prepareStatement("select * from videos join pvjoin on videos.id=pvjoin.video_id where playlist_id=? order by video_order;");
+            PreparedStatement ps = conn.prepareStatement(SqlStatementProvider.GET_ALL_VIDEOS_FROM_PLAYLIST);
             ps.setInt(1, playlist_id);
             ResultSet resultSet = ps.executeQuery();
 
@@ -155,7 +155,7 @@ public class PlaylistDAO {
     private int getCurrentPlaylistIndex(int playlist_id) throws SQLException {
         try {
             int videoCount = 0;
-            PreparedStatement ps = conn.prepareStatement("SELECT count(video_order) FROM pvjoin WHERE playlist_id=?;");
+            PreparedStatement ps = conn.prepareStatement(SqlStatementProvider.GET_MAX_VIDEO_ORDER_GIVEN_PLAYLIST_ID);
             ps.setInt(1, playlist_id);
             ResultSet resultSet = ps.executeQuery();
 
@@ -174,10 +174,32 @@ public class PlaylistDAO {
 
     public Playlist appendVideo(int video_id, int playlist_id) throws SQLException {
         try {
-            PreparedStatement ps = conn.prepareStatement("INSERT INTO pvjoin (video_id, playlist_id, video_order) values (?, ?, ?);");
+            PreparedStatement ps = conn.prepareStatement(SqlStatementProvider.APPEND_VIDEO_TO_PLAYLIST_GIVEN_IDS);
             ps.setInt(1, video_id);
             ps.setInt(2, playlist_id);
             ps.setInt(3, getCurrentPlaylistIndex(playlist_id)+1); // next video order value
+            conn.setAutoCommit(false);
+            int rcode = ps.executeUpdate();
+            if (rcode > 0) {
+                conn.commit();
+            }
+            else {
+                System.out.println("Table not altered");
+            }
+            conn.setAutoCommit(true);
+            return getPlaylist(playlist_id);  // return altered playlist
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new SQLException("Failed in adding video to playlist: " + e.getMessage());
+        }
+    }
+
+    public Playlist removeVideoFromPlaylist(int video_id, int playlist_id) throws SQLException {
+        try {
+            PreparedStatement ps = conn.prepareStatement(SqlStatementProvider.REMOVE_VIDEO_FROM_PLAYLIST_GIVEN_IDS);
+            ps.setInt(1, video_id);
+            ps.setInt(2, playlist_id);
             conn.setAutoCommit(false);
             int rcode = ps.executeUpdate();
             if (rcode > 0) {
@@ -190,7 +212,7 @@ public class PlaylistDAO {
 
         } catch (Exception e) {
             e.printStackTrace();
-            throw new SQLException("Failed in adding video to playlist: " + e.getMessage());
+            throw new SQLException("Failed in removing video from playlist: " + e.getMessage());
         }
     }
 
