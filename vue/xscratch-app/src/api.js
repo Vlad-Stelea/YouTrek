@@ -53,5 +53,9 @@ export default {
     }
     const response = await this.execute('post', '/playlists', body)
     return JSON.parse(response.data.body)
+  },
+  async createVideo (videoBody) {
+    const response = await this.execute('post', '/videos', videoBody)
+    return JSON.parse(response.data.body)
   }
 }

@@ -47,6 +47,7 @@
 </template>
 
 <script>
+import api from '@/api'
 var globalEncodedVideo = ''
 export default {
   data: function () {
@@ -88,6 +89,7 @@ export default {
       reader.onload = function (readerEvt) {
         var binaryString = readerEvt.target.result
         globalEncodedVideo = btoa(binaryString)
+        console.log(btoa(globalEncodedVideo))
       }
       reader.readAsBinaryString(data)
       console.log(globalEncodedVideo)
@@ -100,12 +102,12 @@ export default {
       }
       var videoBody = {
         name: this.upload.title,
-        characters: this.upload.characters.split(','),
         dialogue: this.upload.dialogue,
+        characters: this.upload.characters.split(','),
         video: this.upload.encodedVideo
       }
       console.log(videoBody)
-
+      console.log(api.createVideo(videoBody))
       this.$bvModal.hide('Upload')
       // event.target.hide()
     },
