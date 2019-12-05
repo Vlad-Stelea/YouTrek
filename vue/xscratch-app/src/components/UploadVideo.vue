@@ -34,9 +34,8 @@
     </form>
     <b-form-group label ="Video File" label-cols-sm="3" label-for="input">
       <label for = "file">Choose file to upload</label>
-      <input type="file"
-         id="videoFile" name="avatar"
-         accept=".ogg">
+      <input type="file" @change="processFile($event)"
+        name="avatar" accept=".ogg">
          </b-form-group>
     <template #modal-footer>
       <div>
@@ -48,6 +47,7 @@
 </template>
 
 <script>
+var globalEncodedVideo = ''
 export default {
   data: function () {
     return {
@@ -55,7 +55,7 @@ export default {
         title: '',
         dialogue: '',
         characters: '',
-        video: ''
+        encodedVideo: ''
       },
       failedValidation: false
     }
@@ -82,23 +82,32 @@ export default {
   },
 
   methods: {
-    submit () {
-      if (this.upload.title === '' || this.upload.dialogue === '' || this.upload.characters === '') {
+    processFile (event) {
+      var data = event.target.files[0]
+      var reader = new FileReader()
+      reader.onload = function (readerEvt) {
+        var binaryString = readerEvt.target.result
+        globalEncodedVideo = btoa(binaryString)
+      }
+      reader.readAsBinaryString(data)
+      console.log(globalEncodedVideo)
+    },
+    submit (event) {
+      this.upload.encodedVideo = globalEncodedVideo
+      if (this.upload.title === '' || this.upload.dialogue === '' || this.upload.characters === '' || this.upload.encodedVideo === '') {
         this.failedValidation = true
         return
       }
-      var reader = FileReader()
-      var file = this.upload.file
-      var encodedString = reader.readAsBinaryString(file)
-
       var videoBody = {
         name: this.upload.title,
-        characters: this.upload.characters,
+        characters: this.upload.characters.split(','),
         dialogue: this.upload.dialogue,
-        video: encodedString
+        video: this.upload.encodedVideo
       }
       console.log(videoBody)
-      event.target.hide()
+
+      this.$bvModal.hide('Upload')
+      // event.target.hide()
     },
     reset () {
       this.upload = {
