@@ -14,4 +14,7 @@ public class SqlStatementProvider {
             "FROM characters\n" +
             "LEFT JOIN vcjoin v on characters.id = v.character_id\n" +
             "where v.video_id = ?;";
+    public final static String GET_MAX_VIDEO_ORDER_GIVEN_PLAYLIST_ID = "SELECT max(video_order) FROM pvjoin WHERE playlist_id=?;";
+    public final static String REMOVE_VIDEO_FROM_PLAYLIST_GIVEN_IDS = "DELETE FROM pvjoin WHERE video_id=? and playlist_id=?;";
+    public final static String APPEND_VIDEO_TO_PLAYLIST_GIVEN_IDS = "INSERT INTO pvjoin (video_id, playlist_id, video_order) values (?, ?, ?);";
 }

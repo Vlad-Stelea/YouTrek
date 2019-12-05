@@ -155,7 +155,7 @@ public class PlaylistDAO {
     private int getCurrentPlaylistIndex(int playlist_id) throws SQLException {
         try {
             int videoCount = 0;
-            PreparedStatement ps = conn.prepareStatement("SELECT max(video_order) FROM pvjoin WHERE playlist_id=?;");
+            PreparedStatement ps = conn.prepareStatement(SqlStatementProvider.GET_MAX_VIDEO_ORDER_GIVEN_PLAYLIST_ID);
             ps.setInt(1, playlist_id);
             ResultSet resultSet = ps.executeQuery();
 
@@ -174,7 +174,7 @@ public class PlaylistDAO {
 
     public Playlist appendVideo(int video_id, int playlist_id) throws SQLException {
         try {
-            PreparedStatement ps = conn.prepareStatement("INSERT INTO pvjoin (video_id, playlist_id, video_order) values (?, ?, ?);");
+            PreparedStatement ps = conn.prepareStatement(SqlStatementProvider.APPEND_VIDEO_TO_PLAYLIST_GIVEN_IDS);
             ps.setInt(1, video_id);
             ps.setInt(2, playlist_id);
             ps.setInt(3, getCurrentPlaylistIndex(playlist_id)+1); // next video order value
@@ -197,7 +197,7 @@ public class PlaylistDAO {
 
     public Playlist removeVideoFromPlaylist(int video_id, int playlist_id) throws SQLException {
         try {
-            PreparedStatement ps = conn.prepareStatement("delete from pvjoin where video_id=? and playlist_id=?;");
+            PreparedStatement ps = conn.prepareStatement(SqlStatementProvider.REMOVE_VIDEO_FROM_PLAYLIST_GIVEN_IDS);
             ps.setInt(1, video_id);
             ps.setInt(2, playlist_id);
             conn.setAutoCommit(false);
