@@ -32,7 +32,7 @@ public class PlaylistDAO {
             /* create playlist */
             Playlist p1 = null;
             int insert_id = -1;
-            PreparedStatement ps = conn.prepareStatement("INSERT INTO playlists (NAME) VALUES (?);", PreparedStatement.RETURN_GENERATED_KEYS);
+            PreparedStatement ps = conn.prepareStatement(SqlStatementProvider.CREATE_PLAYLIST_GIVEN_NAME, PreparedStatement.RETURN_GENERATED_KEYS);
             ps.setString(1, name);
             int rcode = ps.executeUpdate();
             /* query for playlist just inserted */
@@ -56,7 +56,7 @@ public class PlaylistDAO {
     public ListOfPlaylists deletePlaylist(int playlist_id) throws SQLException {
         try {
             /* delete playlist */
-            PreparedStatement ps = conn.prepareStatement("DELETE FROM playlists WHERE id=?;");
+            PreparedStatement ps = conn.prepareStatement(SqlStatementProvider.DELETE_PLAYLIST_GIVEN_ID);
             ps.setInt(1, playlist_id);
             int ret = ps.executeUpdate();
 
@@ -72,7 +72,7 @@ public class PlaylistDAO {
     public Playlist getPlaylist(int playlist_id) throws SQLException {
         try {
             Playlist pl = null;
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM playlists WHERE id=?;");
+            PreparedStatement ps = conn.prepareStatement(SqlStatementProvider.GET_PLAYLIST_GIVEN_ID);
             ps.setInt(1,  playlist_id);
             ResultSet resultSet = ps.executeQuery();
 
@@ -96,7 +96,7 @@ public class PlaylistDAO {
         try {
             ListOfPlaylists playlists = new ListOfPlaylists();
             Playlist currentPlaylist = null;
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM playlists;");
+            PreparedStatement ps = conn.prepareStatement(SqlStatementProvider.GET_ALL_PLAYLISTS);
             ResultSet resultSet = ps.executeQuery();
 
             while (resultSet.next()) {
@@ -118,7 +118,7 @@ public class PlaylistDAO {
     // Useful especially for cleaning up after junit tests
     public void deletePlaylistByName(String name) throws SQLException {
         try {
-            PreparedStatement ps = conn.prepareStatement("DELETE FROM playlists WHERE NAME=?;");
+            PreparedStatement ps = conn.prepareStatement(SqlStatementProvider.DELETE_PLAYLIST_GIVEN_NAME);
             ps.setString(1, name);
             int ret = ps.executeUpdate();
 
@@ -132,7 +132,7 @@ public class PlaylistDAO {
         try {
             ListOfVideos videoSegments = new ListOfVideos();
             Video currentVideo = null;
-            PreparedStatement ps = conn.prepareStatement("select * from videos join pvjoin on videos.id=pvjoin.video_id where playlist_id=? order by video_order;");
+            PreparedStatement ps = conn.prepareStatement(SqlStatementProvider.GET_ALL_VIDEOS_FROM_PLAYLIST);
             ps.setInt(1, playlist_id);
             ResultSet resultSet = ps.executeQuery();
 

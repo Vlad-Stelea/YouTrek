@@ -14,7 +14,13 @@ public class SqlStatementProvider {
             "FROM characters\n" +
             "LEFT JOIN vcjoin v on characters.id = v.character_id\n" +
             "where v.video_id = ?;";
+    public final static String CREATE_PLAYLIST_GIVEN_NAME = "INSERT INTO playlists (NAME) VALUES (?);";
+    public final static String GET_ALL_PLAYLISTS = "SELECT * FROM playlists;";
+    public final static String GET_PLAYLIST_GIVEN_ID = "SELECT * FROM playlists WHERE id=?;";
     public final static String GET_MAX_VIDEO_ORDER_GIVEN_PLAYLIST_ID = "SELECT max(video_order) FROM pvjoin WHERE playlist_id=?;";
+    public final static String GET_ALL_VIDEOS_FROM_PLAYLIST = "select * from videos join pvjoin on videos.id=pvjoin.video_id where playlist_id=? order by video_order;";
+    public final static String DELETE_PLAYLIST_GIVEN_NAME = "DELETE FROM playlists WHERE NAME=?;";
+    public final static String DELETE_PLAYLIST_GIVEN_ID = "DELETE FROM playlists WHERE id=?;";
     public final static String REMOVE_VIDEO_FROM_PLAYLIST_GIVEN_IDS = "DELETE FROM pvjoin WHERE video_id=? and playlist_id=?;";
     public final static String APPEND_VIDEO_TO_PLAYLIST_GIVEN_IDS = "INSERT INTO pvjoin (video_id, playlist_id, video_order) values (?, ?, ?);";
 }
