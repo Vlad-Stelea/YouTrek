@@ -87,12 +87,11 @@ export default {
       var data = event.target.files[0]
       var reader = new FileReader()
       reader.onload = function (readerEvt) {
-        var binaryString = readerEvt.target.result
-        globalEncodedVideo = btoa(binaryString)
-        console.log(btoa(globalEncodedVideo))
+        var binaryString = readerEvt.target.result.substr(22)
+        globalEncodedVideo = binaryString
+        console.log(globalEncodedVideo)
       }
-      reader.readAsBinaryString(data)
-      console.log(globalEncodedVideo)
+      reader.readAsDataURL(data)
     },
     submit (event) {
       this.upload.encodedVideo = globalEncodedVideo
