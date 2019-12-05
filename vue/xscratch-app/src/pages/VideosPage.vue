@@ -74,12 +74,12 @@ export default {
   methods: {
     async deleteVidProcess (id) {
       this.videos = await api.deleteVideo(id)
-      .catch(error => {
-        this.errors = [];
-        console.log(error);
-        });
+        .catch(error => {
+          this.errors = []
+          console.log(error)
+        })
       this.videos.forEach(el => {
-      el.url = 'https://xscratch-videos.s3.us-east-2.amazonaws.com' + el.url
+        el.url = 'https://xscratch-videos.s3.us-east-2.amazonaws.com' + el.url
       })
       this.loading = false
     },

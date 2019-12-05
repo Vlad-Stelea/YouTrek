@@ -67,12 +67,12 @@ export default {
     }
   },
   methods: {
-    async deletePlaylistProcess(id) {
+    async deletePlaylistProcess (id) {
       this.videos = await api.deletePlaylist(id)
-      .catch(error => {
-        this.errors = [];
-        console.log(error);
-        });
+        .catch(error => {
+          this.errors = []
+          console.log(error)
+        })
       this.loading = false
     },
     async loadPlaylist () {
