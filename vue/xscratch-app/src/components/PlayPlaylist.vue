@@ -1,14 +1,14 @@
 <template>
   <b-modal
     id="play"
-    size="md"
+    size="lg"
     header-bg-variant="dark"
     header-border-variant="dark"
-    footer-bg-variant="dark"
-    footer-border-variant="dark"
     body-bg-variant="dark"
     centered
+    hide-footer
     :title="playlist.name"
+    @hide="reset"
   >
     <div id="filler-div"></div>
     <video
@@ -23,32 +23,42 @@
     >
       <source v-bind:src="video.url" type="video/ogg" />/>
     </video>
-    <template v-slot:modal-footer>
-      <b-row align-h="end">
-        <b-col cols="auto">
-          <b-button variant="outline-success" @click="backward">
-            <font-awesome-icon icon="fast-backward" size="2x" />
-          </b-button>
-          <b-button v-if="playing" variant="outline-success" @click="pause">
-            <font-awesome-icon icon="pause-circle" size="2x" />
-          </b-button>
-          <b-button v-else variant="outline-success" @click="play">
-            <font-awesome-icon icon="play-circle" size="2x" />
-          </b-button>
-          <b-button variant="outline-success" @click="forward">
-            <font-awesome-icon icon="fast-forward" size="2x" />
-          </b-button>
-        </b-col>
-        <b-col cols="auto">
-          <b-button v-if="loop" variant="success" @click="toggleLoop">
-            <font-awesome-icon icon="redo-alt" size="2x" />
-          </b-button>
-          <b-button v-else variant="outline-success" @click="toggleLoop">
-            <font-awesome-icon icon="redo-alt" size="2x" />
-          </b-button>
-        </b-col>
-      </b-row>
-    </template>
+    <div id="controls" :class="{ 'hide-controls' : playing }">
+      <b-container fluid>
+        <b-row align-h="between">
+          <b-col cols="auto">
+            <b-button v-if="loop" variant="success" @click="toggleLoop">
+              <font-awesome-icon icon="redo-alt" size="2x" />
+            </b-button>
+            <b-button v-else variant="outline-success" @click="toggleLoop">
+              <font-awesome-icon icon="redo-alt" size="2x" />
+            </b-button>
+          </b-col>
+          <b-col cols="auto">
+            <b-button variant="outline-success" @click="backward">
+              <font-awesome-icon icon="fast-backward" size="2x" />
+            </b-button>
+            <b-button v-if="playing" variant="outline-success" @click="pause">
+              <font-awesome-icon icon="pause-circle" size="2x" />
+            </b-button>
+            <b-button v-else variant="outline-success" @click="play">
+              <font-awesome-icon icon="play-circle" size="2x" />
+            </b-button>
+            <b-button variant="outline-success" @click="forward">
+              <font-awesome-icon icon="fast-forward" size="2x" />
+            </b-button>
+          </b-col>
+          <b-col cols="auto">
+            <b-button v-if="loop" variant="success" @click="toggleLoop">
+              <font-awesome-icon icon="redo-alt" size="2x" />
+            </b-button>
+            <b-button v-else variant="outline-success" @click="toggleLoop">
+              <font-awesome-icon icon="redo-alt" size="2x" />
+            </b-button>
+          </b-col>
+        </b-row>
+      </b-container>
+    </div>
   </b-modal>
 </template>
 
@@ -89,6 +99,11 @@ export default {
       })
       console.log(isLoaded)
       this.doneLoading = isLoaded
+      // set up the current video so you can see it
+      if (isLoaded) {
+        var video = this.videos[this.currentVideo]
+        this.playingID = video.id
+      }
     },
     play () {
       this.playing = true
@@ -144,6 +159,13 @@ export default {
         }
       }
     },
+    reset () {
+      this.doneLoading = false
+      this.currentVideo = 0
+      this.playingID = 0
+      this.playing = false
+      this.loop = false
+    },
     toggleLoop () {
       this.loop = !this.loop
     }
@@ -164,21 +186,43 @@ export default {
   left: 0px;
   width: 100%;
 }
+#controls {
+  position: absolute;
+  opacity: 1;
+  z-index: 110 !important;
+  margin-top: -100px !important;
+  padding-top: 50px;
+  left: 0px;
+  width: 100%;
+  height: 101px;
+  background-image: linear-gradient(#00000000, #000000c0, #000000);
+}
+
+.hide-controls {
+  opacity: 0 !important;
+  transition: opacity 0.1s;
+}
+.hide-controls:hover,
+.hide-controls:focus {
+  opacity: 1 !important;
+  transition: opacity 0.2s;
+}
+
 .modal-body {
-  padding: 0px;
+  padding: 0px !important;
 }
 .modal-footer {
   justify-content: center;
 }
 .modal-content {
-  background: none;
+  background: none !important;
 }
 
-.videoContainer + .playing {
+.videoContainer.playing {
   opacity: 1 !important;
 }
 
-.videoContainer + :not(.playing) {
+.videoContainer:not(.playing) {
   opacity: 0 !important;
 }
 </style>

@@ -1,26 +1,30 @@
 <template>
   <div id="videopage">
     <h1>Library:</h1>
-    <div class="topnav pb-4">
-      <b-input-group prepend="Search" class="mt-3 w-25">
-        <b-form-input id="search-bar" v-model="search" @keydown.enter="searchVideos()"></b-form-input>
-        <b-input-group-append>
-          <b-button
-            v-if="search != ''"
-            @mouseup="clearSearch()"
-            variant="outline-danger"
-            id="clear-button"
-          >
-            <font-awesome-icon icon="times" />
-          </b-button>
-          <b-button @click="searchVideos()" variant="success">
-            <font-awesome-icon icon="coffee" />
-          </b-button>
-        </b-input-group-append>
-      </b-input-group>
-    </div>
+    <b-row>
+      <b-col class="col-sm-8 col-md-5 col-lg-4 col-xl-3">
+        <div class="topnav pb-4">
+          <b-input-group prepend="Search" class="mt-3">
+            <b-form-input id="search-bar" v-model="search" @keydown.enter="searchVideos()"></b-form-input>
+            <b-input-group-append>
+              <b-button
+                v-if="search != ''"
+                @mouseup="clearSearch()"
+                variant="outline-danger"
+                id="clear-button"
+              >
+                <font-awesome-icon icon="times" />
+              </b-button>
+              <b-button @click="searchVideos()" variant="success">
+                <font-awesome-icon icon="coffee" />
+              </b-button>
+            </b-input-group-append>
+          </b-input-group>
+        </div>
+      </b-col>
+    </b-row>
     <h4 class="py-3" v-if="activeSearch">Searching for "{{activeSearch}}"</h4>
-    <div v-if="loading">Loading...</div>
+    <Loading key="videos" :active="loading" />
 
     <div id="divVideo">
       <b-card
@@ -49,18 +53,22 @@
 </template>
 
 <script>
+import Loading from '@/components/Loading.vue'
 import api from '@/api'
 
 export default {
+  components: {
+    Loading
+  },
   data: function () {
     return {
-      loading: true,
+      loading: false,
       videos: [],
       search: '',
       activeSearch: ''
     }
   },
-  created: function () {
+  mounted: function () {
     this.loadVideos()
   },
   methods: {
@@ -146,7 +154,7 @@ div {
   padding-bottom: 2px;
 }
 .card-body {
-  padding: 0px;
+  padding: 0rem !important;
   border: none;
 }
 .card {
