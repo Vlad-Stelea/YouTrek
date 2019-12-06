@@ -5,6 +5,7 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectResult;
+import com.amazonaws.util.Base64;
 
 import java.io.*;
 
@@ -32,7 +33,7 @@ public class S3Util {
                 .build();
 
         ObjectMetadata metadata = setupMetadataForVideo();
-        InputStream videoStream = convertBase64StringToStream(base64EncodedString);
+        InputStream videoStream = decodeAndConvertBase64StringToStream(base64EncodedString);
         PutObjectResult result = s3.putObject(location, videoName, videoStream, metadata);
 
         return result;
@@ -54,8 +55,9 @@ public class S3Util {
 
 
     //Exception should bubble up
-    InputStream convertBase64StringToStream(String base64String) throws IOException {
+    InputStream decodeAndConvertBase64StringToStream(String base64String) throws IOException {
         byte [] bytes = base64String.getBytes();
+        bytes = Base64.decode(bytes);
         InputStream is = new ByteArrayInputStream(bytes);
         return is;
     }
