@@ -26,6 +26,14 @@ public class SqlStatementProvider {
   
     public final static String INSERT_VIDEO_CHARACTER_PAIR =
             "INSERT INTO vcjoin(video_id, character_id) VALUE (?, ?);";
+  
+    public final static String DELETE_VIDEO_GIVEN_ID =
+            "DELETE FROM " +
+            "videos WHERE id = ?;";
+
+    public final static String CREATE_VIDEO =
+            "INSERT INTO videos(name, is_remote, is_available, url, dialogue, date_created, tlp_id)\n" +
+            "VALUE (?, false, true, ?, ?, NOW(), NULL);";
 
     /* playlistDAO */
     public final static String CREATE_PLAYLIST_GIVEN_NAME = "INSERT INTO playlists (NAME) VALUES (?);";

@@ -70,7 +70,10 @@ public class TestVideoDAO {
         int insertId = VideoDAO.getInstance().createVideo(insertVideo);
         Video acutallyInsertedVideo = VideoDAO.getInstance().getVideo(insertId);
         assertTrue(insertVideo.equals(acutallyInsertedVideo));
-        //TODO delete the video Coming soon in delete video PR
+
+        VideoDAO.getInstance().deleteVideoWithId(insertId);
+        //Delete the video
+        VideoDAO.getInstance().deleteVideoWithId(insertId);
     }
 
     @Test
@@ -92,7 +95,21 @@ public class TestVideoDAO {
         VideoDAO.getInstance().insertVideoCharactersPair(videoId, characterIds);
         Video insertedVideo = VideoDAO.getInstance().getVideo(videoId);
         assertEquals(expectedCharacters, insertedVideo.characters);
-        //TODO delete new video inserted
+        //Delete new video inserted
+        VideoDAO.getInstance().deleteVideoWithId(videoId);
+    }
+
+    @Test
+    public void testDeleteVideo() throws SQLException{
+        Video toInsert = new Video("Name", "www.testurl.com", "Test dialogue");
+        int insertedId = VideoDAO.getInstance().createVideo(toInsert);
+        VideoDAO.getInstance().deleteVideoWithId(insertedId);
+        ListOfVideos lov = VideoDAO.getInstance().getVideoSegments();
+        for(Video video : lov) {
+            if(video.id == insertedId) throw new AssertionError("Video not deleted");
+        }
+        //Delete new video inserted
+        VideoDAO.getInstance().deleteVideoWithId(insertedId);
     }
 
     //Helper methods
