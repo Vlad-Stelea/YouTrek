@@ -3,29 +3,29 @@ package youtrek.http;
 import com.google.gson.GsonBuilder;
 
 public class RemoveVideoFromPlaylistRequest {
-    int playlist_id;
-    int video_id;
+    int playlistId;
+    int videoId;
 
     public RemoveVideoFromPlaylistRequest() {
 
     }
-    public RemoveVideoFromPlaylistRequest(int playlist_id, int video_id) {
-        this.playlist_id = playlist_id;
-        this.video_id = video_id;
+    public RemoveVideoFromPlaylistRequest(int playlistId, int videoId) {
+        this.playlistId = playlistId;
+        this.videoId = videoId;
     }
 
     public int getVideoId() {
-        return this.video_id;
+        return this.videoId;
     }
     public int getPlaylistId() {
-        return this.playlist_id;
+        return this.playlistId;
     }
 
     public void setVideoId(int id) {
-        this.video_id = id;
+        this.videoId = id;
     }
     public void setPlaylistId(int id) {
-        this.playlist_id = id;
+        this.playlistId = id;
     }
 
     @Override
