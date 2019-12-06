@@ -7,6 +7,7 @@ import org.junit.Test;
 import youtrek.models.ListOfPlaylists;
 import youtrek.models.ListOfVideos;
 import youtrek.models.Playlist;
+import youtrek.models.Video;
 
 import java.sql.SQLException;
 
@@ -98,7 +99,30 @@ public class TestPlaylistDAO {
 
     @Test
     public void testRemoveVideo() throws Exception {
+        // must test that not only videos are removed from playlist videos, but that insertions after deletions in proper order
+        PlaylistDAO dao = PlaylistDAO.getInstance();
+        Playlist test = dao.createPlaylist("SomeTestPlaylist");
+        dao.appendVideo(1, test.id);
+        dao.appendVideo(2, test.id);
+        int numPostAppend = dao.getPlaylistVideos(test.id).getNumVideos();
 
+        dao.removeVideoFromPlaylist(1, test.id);
+        int numPostRemove = dao.getPlaylistVideos(test.id).getNumVideos();
+
+        assertEquals(numPostAppend, numPostRemove+1);
+        dao.appendVideo(1, test.id); // should now be AFTER 2 in order
+        ListOfVideos lov = dao.getPlaylistVideos(test.id);
+        boolean first = true;
+        int firstid = -1, secondid = -1;
+        for (Video v : lov) {
+            if (first) {
+                firstid = v.id;
+                first = false;
+            }
+            else {
+                secondid = v.id;
+            }
+        }
+        assertTrue(firstid == 2 && secondid == 1);
     }
-
 }

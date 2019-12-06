@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
+/* use case 10/11 */
 public class GetVideosHandler implements RequestHandler<GetVideosRequest, GetVideosResponse> {
     @Override
     public GetVideosResponse handleRequest(GetVideosRequest request, Context context) {

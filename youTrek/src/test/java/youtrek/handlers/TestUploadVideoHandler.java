@@ -47,7 +47,7 @@ public class TestUploadVideoHandler {
                 "Spock",
                 "Kirk"
         );
-        String video = "Test video";
+        String video = "Test";
         UploadVideoPostRequest request = new UploadVideoPostRequest(name, dialogue, characters, video);
         UploadVideoResponse response = handler.handleRequest(request, null);
         assertEquals(response.getStatusCode(), 200);
