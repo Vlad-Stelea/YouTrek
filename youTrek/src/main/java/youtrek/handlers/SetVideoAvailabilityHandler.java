@@ -23,7 +23,7 @@ public class SetVideoAvailabilityHandler implements RequestHandler<SetVideoAvail
             v = VideoDAO.getInstance().setVideoAvailability(o.getVideoId(), o.getIsAvail());
             return new SetVideoAvailabilityResponse(v, headers, 200);
         } catch(SQLException e) {
-            v = new Video("N/A", "N/A", "N/A");
+            v = null;
             return new SetVideoAvailabilityResponse(v, headers, 400);
         }
     }
