@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
+/* use case 13/14 */
 public class SetVideoAvailabilityHandler implements RequestHandler<SetVideoAvailabilityRequest, SetVideoAvailabilityResponse> {
     @Override
     public SetVideoAvailabilityResponse handleRequest(SetVideoAvailabilityRequest o, Context context) {
