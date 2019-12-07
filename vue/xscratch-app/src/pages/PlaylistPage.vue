@@ -44,6 +44,7 @@
 <script>
 import PlayPlaylist from '@/components/PlayPlaylist'
 import Loading from '@/components/Loading'
+import App from '@/App'
 import api from '@/api'
 
 export default {
@@ -67,12 +68,17 @@ export default {
     }
   },
   methods: {
-    async deletePlaylistProcess (id) {
-      this.videos = await api.deletePlaylist(id)
+    async deletePlaylistProcess (idNum) {
+      var idBody = {
+        id: idNum
+      }
+      await api.deletePlaylist(idBody)
         .catch(error => {
           this.errors = []
           console.log(error)
         })
+      this.$router.replace({name: 'videos'})
+      App.data.playlists = api.getPlaylist()
       this.loading = false
     },
     async loadPlaylist () {

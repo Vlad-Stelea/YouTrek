@@ -5,9 +5,9 @@
       <b-col class="col-sm-8 col-md-5 col-lg-4 col-xl-3">
         <div class="topnav">
           <b-input-group prepend="Add URL" class="mt-3">
-            <b-form-input id="search-bar"></b-form-input>
+            <b-form-input id="search-bar" v-model='activeTLP' @keydown.enter="registerTLPProcess()"></b-form-input>
             <b-input-group-append>
-              <b-button variant="success">
+              <b-button variant="success" @click="registerTLPProcess()">
                 <font-awesome-icon icon="plus" />
               </b-button>
             </b-input-group-append>
@@ -66,7 +66,7 @@
               <b-button v-else @click="video.isAvailable = true" variant="outline-secondary">
                 <font-awesome-icon icon="globe" />
               </b-button>
-              <b-button variant="outline-danger">
+              <b-button @click="deleteVidProcess(video.id)" variant="outline-danger">
                 <font-awesome-icon icon="trash" />
               </b-button>
             </b-col>
@@ -92,7 +92,8 @@ export default {
     return {
       videos: [],
       search: '',
-      tlds: [],
+      tlps: [],
+      activeTLP: '',
       activeSearch: '',
       loading: false
     }
@@ -101,6 +102,34 @@ export default {
     this.loadVideos()
   },
   methods: {
+    async registerTLPProcess () {
+      if (this.activeTLP !== '') {
+        var URLBody = {
+          URL: this.activeTLP
+        }
+        console.log(URLBody)
+        await api.registerTLP(URLBody)
+          .catch(error => {
+            this.errors = []
+            console.log(error)
+          })
+        this.loading = false
+      }
+    },
+    async deleteVidProcess (idNum) {
+      var idBody = {
+        id: idNum
+      }
+      this.videos = await api.deleteVideo(idBody)
+        .catch(error => {
+          this.errors = []
+          console.log(error)
+        })
+      this.videos.forEach(el => {
+        el.url = 'https://xscratch-videos.s3.us-east-2.amazonaws.com' + el.url
+      })
+      this.loading = false
+    },
     async loadVideos () {
       this.loading = true
       this.videos = await api.getVideos()

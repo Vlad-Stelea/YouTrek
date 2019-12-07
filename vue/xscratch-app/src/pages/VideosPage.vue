@@ -72,8 +72,11 @@ export default {
     this.loadVideos()
   },
   methods: {
-    async deleteVidProcess (id) {
-      this.videos = await api.deleteVideo(id)
+    async deleteVidProcess (idNum) {
+      var idBody = {
+        id: idNum
+      }
+      this.videos = await api.deleteVideo(idBody)
         .catch(error => {
           this.errors = []
           console.log(error)
