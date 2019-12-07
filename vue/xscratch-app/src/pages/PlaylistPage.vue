@@ -5,7 +5,11 @@
       <b-button v-b-modal.play v-if="!loading" class="ml-4" variant="success">
         <font-awesome-icon icon="play-circle" />
       </b-button>
-      <b-button v-if="!loading"  @click="deletePlaylistProcess(playlist.id)" variant="outline-danger">
+      <b-button
+        v-if="!loading"
+        @click="deletePlaylistProcess(playlist.id)"
+        variant="outline-danger"
+      >
         <font-awesome-icon icon="trash" />
       </b-button>
     </h1>
@@ -44,7 +48,6 @@
 <script>
 import PlayPlaylist from '@/components/PlayPlaylist'
 import Loading from '@/components/Loading'
-import App from '@/App'
 import api from '@/api'
 
 export default {
@@ -78,7 +81,7 @@ export default {
           console.log(error)
         })
       this.$router.replace({name: 'videos'})
-      App.data.playlists = api.getPlaylist()
+      this.$emit('reloadPlaylists')
       this.loading = false
     },
     async loadPlaylist () {

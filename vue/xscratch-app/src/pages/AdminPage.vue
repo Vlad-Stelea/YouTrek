@@ -5,7 +5,7 @@
       <b-col class="col-sm-8 col-md-5 col-lg-4 col-xl-3">
         <div class="topnav">
           <b-input-group prepend="Add URL" class="mt-3">
-            <b-form-input id="search-bar" v-model='activeTLP' @keydown.enter="registerTLPProcess()"></b-form-input>
+            <b-form-input id="search-bar" v-model="activeTLP" @keydown.enter="registerTLPProcess()"></b-form-input>
             <b-input-group-append>
               <b-button variant="success" @click="registerTLPProcess()">
                 <font-awesome-icon icon="plus" />
@@ -15,6 +15,14 @@
         </div>
       </b-col>
     </b-row>
+    <b-table dark :items="tlps" :fields="tlpFields" class="mt-2 w-50">
+      <template v-slot:cell(url)="row">
+        <b-button size="sm" class="mr-2" variant="outline-danger" @click="deleteTLP(row.item.id)">
+          <font-awesome-icon icon="trash" size="sm" />
+        </b-button>
+        {{row.item.url}}
+      </template>
+    </b-table>
 
     <hr class="bg-success" />
 
@@ -93,6 +101,9 @@ export default {
       videos: [],
       search: '',
       tlps: [],
+      tlpFields: [
+        { key: 'url', label: 'TLPs' }
+      ],
       activeTLP: '',
       activeSearch: '',
       loading: false
@@ -100,6 +111,7 @@ export default {
   },
   mounted: function () {
     this.loadVideos()
+    this.loadTLPs()
   },
   methods: {
     async registerTLPProcess () {
@@ -153,6 +165,13 @@ export default {
       this.search = ''
       this.searchVideos()
       this.activeSearch = ''
+    },
+    async loadTLPs () {
+      this.tlps = await api.getTLPs()
+      console.log(this.tlps)
+    },
+    async deleteTLP (id) {
+      await api.deleteTLP(id)
     }
   }
 }
