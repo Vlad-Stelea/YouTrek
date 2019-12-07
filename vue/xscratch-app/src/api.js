@@ -74,8 +74,11 @@ export default {
     return 'done' // JSON.parse(response.data.body)
   },
 
-  async registerTLP (id) {
-    const response = await this.execute('post', '/tlp', id)
+  async registerTLP (url) {
+    const body = {
+      'url': url
+    }
+    const response = await this.execute('post', '/tlp', body)
     return JSON.parse(response.data.body)
   },
 

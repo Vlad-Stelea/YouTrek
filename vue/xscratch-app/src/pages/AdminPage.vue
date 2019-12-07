@@ -116,16 +116,13 @@ export default {
   methods: {
     async registerTLPProcess () {
       if (this.activeTLP !== '') {
-        var URLBody = {
-          URL: this.activeTLP
-        }
-        console.log(URLBody)
-        console.log(await api.registerTLP(URLBody))
+        console.log(await api.registerTLP(this.activeTLP))
           .catch(error => {
             this.errors = []
             console.log(error)
           })
         this.loading = false
+        this.activeTLP = ''
       }
     },
     async deleteVidProcess (idNum) {
