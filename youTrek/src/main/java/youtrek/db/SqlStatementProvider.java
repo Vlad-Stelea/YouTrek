@@ -53,5 +53,6 @@ public class SqlStatementProvider {
 
     //Tlp stuff
     public final static String REGISTER_TLP = "insert into tlps(base_url) VALUE (?);";
+    public final static String GET_TLP_BY_ID = "SELECT * FROM tlps WHERE id = ?";
 
 }

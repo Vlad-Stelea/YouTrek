@@ -46,4 +46,27 @@ public class TlpDAO {
                     append(e.getStackTrace()).toString());
         }
     }
+
+    public String getUrlById(int id) throws SQLException{
+        try {
+            //TODO fill with actual value
+            String query = SqlStatementProvider.GET_TLP_BY_ID;
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            rs.next();
+            String url = rs.getString("base_url");
+
+            rs.close();
+            ps.close();
+
+            return url;
+        }catch(Exception e) {
+            e.printStackTrace();
+            throw new SQLException(new StringBuilder().
+                    append("Failed in get the url from id: ").
+                    append(e.getStackTrace()).toString());
+        }
+    }
 }
