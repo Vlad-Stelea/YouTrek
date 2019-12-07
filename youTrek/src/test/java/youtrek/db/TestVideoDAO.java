@@ -112,6 +112,17 @@ public class TestVideoDAO {
         VideoDAO.getInstance().deleteVideoWithId(insertedId);
     }
 
+    @Test
+    public void testSetVideoAvailability() throws SQLException{
+        VideoDAO dao = VideoDAO.getInstance();
+        Video v = dao.getVideo(1);
+        // flip availability
+        Boolean availability = v.isAvailable;
+        v = dao.setVideoAvailability(v.id, !availability);
+        Boolean flippedAvail = v.isAvailable;
+        assertEquals(availability, !flippedAvail);
+    }
+
     //Helper methods
     private void testVideosFiltered(String filter) throws Exception {
         VideoDAO dao = VideoDAO.getInstance();
