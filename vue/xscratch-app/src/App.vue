@@ -152,6 +152,7 @@ export default {
   top: 60px;
   left: 160px;
   height: 100vh;
+  padding-bottom: 60px;
   width: 100vw;
   padding-left: 20px;
   background-color: #232121;

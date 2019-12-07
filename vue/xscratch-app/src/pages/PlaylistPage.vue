@@ -15,6 +15,7 @@
     <div v-if="!loading && videos.length == 0">No videos in this playlist</div>
 
     <div id="divVideo">
+      <!-- List of videos -->
       <b-card
         v-for="video in videos"
         v-bind:key="video.name"
@@ -35,6 +36,22 @@
         <video style="padding-bottom: 0px;" controls=" " width="320" height="240">
           <source v-bind:src="video.url" type="video/ogg" />/>
         </video>
+      </b-card>
+      <!-- Add Video Card -->
+      <b-card
+        class="vidContainer addVideoCard m-2"
+        bg-variant="dark"
+        footer="Append a video to this playlist"
+        @click="addVideo"
+      >
+        <b-card-header>
+          <b-row align-h="between">
+            <b-col cols="auto" class="pt-1">Add Video</b-col>
+          </b-row>
+        </b-card-header>
+        <div class="addVideoSlot">
+          <font-awesome-icon icon="plus-circle" size="6x" />
+        </div>
       </b-card>
     </div>
     <PlayPlaylist :playlist="playlist" :videos="videos" id="play" />
@@ -75,6 +92,9 @@ export default {
         el.url = 'https://xscratch-videos.s3.us-east-2.amazonaws.com' + el.url
       })
       this.loading = false
+    },
+    async addVideo () {
+      console.log('adding')
     }
   }
 }
@@ -100,6 +120,25 @@ div {
 .titleContainer {
   text-align: center;
 }
+.addVideoSlot {
+  width: 320px !important;
+  height: 240px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 0px;
+  stroke: #0cad0b;
+  stroke-width: 1rem;
+  color: transparent;
+}
+
+.addVideoCard .card-footer {
+  margin-top: 0px !important;
+}
+
+/* .addVideoSlot.fa-6x {
+  margin-left: auto;
+} */
 
 #videopage {
   padding-right: 40px;
