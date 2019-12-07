@@ -51,4 +51,7 @@ public class SqlStatementProvider {
     public final static String GET_ALL_CHARACTERS =
             "SELECT  * FROM characters;";
 
+    //Tlp stuff
+    public final static String REGISTER_TLP = "insert into tlps(base_url) VALUE (?);";
+
 }

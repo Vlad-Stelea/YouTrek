@@ -3,6 +3,10 @@ package youtrek.http;
 public class RegisterTlpRequest extends AbstractYouTrekRequest{
     String url;
 
+    public RegisterTlpRequest() {
+
+    }
+
     public RegisterTlpRequest(String url) {
         this.url = url;
     }

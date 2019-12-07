@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class RegisterTlpResponse extends AbstractYouTrekResponse<RegisterTlpResponseBody>{
 
-    protected RegisterTlpResponse(RegisterTlpResponseBody body, Map<String, String> headers, int statusCode) {
+    public RegisterTlpResponse(RegisterTlpResponseBody body, Map<String, String> headers, int statusCode) {
         super(body, headers, statusCode);
     }
 }
