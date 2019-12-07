@@ -55,7 +55,7 @@
       </b-card>
     </div>
     <PlayPlaylist :playlist="playlist" :videos="videos" id="play" />
-    <AppendVideo :playlist="playlist" id="append" />
+    <AppendVideo :playlist="playlist" id="append" @reload="loadPlaylist" />
   </div>
 </template>
 

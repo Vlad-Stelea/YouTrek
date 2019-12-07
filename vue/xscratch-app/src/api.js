@@ -59,6 +59,8 @@ export default {
     const body = {
       'id': videoID
     }
+    console.log(playlistID)
+    console.log(body)
     const response = await this.execute('post', '/playlists/' + playlistID + '/video', body)
     return JSON.parse(response.data.body)
   }
