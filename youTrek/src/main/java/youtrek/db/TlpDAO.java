@@ -1,5 +1,9 @@
 package youtrek.db;
 
+import youtrek.http.RegisterTlpResponse;
+import youtrek.models.ListOfTlp;
+import youtrek.models.RegisterTlpResponseBody;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -68,5 +72,32 @@ public class TlpDAO {
                     append("Failed in get the url from id: ").
                     append(e.getStackTrace()).toString());
         }
+    }
+
+    public ListOfTlp getAllTLP() throws SQLException{
+        try {
+            ListOfTlp lotlp = new ListOfTlp();
+            RegisterTlpResponseBody currentTLP = null;
+            PreparedStatement ps = conn.prepareStatement(SqlStatementProvider.GET_ALL_TLP);
+            ResultSet resultSet = ps.executeQuery();
+
+            while (resultSet.next()) {
+                currentTLP = generateTLP(resultSet);
+                lotlp.appendTLP(currentTLP);
+            }
+            resultSet.close();
+            ps.close();
+
+            return lotlp;
+    } catch (Exception e) {
+        e.printStackTrace();
+        throw new SQLException("Failed in getting list of tlp: " + e.getMessage());
+    }
+}
+    RegisterTlpResponseBody generateTLP(ResultSet rset) throws Exception {
+        int id = rset.getInt("id");
+        String url = rset.getString("base_url");
+        RegisterTlpResponseBody aTLP = new RegisterTlpResponseBody(id, url);
+        return aTLP;
     }
 }
