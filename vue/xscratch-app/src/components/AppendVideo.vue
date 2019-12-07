@@ -10,7 +10,7 @@
     centered
     striped
     scrollable
-    hide-footer="true"
+    hide-footer
     @hidden="killAll"
     @show="loadVideos"
     :title="'Add Video to: ' + playlist.name"
