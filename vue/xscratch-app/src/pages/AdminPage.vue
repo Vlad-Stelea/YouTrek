@@ -108,7 +108,7 @@ export default {
           URL: this.activeTLP
         }
         console.log(URLBody)
-        await api.registerTLP(URLBody)
+        console.log(await api.registerTLP(URLBody))
           .catch(error => {
             this.errors = []
             console.log(error)

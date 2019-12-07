@@ -76,14 +76,13 @@ export default {
       var idBody = {
         id: idNum
       }
-      this.videos = await api.deleteVideo(idBody)
+      console.log(idBody)
+      await api.deleteVideo(idBody)
         .catch(error => {
           this.errors = []
           console.log(error)
         })
-      this.videos.forEach(el => {
-        el.url = 'https://xscratch-videos.s3.us-east-2.amazonaws.com' + el.url
-      })
+      this.loadVideos()
       this.loading = false
     },
     async loadVideos () {

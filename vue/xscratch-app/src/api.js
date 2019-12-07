@@ -66,8 +66,9 @@ export default {
   },
 
   async deleteVideo (id) {
-    const response = await this.execute('get', '/videos/delete', id)
-    return JSON.parse(response.data.body).videos
+    const response = await this.execute('post', '/videos/delete', id)
+    console.log(response)
+    return 'done'//JSON.parse(response.data.body)
   },
 
   async registerTLP (id) {
