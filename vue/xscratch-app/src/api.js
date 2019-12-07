@@ -73,5 +73,21 @@ export default {
   async registerTLP (id) {
     const response = await this.execute('post', '/tlp', id)
     return JSON.parse(response.data.body)
+  },
+
+  async getTLPs () {
+    const mock = {
+      'tlps': [
+        {
+          'id': 1,
+          'url': 'google.com'
+        },
+        {
+          'id': 3,
+          'url': 'abc.xyz'
+        }
+      ]
+    }
+    return mock.tlps
   }
 }
