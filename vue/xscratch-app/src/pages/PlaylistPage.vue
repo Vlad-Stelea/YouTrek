@@ -42,7 +42,7 @@
         class="vidContainer addVideoCard m-2"
         bg-variant="dark"
         footer="Append a video to this playlist"
-        @click="addVideo"
+        v-b-modal.append
       >
         <b-card-header>
           <b-row align-h="between">
@@ -55,11 +55,13 @@
       </b-card>
     </div>
     <PlayPlaylist :playlist="playlist" :videos="videos" id="play" />
+    <AppendVideo :playlist="playlist" id="append" />
   </div>
 </template>
 
 <script>
 import PlayPlaylist from '@/components/PlayPlaylist'
+import AppendVideo from '@/components/AppendVideo'
 import Loading from '@/components/Loading'
 import api from '@/api'
 
@@ -73,7 +75,8 @@ export default {
   },
   components: {
     PlayPlaylist,
-    Loading
+    Loading,
+    AppendVideo
   },
   mounted: function () {
     this.loadPlaylist()
