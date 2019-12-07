@@ -30,7 +30,10 @@ public class SqlStatementProvider {
     public final static String DELETE_VIDEO_GIVEN_ID =
             "DELETE FROM " +
             "videos WHERE id = ?;";
-    
+
+    public final static String UPDATE_VIDEO_AVAILABILITY = "UPDATE videos set is_available = ? where id=?;";
+
+
 
     /* playlistDAO */
     public final static String CREATE_PLAYLIST_GIVEN_NAME = "INSERT INTO playlists (NAME) VALUES (?);";
