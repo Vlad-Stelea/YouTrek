@@ -34,9 +34,9 @@
       </router-link>
     </div>
     <div id="content">
-      <router-view @reloadPlaylists="loadPlaylists" class="pt-3" />
+      <router-view @reloadPlaylists="loadPlaylists" :reloadFlag="reloadFlag" class="pt-3" />
     </div>
-    <UploadVideo />
+    <UploadVideo @reloadVideos="reloadVideos" />
   </div>
 </template>
 
@@ -56,13 +56,17 @@ export default {
       playlists: [],
       loadingPlaylists: false,
       addingPlaylist: false,
-      addPlaylistValue: ''
+      addPlaylistValue: '',
+      reloadFlag: 0
     }
   },
   mounted: function () {
     this.loadPlaylists()
   },
   methods: {
+    reloadVideos () {
+      this.reloadFlag += 1
+    },
     async loadPlaylists () {
       this.loadingPlaylists = true
       this.playlists = await api.getPlaylists()

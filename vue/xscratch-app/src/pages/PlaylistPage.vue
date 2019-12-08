@@ -92,6 +92,7 @@ export default {
   },
   methods: {
     async deletePlaylistProcess (idNum) {
+      this.loading = true
       var idBody = {
         id: idNum
       }
