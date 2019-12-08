@@ -87,7 +87,7 @@ export default {
     return JSON.parse(response.data.body).listOfTLP
   },
   async deleteTLP (id) {
-    const response = await this.execute('post', '/tlp', id)
+    const response = await this.execute('post', '/tlp/delete', id)
     return JSON.parse(response.data.body)
   }
 }

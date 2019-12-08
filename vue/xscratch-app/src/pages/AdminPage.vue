@@ -164,8 +164,11 @@ export default {
       this.tlps = allTLPs
       console.log(this.tlps)
     },
-    async deleteTLP (id) {
-      await api.deleteTLP(id)
+    async deleteTLP (idNum) {
+      var idBody = {
+        id: idNum
+      }
+      await api.deleteTLP(idBody)
       this.loadTLPs()
     }
   }
