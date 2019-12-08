@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-public class TestGetTlpHandler {
+public class TestGetTLPsHandler {
     GetTLPsHandler handler;
     ListOfTlp lov;
     GetTLPsRequest request;
