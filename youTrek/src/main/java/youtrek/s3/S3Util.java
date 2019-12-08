@@ -3,8 +3,8 @@ package youtrek.s3;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.amazonaws.services.s3.model.PutObjectResult;
+import com.amazonaws.services.s3.model.*;
+import com.amazonaws.util.Base64;
 
 import java.io.*;
 
@@ -32,10 +32,12 @@ public class S3Util {
                 .build();
 
         ObjectMetadata metadata = setupMetadataForVideo();
-        InputStream videoStream = convertBase64StringToStream(base64EncodedString);
-        PutObjectResult result = s3.putObject(location, videoName, videoStream, metadata);
+        InputStream videoStream = decodeAndConvertBase64StringToStream(base64EncodedString);
 
-        return result;
+        PutObjectRequest request = new PutObjectRequest(location, videoName, videoStream, metadata);
+        AccessControlList acl = setupAccess();
+        request.setAccessControlList(acl);
+        return s3.putObject(request);
     }
 
     /**
@@ -54,14 +56,21 @@ public class S3Util {
 
 
     //Exception should bubble up
-    InputStream convertBase64StringToStream(String base64String) throws IOException {
+    InputStream decodeAndConvertBase64StringToStream(String base64String) throws IOException {
         byte [] bytes = base64String.getBytes();
+        bytes = Base64.decode(bytes);
         InputStream is = new ByteArrayInputStream(bytes);
         return is;
     }
 
     private ObjectMetadata setupMetadataForVideo() {
         return new ObjectMetadata();
+    }
+
+    private AccessControlList setupAccess() {
+        AccessControlList acl = new AccessControlList();
+        acl.grantPermission(GroupGrantee.AllUsers, Permission.Read);
+        return acl;
     }
 
 }

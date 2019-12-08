@@ -24,7 +24,6 @@ public class VideoDAO {
         return instance;
     }
 
-    //TODO decide on where/when to add the add/remove video functions
     public Video getVideo(int id) throws SQLException {
         try {
             Video video = null;
@@ -95,6 +94,23 @@ public class VideoDAO {
         }
     }
 
+    public void deleteVideoWithId(int id) throws SQLException {
+        try {
+            String query = SqlStatementProvider.DELETE_VIDEO_GIVEN_ID;
+
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setInt(1, id);
+            ps.executeUpdate();
+            ps.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new SQLException(new StringBuilder().
+                    append("Failed in deleting video with id: ").
+                    append(id).
+                    append(e.getStackTrace()).toString());
+        }
+    }
+
     /**
      * Inserts the passed in video object to the database
      * @param video the video to store in the database
@@ -123,6 +139,23 @@ public class VideoDAO {
             throw new SQLException(new StringBuilder().
                     append("Failed in creating video: ").
                     append(e.getStackTrace()).toString());
+        }
+    }
+
+    public Video setVideoAvailability(int videoId, boolean isAvail) throws SQLException {
+        try {
+            String query = SqlStatementProvider.UPDATE_VIDEO_AVAILABILITY;
+
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setBoolean(1, isAvail);
+            ps.setInt(2, videoId);
+            ps.executeUpdate();
+            ps.close();
+
+            return getVideo(videoId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new SQLException("Failed in changing video availability: " + e.getMessage());
         }
     }
 

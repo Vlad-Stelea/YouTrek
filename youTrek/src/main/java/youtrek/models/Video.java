@@ -2,6 +2,7 @@ package youtrek.models;
 
 import java.sql.Date; //TODO make sure that we're using java.sql.Date throughout the project (NOT java.util.Date)
 import java.util.ArrayList;
+import java.util.Formatter;
 import java.util.List;
 
 public class Video {
@@ -73,8 +74,15 @@ public class Video {
     }
 
     @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        Formatter fmt = new Formatter(sb);
+        fmt.format("|ID:%d  Name: %s|", id, name);
+        return sb.toString();
+    }
+
+    @Override
     public int hashCode() {
         return this.name.hashCode();
     }
-
 }

@@ -2,30 +2,30 @@ package youtrek.http;
 
 import com.google.gson.GsonBuilder;
 
-public class AppendVideoRequest {
-    int playlistId;
+public class SetVideoAvailabilityRequest {
     int videoId;
+    Boolean isAvail;
 
-    public AppendVideoRequest() {
+    public SetVideoAvailabilityRequest() {
 
     }
-    public AppendVideoRequest(int playlistId, int videoId) {
-        this.playlistId = playlistId;
+    public SetVideoAvailabilityRequest(int videoId, Boolean isAvail) {
         this.videoId = videoId;
+        this.isAvail = isAvail;
     }
 
     public int getVideoId() {
         return this.videoId;
     }
-    public int getPlaylistId() {
-        return this.playlistId;
+    public Boolean getIsAvail() {
+        return this.isAvail;
     }
 
     public void setVideoId(int id) {
         this.videoId = id;
     }
-    public void setPlaylistId(int id) {
-        this.playlistId = id;
+    public void setIsAvail(Boolean isAvail) {
+        this.isAvail = isAvail;
     }
 
     @Override

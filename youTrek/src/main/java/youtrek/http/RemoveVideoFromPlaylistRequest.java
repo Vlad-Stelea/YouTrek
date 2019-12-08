@@ -2,14 +2,14 @@ package youtrek.http;
 
 import com.google.gson.GsonBuilder;
 
-public class AppendVideoRequest {
+public class RemoveVideoFromPlaylistRequest {
     int playlistId;
     int videoId;
 
-    public AppendVideoRequest() {
+    public RemoveVideoFromPlaylistRequest() {
 
     }
-    public AppendVideoRequest(int playlistId, int videoId) {
+    public RemoveVideoFromPlaylistRequest(int playlistId, int videoId) {
         this.playlistId = playlistId;
         this.videoId = videoId;
     }
