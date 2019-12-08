@@ -53,5 +53,15 @@ export default {
     }
     const response = await this.execute('post', '/playlists', body)
     return JSON.parse(response.data.body)
+  },
+
+  async appendVideo (playlistID, videoID) {
+    const body = {
+      'id': videoID
+    }
+    console.log(playlistID)
+    console.log(body)
+    const response = await this.execute('post', '/playlists/' + playlistID + '/video', body)
+    return JSON.parse(response.data.body)
   }
 }

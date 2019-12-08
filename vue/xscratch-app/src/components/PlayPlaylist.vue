@@ -173,7 +173,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #filler-div {
   width: 100%;
   padding-top: 75%;
