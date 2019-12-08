@@ -102,7 +102,7 @@ export default {
       search: '',
       tlps: [],
       tlpFields: [
-        { key: 'url', label: 'TLPs' }
+        { id: 'id', url: 'url' }
       ],
       activeTLP: '',
       activeSearch: '',
@@ -116,27 +116,22 @@ export default {
   methods: {
     async registerTLPProcess () {
       if (this.activeTLP !== '') {
-        console.log(await api.registerTLP(this.activeTLP))
+        await api.registerTLP(this.activeTLP)
           .catch(error => {
             this.errors = []
             console.log(error)
           })
+        this.loadTLPs()
         this.loading = false
         this.activeTLP = ''
       }
     },
     async deleteVidProcess (idNum) {
-      var idBody = {
-        id: idNum
-      }
-      this.videos = await api.deleteVideo(idBody)
+      this.videos = await api.deleteVideo(idNum)
         .catch(error => {
           this.errors = []
           console.log(error)
         })
-      this.videos.forEach(el => {
-        el.url = 'https://xscratch-videos.s3.us-east-2.amazonaws.com' + el.url
-      })
       this.loading = false
     },
     async loadVideos () {
@@ -164,11 +159,14 @@ export default {
       this.activeSearch = ''
     },
     async loadTLPs () {
-      this.tlps = await api.getTLPs()
+      var allTLPs = await api.getTLPs()
+      console.log(allTLPs)
+      this.tlps = allTLPs
       console.log(this.tlps)
     },
     async deleteTLP (id) {
       await api.deleteTLP(id)
+      this.loadTLPs()
     }
   }
 }

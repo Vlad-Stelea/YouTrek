@@ -73,12 +73,11 @@ export default {
   },
   methods: {
     async deleteVidProcess (idNum) {
-      await api.deleteVideo(idNum)
+      this.videos = await api.deleteVideo(idNum)
         .catch(error => {
           this.errors = []
           console.log(error)
         })
-      this.loadVideos()
       this.loading = false
     },
     async loadVideos () {
