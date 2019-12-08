@@ -100,4 +100,21 @@ public class TlpDAO {
         RegisterTlpResponseBody aTLP = new RegisterTlpResponseBody(id, url);
         return aTLP;
     }
+
+    public ListOfTlp deleteTLP(int id) throws SQLException{
+        try {
+            /* delete playlist */
+            PreparedStatement ps = conn.prepareStatement(SqlStatementProvider.DELETE_TLP_GIVEN_ID);
+            ps.setInt(1, id);
+            int ret = ps.executeUpdate();
+
+            /* return list of playlist after deletion */
+            return getAllTLP();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new SQLException("Failed in deleting TLP: " + e.getMessage());
+        }
+    }
 }
+
