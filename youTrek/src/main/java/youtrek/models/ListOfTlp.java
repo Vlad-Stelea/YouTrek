@@ -22,4 +22,8 @@ public class ListOfTlp {
     public Iterator<RegisterTlpResponseBody> iterator() {
         return listOfTLP.iterator();
     }
+
+    public int getNumTlps() {
+        return listOfTLP.size();
+    }
 }
