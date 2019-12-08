@@ -34,7 +34,7 @@
       </router-link>
     </div>
     <div id="content">
-      <router-view class="pt-3" />
+      <router-view @reloadPlaylists="loadPlaylists" class="pt-3" />
     </div>
     <UploadVideo />
   </div>

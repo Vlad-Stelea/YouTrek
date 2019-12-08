@@ -27,7 +27,16 @@
           <code>SCREAMING</code>
         </b-form-invalid-feedback>
       </b-form-group>
+      <b-form-group label="Video Characters:" label-cols-sm="3" label-for="input">
+        <b-form-input v-model="upload.characters" :state="characterState" placeholder="Enter video characters" />
+        <b-form-invalid-feedback :state="titleState">You must give this video characters</b-form-invalid-feedback>
+      </b-form-group>
     </form>
+    <b-form-group label ="Video File" label-cols-sm="3" label-for="input">
+      <label for = "file">Choose file to upload</label>
+      <input type="file" @change="processFile($event)"
+        name="avatar" accept=".ogg">
+         </b-form-group>
     <template #modal-footer>
       <div>
         <b-btn type="reset" @click="reset" variant="outline-danger">Reset</b-btn>
@@ -38,6 +47,8 @@
 </template>
 
 <script>
+import api from '@/api'
+var globalEncodedVideo = ''
 export default {
   data: function () {
     return {
@@ -45,7 +56,7 @@ export default {
         title: '',
         dialogue: '',
         characters: '',
-        video: ''
+        encodedVideo: ''
       },
       failedValidation: false
     }
@@ -62,22 +73,43 @@ export default {
         return this.upload.dialogue !== ''
       }
       return this.upload.dialogue === '' ? null : true
+    },
+    characterState () {
+      if (this.failedValidation) {
+        return this.upload.characters !== ''
+      }
+      return this.upload.characters === '' ? null : true
     }
   },
+
   methods: {
-    submit () {
-      if (this.upload.title === '' || this.upload.dialogue === '') {
+    processFile (event) {
+      var data = event.target.files[0]
+      var reader = new FileReader()
+      reader.onload = function (readerEvt) {
+        var binaryString = readerEvt.target.result.substr(22)
+        globalEncodedVideo = binaryString
+        console.log(globalEncodedVideo)
+      }
+      reader.readAsDataURL(data)
+    },
+    submit (event) {
+      this.upload.encodedVideo = globalEncodedVideo
+      if (this.upload.title === '' || this.upload.dialogue === '' || this.upload.characters === '' || this.upload.encodedVideo === '') {
         this.failedValidation = true
         return
       }
       var videoBody = {
         name: this.upload.title,
-        characters: this.upload.characters,
         dialogue: this.upload.dialogue,
-        video: this.upload.video
+        characters: this.upload.characters.split(','),
+        video: this.upload.encodedVideo
       }
       console.log(videoBody)
-      event.target.hide()
+      console.log(api.createVideo(videoBody))
+      api.getVideos()
+      this.$bvModal.hide('Upload')
+      // event.target.hide()
     },
     reset () {
       this.upload = {

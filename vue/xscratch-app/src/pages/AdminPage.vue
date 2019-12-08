@@ -5,9 +5,9 @@
       <b-col class="col-sm-8 col-md-5 col-lg-4 col-xl-3">
         <div class="topnav">
           <b-input-group prepend="Add URL" class="mt-3">
-            <b-form-input id="search-bar"></b-form-input>
+            <b-form-input id="search-bar" v-model="activeTLP" @keydown.enter="registerTLPProcess()"></b-form-input>
             <b-input-group-append>
-              <b-button variant="success">
+              <b-button variant="success" @click="registerTLPProcess()">
                 <font-awesome-icon icon="plus" />
               </b-button>
             </b-input-group-append>
@@ -15,6 +15,14 @@
         </div>
       </b-col>
     </b-row>
+    <b-table dark :items="tlps" :fields="tlpFields" class="mt-2 w-50">
+      <template v-slot:cell(url)="row">
+        <b-button size="sm" class="mr-2" variant="outline-danger" @click="deleteTLP(row.item.id)">
+          <font-awesome-icon icon="trash" size="sm" />
+        </b-button>
+        {{row.item.url}}
+      </template>
+    </b-table>
 
     <hr class="bg-success" />
 
@@ -66,7 +74,7 @@
               <b-button v-else @click="video.isAvailable = true" variant="outline-secondary">
                 <font-awesome-icon icon="globe" />
               </b-button>
-              <b-button variant="outline-danger">
+              <b-button @click="deleteVidProcess(video.id)" variant="outline-danger">
                 <font-awesome-icon icon="trash" />
               </b-button>
             </b-col>
@@ -92,15 +100,40 @@ export default {
     return {
       videos: [],
       search: '',
-      tlds: [],
+      tlps: [],
+      tlpFields: [
+        { id: 'id', url: 'url' }
+      ],
+      activeTLP: '',
       activeSearch: '',
       loading: false
     }
   },
   mounted: function () {
     this.loadVideos()
+    this.loadTLPs()
   },
   methods: {
+    async registerTLPProcess () {
+      if (this.activeTLP !== '') {
+        await api.registerTLP(this.activeTLP)
+          .catch(error => {
+            this.errors = []
+            console.log(error)
+          })
+        this.loadTLPs()
+        this.loading = false
+        this.activeTLP = ''
+      }
+    },
+    async deleteVidProcess (idNum) {
+      this.videos = await api.deleteVideo(idNum)
+        .catch(error => {
+          this.errors = []
+          console.log(error)
+        })
+      this.loading = false
+    },
     async loadVideos () {
       this.loading = true
       this.videos = await api.getVideos()
@@ -124,6 +157,19 @@ export default {
       this.search = ''
       this.searchVideos()
       this.activeSearch = ''
+    },
+    async loadTLPs () {
+      var allTLPs = await api.getTLPs()
+      console.log(allTLPs)
+      this.tlps = allTLPs
+      console.log(this.tlps)
+    },
+    async deleteTLP (idNum) {
+      var idBody = {
+        id: idNum
+      }
+      await api.deleteTLP(idBody)
+      this.loadTLPs()
     }
   }
 }

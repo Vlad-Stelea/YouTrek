@@ -38,7 +38,7 @@
           <b-row align-h="between">
             <b-col cols="auto" class="pt-1">{{video.name}}</b-col>
             <b-col cols="auto" class="mb-1 pr-3">
-              <b-button variant="outline-danger">
+              <b-button @click="deleteVidProcess(video.id)" variant="outline-danger">
                 <font-awesome-icon icon="trash" />
               </b-button>
             </b-col>
@@ -72,8 +72,17 @@ export default {
     this.loadVideos()
   },
   methods: {
+    async deleteVidProcess (idNum) {
+      this.videos = await api.deleteVideo(idNum)
+        .catch(error => {
+          this.errors = []
+          console.log(error)
+        })
+      this.loading = false
+    },
     async loadVideos () {
       this.loading = true
+      this.videos = []
       this.videos = await api.getVideos()
       this.videos.forEach(el => {
         el.url = 'https://xscratch-videos.s3.us-east-2.amazonaws.com' + el.url
