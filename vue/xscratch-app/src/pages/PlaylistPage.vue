@@ -31,7 +31,7 @@
           <b-row align-h="between">
             <b-col cols="auto" class="pt-1">{{video.name}}</b-col>
             <b-col cols="auto" class="mb-1 pr-3">
-              <b-button variant="outline-danger">
+              <b-button variant="outline-danger" @click="removeVideo(video.id)">
                 <font-awesome-icon icon="minus-circle" />
               </b-button>
             </b-col>
@@ -113,8 +113,10 @@ export default {
       })
       this.loading = false
     },
-    async addVideo () {
-      console.log('adding')
+    async removeVideo (videoID) {
+      this.loading = true
+      await api.removeVideo(this.playlist.id, videoID)
+      this.loadPlaylist()
     }
   }
 }

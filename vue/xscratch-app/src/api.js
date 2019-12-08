@@ -98,5 +98,13 @@ export default {
     }
     const response = await this.execute('post', '/playlists/' + playlistID + '/video', body)
     return JSON.parse(response.data.body)
+  },
+
+  async removeVideo (playlistID, videoID) {
+    const body = {
+      'id': videoID
+    }
+    const response = await this.execute('post', '/playlists/' + playlistID + '/video/delete', body)
+    return JSON.parse(response.data.body)
   }
 }
