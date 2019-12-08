@@ -30,7 +30,10 @@ public class SqlStatementProvider {
     public final static String DELETE_VIDEO_GIVEN_ID =
             "DELETE FROM " +
             "videos WHERE id = ?;";
-    
+
+    public final static String UPDATE_VIDEO_AVAILABILITY = "UPDATE videos set is_available = ? where id=?;";
+
+
 
     /* playlistDAO */
     public final static String CREATE_PLAYLIST_GIVEN_NAME = "INSERT INTO playlists (NAME) VALUES (?);";
@@ -51,9 +54,10 @@ public class SqlStatementProvider {
     public final static String GET_ALL_CHARACTERS =
             "SELECT  * FROM characters;";
 
-    //Tlp stuff
+    /* TlpDAO */
     public final static String REGISTER_TLP = "insert into tlps(base_url) VALUE (?);";
     public final static String GET_TLP_BY_ID = "SELECT * FROM tlps WHERE id = ?";
     public final static String GET_ALL_TLP = "SELECT * FROM tlps";
+
 
 }

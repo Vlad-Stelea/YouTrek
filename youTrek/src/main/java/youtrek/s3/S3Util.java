@@ -3,8 +3,7 @@ package youtrek.s3;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.amazonaws.services.s3.model.PutObjectResult;
+import com.amazonaws.services.s3.model.*;
 import com.amazonaws.util.Base64;
 
 import java.io.*;
@@ -34,9 +33,11 @@ public class S3Util {
 
         ObjectMetadata metadata = setupMetadataForVideo();
         InputStream videoStream = decodeAndConvertBase64StringToStream(base64EncodedString);
-        PutObjectResult result = s3.putObject(location, videoName, videoStream, metadata);
 
-        return result;
+        PutObjectRequest request = new PutObjectRequest(location, videoName, videoStream, metadata);
+        AccessControlList acl = setupAccess();
+        request.setAccessControlList(acl);
+        return s3.putObject(request);
     }
 
     /**
@@ -64,6 +65,12 @@ public class S3Util {
 
     private ObjectMetadata setupMetadataForVideo() {
         return new ObjectMetadata();
+    }
+
+    private AccessControlList setupAccess() {
+        AccessControlList acl = new AccessControlList();
+        acl.grantPermission(GroupGrantee.AllUsers, Permission.Read);
+        return acl;
     }
 
 }

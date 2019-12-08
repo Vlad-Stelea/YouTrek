@@ -2,6 +2,7 @@ package youtrek.db;
 
 import org.junit.Before;
 import org.junit.Test;
+
 import youtrek.models.ListOfTlp;
 
 import static org.junit.Assert.*;
@@ -33,6 +34,7 @@ public class TestTlpDao {
         String fetchedUrl = dao.getUrlById(id);
         assertEquals(expectedUrl, fetchedUrl);
     }
+
 
     @Test
     public void testGetAllTLP() throws SQLException{
