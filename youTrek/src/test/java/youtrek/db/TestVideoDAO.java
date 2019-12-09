@@ -6,6 +6,7 @@ import static org.junit.Assert.assertNotNull;
 
 import org.junit.Before;
 import org.junit.Test;
+import youtrek.models.ListOfPublicSegments;
 import youtrek.models.ListOfVideos;
 import youtrek.models.Video;
 
@@ -121,6 +122,16 @@ public class TestVideoDAO {
         v = dao.setVideoAvailability(v.id, !availability);
         Boolean flippedAvail = v.isAvailable;
         assertEquals(availability, !flippedAvail);
+    }
+
+    @Test
+    public void testGetPublicSegments() throws SQLException {
+        VideoDAO dao = VideoDAO.getInstance();
+        Video v = dao.setVideoAvailability(1, true);
+        ListOfVideos lov = dao.getPublicSegments();
+        assertNotNull(lov);
+        ListOfPublicSegments segments = new ListOfPublicSegments(lov);
+        assertNotNull(segments);
     }
 
     //Helper methods
