@@ -11,12 +11,11 @@ public class Video {
     public final String url;
     public final String dialogue;
     public  Date dateCreated;
-    public int tlpId; //TODO check if this should be marked final
+    public int tlpId;
     public boolean isRemote;
     public boolean isAvailable;
     public List<String> characters;
 
-    //TODO check if we ever need anything other than full constructor
     public Video(int id, String name, String url, String dialogue, Date dateCreated) {
         this.id = id;
         this.name = name;
@@ -48,6 +47,13 @@ public class Video {
         this.tlpId = -1;
         this.isRemote = false;
         this.isAvailable = true;
+    }
+
+    public Video(String url, List<String> characters, String dialogue) {
+        this.name = null;
+        this.url = url;
+        this.characters = characters;
+        this.dialogue = dialogue;
     }
 
     public void setIsRemote(boolean b) {
