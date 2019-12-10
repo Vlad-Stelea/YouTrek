@@ -157,7 +157,7 @@ export default {
       const body = {
         'url': video.url,
         'character': video.characters[0],
-        'text': video.text
+        'text': video.dialogue
       }
       const response = await this.execute('post', '/playlists/' + playlistID + '/video/remote', body)
       return JSON.parse(response.data.body)
