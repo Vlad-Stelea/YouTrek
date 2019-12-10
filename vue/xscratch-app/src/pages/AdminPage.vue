@@ -174,6 +174,9 @@ export default {
     async setAvail (vidID, vidAvail) {
       const response = await api.setAvailability(vidID, vidAvail)
       console.log(response.isAvailable)
+      if (!response.isAvailable){
+        this.loadVideos()
+      }
       return response.isAvailable;
     }
   }
