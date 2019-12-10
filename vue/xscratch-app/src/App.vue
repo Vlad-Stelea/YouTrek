@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <div id="header">
-      <h1>youTrek</h1>
+      <router-link :to="{ name: 'videos'}">
+        <h1>youTrek</h1>
+      </router-link>
       <b-button id="uploadButton" v-b-modal.upload>+ Upload Video</b-button>
     </div>
     <div id="sidebar">
@@ -190,6 +192,10 @@ export default {
   border: none;
   border-bottom: 1px solid #0cad0b;
   border-radius: 0px;
+}
+
+router-link {
+  text-decoration: none;
 }
 
 #newPlaylist {
