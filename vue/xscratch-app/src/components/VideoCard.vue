@@ -50,7 +50,7 @@
 </template>
 
 <script>
-// import api from '@/api'
+import api from '@/api'
 
 export default {
   props: {
@@ -68,12 +68,12 @@ export default {
     async setAvail (vidID, vidAvail) {
       const response = await api.setAvailability(vidID, vidAvail)
       console.log(response.isAvailable)
-      if (!response.isAvailable){
+      if (!response.isAvailable) {
         this.loadVideos()
       }
-      return response.isAvailable;
-   }
- }
+      return response.isAvailable
+    }
+  }
 }
 </script>
 <style>
