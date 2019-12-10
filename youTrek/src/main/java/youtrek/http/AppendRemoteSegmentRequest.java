@@ -5,14 +5,19 @@ import youtrek.models.PublicSegment;
 
 public class AppendRemoteSegmentRequest {
     int playlistId;
-    PublicSegment ps;
+    String url;
+    String characters;
+    String text;
+    // PublicSegment ps;
 
     public AppendRemoteSegmentRequest() {
 
     }
     public AppendRemoteSegmentRequest(int playlistId, PublicSegment ps) {
         this.playlistId = playlistId;
-        this.ps = ps;
+        this.url = ps.url;
+        this.characters = ps.character;
+        this.text = ps.text;
     }
 
     public int getPlaylistId() {
@@ -20,11 +25,13 @@ public class AppendRemoteSegmentRequest {
     }
 
     public PublicSegment getPs() {
-        return this.ps;
+        return new PublicSegment(url, characters, text);
     }
 
     public void setPs(PublicSegment ps) {
-        this.ps = ps;
+        this.url = ps.url;
+        this.characters = ps.character;
+        this.text = ps.text;
     }
 
     public void setPlaylistId(int playlistId) {
