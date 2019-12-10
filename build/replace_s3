@@ -1,0 +1,27 @@
+#!/bin/bash
+
+aws s3 cp s3://xeno-raw-video-clips/VideoSegments/C1-Computer_Working.mp4.ogg s3://xscratch-videos/C1-Computer_Working.ogg
+
+aws s3 cp s3://xeno-raw-video-clips/VideoSegments/C2-Mental_Disease.mp4.ogg s3://xscratch-videos/C2-Mental_Disease.ogg
+
+aws s3 cp s3://xeno-raw-video-clips/VideoSegments/C3-Kinky_Hand.mp4.ogg s3://xscratch-videos/C3-Kinky_Hand.ogg
+
+aws s3 cp s3://xeno-raw-video-clips/VideoSegments/C4-Chekov_Screaming.mp4.ogg s3://xscratch-videos/C4-Chekov_Screaming.ogg
+
+aws s3 cp s3://xeno-raw-video-clips/VideoSegments/C5-I_Like_Him.mp4.ogg s3://xscratch-videos/C5-I_Like_Him.ogg
+
+aws s3 cp s3://xeno-raw-video-clips/VideoSegments/C6-Chekov.mp4.ogg s3://xscratch-videos/C6-Chekov.ogg
+
+aws s3 cp s3://xeno-raw-video-clips/VideoSegments/C7-Dismissed.mp4.ogg s3://xscratch-videos/C7-Dismissed.ogg
+
+aws s3 cp s3://xeno-raw-video-clips/VideoSegments/C8-Captains_Quarters.mp4.ogg s3://xscratch-videos/C8-Captains_Quarters.ogg
+
+aws s3 cp s3://xeno-raw-video-clips/VideoSegments/C9-Scotch.mp4.ogg s3://xscratch-videos/C9-Scotch.ogg
+
+aws s3 cp s3://xeno-raw-video-clips/VideoSegments/C10-Oral.mp4.ogg s3://xscratch-videos/C10-Oral.ogg
+
+aws s3 cp s3://xeno-raw-video-clips/VideoSegments/C11-SPOCK.mp4.ogg s3://xscratch-videos/C11-SPOCK.ogg
+
+aws s3 cp s3://xeno-raw-video-clips/VideoSegments/C12-Chekov_Screams_again.mp4.ogg s3://xscratch-videos/C12-Chekov_Screams_Again.ogg
+
+aws s3 cp s3://xeno-raw-video-clips/VideoSegments/C13-Space_Breaking.mp4.ogg s3://xscratch-videos/C13-Space_Breaking.ogg
