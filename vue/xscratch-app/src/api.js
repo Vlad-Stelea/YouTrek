@@ -40,7 +40,8 @@ export default {
             ],
             dialogue: seg.text,
             url: seg.url,
-            name: 'no name'
+            name: 'remote:' + seg.text,
+            id: 'remote:' + seg.text
           }
           remoteVideoList.push(formattedSeg)
         })
