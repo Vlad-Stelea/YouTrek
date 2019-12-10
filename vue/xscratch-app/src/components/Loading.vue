@@ -19,7 +19,6 @@ export default {
   },
   watch: {
     active: function () {
-      console.log(this.active)
       if (this.active) {
         this.counter = setInterval(() => {
           this.timeStep()

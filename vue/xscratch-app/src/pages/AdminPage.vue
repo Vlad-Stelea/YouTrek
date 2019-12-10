@@ -154,9 +154,9 @@ export default {
     async loadVideos () {
       this.loading = true
       this.videos = await api.getVideos()
-      this.videos.forEach(el => {
-        el.url = 'https://xscratch-videos.s3.us-east-2.amazonaws.com' + el.url
-      })
+      // this.videos.forEach(el => {
+      //   el.url = 'https://xscratch-videos.s3.us-east-2.amazonaws.com' + el.url
+      // })
       this.loading = false
     },
     async searchVideos () {
@@ -165,9 +165,9 @@ export default {
       this.loading = true
       console.log(this.search)
       this.videos = await api.searchVideos(this.search)
-      this.videos.forEach(el => {
-        el.url = 'https://xscratch-videos.s3.us-east-2.amazonaws.com' + el.url
-      })
+      // this.videos.forEach(el => {
+      //   el.url = 'https://xscratch-videos.s3.us-east-2.amazonaws.com' + el.url
+      // })
       this.loading = false
     },
     async clearSearch () {
@@ -178,9 +178,7 @@ export default {
     async loadTLPs () {
       this.loadingTLP = true
       var allTLPs = await api.getTLPs()
-      console.log(allTLPs)
       this.tlps = allTLPs
-      console.log(this.tlps)
       this.loadingTLP = false
     },
     async deleteTLP (idNum) {
