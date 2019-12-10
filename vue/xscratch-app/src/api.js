@@ -148,6 +148,21 @@ export default {
     }
     const response = await this.execute('post', '/playlists/' + playlistID + '/video/delete', body)
     return JSON.parse(response.data.body)
+  },
+
+  async getCharacters () {
+    // Empty body
+    // const body = {
+    // }
+
+    // const response = await this.execute('get', '/characters', body)
+
+    const mockResponse = {
+      'characters': ['Spock', 'Kirk', 'Conner', 'Emmett', 'Nour', 'Vlad', 'Other Character']
+    }
+
+    // TODO change with actual response
+    return mockResponse.characters
   }
 
 }
