@@ -27,38 +27,35 @@
     <Loading key="videos" :active="loading" />
 
     <div id="divVideo">
-      <b-card
+      <VideoCard
         v-for="video in videos"
         v-bind:key="video.name"
-        class="vidContainer m-2"
-        v-bind:footer="video.dialogue"
-        bg-variant="dark"
-      >
-        <b-card-header>
-          <b-row align-h="between">
-            <b-col cols="auto" class="pt-1">{{video.name}}</b-col>
-            <b-col cols="auto" class="mb-1 pr-3">
-              <b-button @click="deleteVidProcess(video.id)" variant="outline-danger">
-                <font-awesome-icon icon="trash" />
-              </b-button>
-            </b-col>
-          </b-row>
-        </b-card-header>
-        <video style="padding-bottom: 0px;" controls=" " width="320" height="240">
-          <source v-bind:src="video.url" type="video/ogg" />/>
-        </video>
-      </b-card>
+        :video="video"
+        @remove="deleteVidProcess"
+        :isAdmin="false"
+        :isPlaylist="false"
+      />
     </div>
   </div>
 </template>
 
 <script>
 import Loading from '@/components/Loading.vue'
+import VideoCard from '@/components/VideoCard.vue'
 import api from '@/api'
 
 export default {
   components: {
-    Loading
+    Loading,
+    VideoCard
+  },
+  props: {
+    reloadFlag: Number
+  },
+  watch: {
+    reloadFlag: function (val) {
+      this.loadVideos()
+    }
   },
   data: function () {
     return {
@@ -73,6 +70,8 @@ export default {
   },
   methods: {
     async deleteVidProcess (idNum) {
+      if (!confirm('Are you sure you want to delete this video?')) return
+      this.loading = true
       this.videos = await api.deleteVideo(idNum)
         .catch(error => {
           this.errors = []
@@ -84,9 +83,9 @@ export default {
       this.loading = true
       this.videos = []
       this.videos = await api.getVideos()
-      this.videos.forEach(el => {
-        el.url = 'https://xscratch-videos.s3.us-east-2.amazonaws.com' + el.url
-      })
+      // this.videos.forEach(el => {
+      //   el.url = 'https://xscratch-videos.s3.us-east-2.amazonaws.com' + el.url
+      // })
       this.loading = false
     },
     async searchVideos () {
@@ -95,9 +94,9 @@ export default {
       this.loading = true
       console.log(this.search)
       this.videos = await api.searchVideos(this.search)
-      this.videos.forEach(el => {
-        el.url = 'https://xscratch-videos.s3.us-east-2.amazonaws.com' + el.url
-      })
+      // this.videos.forEach(el => {
+      //   el.url = 'https://xscratch-videos.s3.us-east-2.amazonaws.com' + el.url
+      // })
       this.loading = false
     },
     async clearSearch () {
@@ -122,10 +121,7 @@ div {
   overflow: hidden;
   display: inline-block;
 }
-.vidContainer {
-  float: left;
-  width: 320;
-}
+
 .titleContainer {
   text-align: center;
 }

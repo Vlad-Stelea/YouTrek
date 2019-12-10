@@ -2,15 +2,32 @@
   <div :id="playlist.name + playlist.id" v-on:playlist-change="loadPlaylist">
     <h1>
       {{playlist.name}}
-      <b-button v-b-modal.play v-if="!loading" class="ml-4" variant="success">
-        <font-awesome-icon icon="play-circle" />
+      <b-button
+        v-b-modal.play
+        v-if="!loading"
+        class="ml-4 border-0"
+        title="Play Playlist"
+        variant="success"
+      >
+        <font-awesome-icon icon="play-circle" size="2x" />
+      </b-button>
+      <b-button
+        v-b-modal.append
+        v-if="!loading"
+        class="mx-3 border-0"
+        title="Append Video"
+        variant="outline-success"
+      >
+        <font-awesome-icon icon="plus-circle" size="2x" />
       </b-button>
       <b-button
         v-if="!loading"
         @click="deletePlaylistProcess(playlist.id)"
+        class="border-0"
         variant="outline-danger"
+        title="Delete Playlist"
       >
-        <font-awesome-icon icon="trash" />
+        <font-awesome-icon icon="trash" size="2x" />
       </b-button>
     </h1>
 
@@ -20,43 +37,14 @@
 
     <div id="divVideo">
       <!-- List of videos -->
-      <b-card
+      <VideoCard
         v-for="video in videos"
         v-bind:key="video.name"
-        class="vidContainer m-2"
-        v-bind:footer="video.dialogue"
-        bg-variant="dark"
-      >
-        <b-card-header>
-          <b-row align-h="between">
-            <b-col cols="auto" class="pt-1">{{video.name}}</b-col>
-            <b-col cols="auto" class="mb-1 pr-3">
-              <b-button variant="outline-danger">
-                <font-awesome-icon icon="minus-circle" />
-              </b-button>
-            </b-col>
-          </b-row>
-        </b-card-header>
-        <video style="padding-bottom: 0px;" controls=" " width="320" height="240">
-          <source v-bind:src="video.url" type="video/ogg" />/>
-        </video>
-      </b-card>
-      <!-- Add Video Card -->
-      <b-card
-        class="vidContainer addVideoCard m-2"
-        bg-variant="dark"
-        footer="Append a video to this playlist"
-        v-b-modal.append
-      >
-        <b-card-header>
-          <b-row align-h="between">
-            <b-col cols="auto" class="pt-1">Add Video</b-col>
-          </b-row>
-        </b-card-header>
-        <div class="addVideoSlot">
-          <font-awesome-icon icon="plus-circle" size="6x" />
-        </div>
-      </b-card>
+        :video="video"
+        @remove="removeVideo"
+        :isAdmin="false"
+        :isPlaylist="true"
+      />
     </div>
     <PlayPlaylist :playlist="playlist" :videos="videos" id="play" />
     <AppendVideo :playlist="playlist" id="append" @reload="loadPlaylist" />
@@ -67,6 +55,7 @@
 import PlayPlaylist from '@/components/PlayPlaylist'
 import AppendVideo from '@/components/AppendVideo'
 import Loading from '@/components/Loading'
+import VideoCard from '@/components/VideoCard'
 import api from '@/api'
 
 export default {
@@ -80,7 +69,8 @@ export default {
   components: {
     PlayPlaylist,
     Loading,
-    AppendVideo
+    AppendVideo,
+    VideoCard
   },
   mounted: function () {
     this.loadPlaylist()
@@ -92,6 +82,8 @@ export default {
   },
   methods: {
     async deletePlaylistProcess (idNum) {
+      if (!confirm('Are you sure you want to delete this playlist?')) return
+      this.loading = true
       var idBody = {
         id: idNum
       }
@@ -113,8 +105,11 @@ export default {
       })
       this.loading = false
     },
-    async addVideo () {
-      console.log('adding')
+    async removeVideo (videoID) {
+      if (!confirm('Are you sure you want to remove this video from the playlist?')) return
+      this.loading = true
+      await api.removeVideo(this.playlist.id, videoID)
+      this.loadPlaylist()
     }
   }
 }

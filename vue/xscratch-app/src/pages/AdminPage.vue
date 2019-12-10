@@ -15,12 +15,18 @@
         </div>
       </b-col>
     </b-row>
-    <b-table dark :items="tlps" :fields="tlpFields" class="mt-2 w-50">
+    <b-table dark :busy="loadingTLP" :items="tlps" :fields="tlpFields" class="mt-2 w-50">
       <template v-slot:cell(url)="row">
         <b-button size="sm" class="mr-2" variant="outline-danger" @click="deleteTLP(row.item.id)">
           <font-awesome-icon icon="trash" size="sm" />
         </b-button>
         {{row.item.url}}
+      </template>
+      <template v-slot:table-busy>
+        <div class="text-center text-danger my-2">
+          <b-spinner class="align-middle"></b-spinner>
+          <strong>Loading...</strong>
+        </div>
       </template>
     </b-table>
 
@@ -53,48 +59,35 @@
     <Loading key="admin-videos" :active="loading" />
 
     <div id="divVideo">
-      <b-card
+      <VideoCard
         v-for="video in videos"
         v-bind:key="video.name"
-        class="vidContainer m-2"
-        v-bind:footer="video.dialogue"
-        bg-variant="dark"
-      >
-        <b-card-header>
-          <b-row align-h="between">
-            <b-col cols="auto" class="pt-1">{{video.name}}</b-col>
-            <b-col cols="auto" class="mb-1 pr-3">
-              <b-button
-                v-if="video.isAvailable"
-                variant="success"
-                @click="video.isAvailable = setAvail(video.id, false)"
-              >
-                <font-awesome-icon icon="globe" />
-              </b-button>
-              <b-button v-else @click="video.isAvailable = setAvail(video.id, true)" variant="outline-secondary">
-                <font-awesome-icon icon="globe" />
-              </b-button>
-              <b-button @click="deleteVidProcess(video.id)" variant="outline-danger">
-                <font-awesome-icon icon="trash" />
-              </b-button>
-            </b-col>
-          </b-row>
-        </b-card-header>
-        <video style="padding-bottom: 0px;" controls=" " width="320" height="240">
-          <source v-bind:src="video.url" type="video/ogg" />/>
-        </video>
-      </b-card>
+        :video="video"
+        @remove="deleteVidProcess"
+        :isAdmin="true"
+        :isPlaylist="false"
+      />
     </div>
   </div>
 </template>
 
 <script>
 import Loading from '@/components/Loading'
+import VideoCard from '@/components/VideoCard'
 import api from '@/api'
 
 export default {
   components: {
-    Loading
+    Loading,
+    VideoCard
+  },
+  props: {
+    reloadFlag: Number
+  },
+  watch: {
+    reloadFlag: function (val) {
+      this.loadVideos()
+    }
   },
   data: function () {
     return {
@@ -106,7 +99,8 @@ export default {
       ],
       activeTLP: '',
       activeSearch: '',
-      loading: false
+      loading: false,
+      loadingTLP: false
     }
   },
   mounted: function () {
@@ -116,17 +110,20 @@ export default {
   methods: {
     async registerTLPProcess () {
       if (this.activeTLP !== '') {
+        this.loadingTLP = true
         await api.registerTLP(this.activeTLP)
           .catch(error => {
             this.errors = []
             console.log(error)
           })
         this.loadTLPs()
-        this.loading = false
+        this.loadingTLP = false
         this.activeTLP = ''
       }
     },
     async deleteVidProcess (idNum) {
+      if (!confirm('Are you sure you want to delete this video?')) return
+      this.loading = true
       this.videos = await api.deleteVideo(idNum)
         .catch(error => {
           this.errors = []
@@ -137,9 +134,9 @@ export default {
     async loadVideos () {
       this.loading = true
       this.videos = await api.getVideos()
-      this.videos.forEach(el => {
-        el.url = 'https://xscratch-videos.s3.us-east-2.amazonaws.com' + el.url
-      })
+      // this.videos.forEach(el => {
+      //   el.url = 'https://xscratch-videos.s3.us-east-2.amazonaws.com' + el.url
+      // })
       this.loading = false
     },
     async searchVideos () {
@@ -148,9 +145,9 @@ export default {
       this.loading = true
       console.log(this.search)
       this.videos = await api.searchVideos(this.search)
-      this.videos.forEach(el => {
-        el.url = 'https://xscratch-videos.s3.us-east-2.amazonaws.com' + el.url
-      })
+      // this.videos.forEach(el => {
+      //   el.url = 'https://xscratch-videos.s3.us-east-2.amazonaws.com' + el.url
+      // })
       this.loading = false
     },
     async clearSearch () {
@@ -159,25 +156,20 @@ export default {
       this.activeSearch = ''
     },
     async loadTLPs () {
+      this.loadingTLP = true
       var allTLPs = await api.getTLPs()
-      console.log(allTLPs)
       this.tlps = allTLPs
-      console.log(this.tlps)
+      this.loadingTLP = false
     },
     async deleteTLP (idNum) {
+      if (!confirm('Are you sure you want to delete this TPL?')) return
+      this.loadingTLP = true
       var idBody = {
         id: idNum
       }
       await api.deleteTLP(idBody)
       this.loadTLPs()
-    },
-    async setAvail (vidID, vidAvail) {
-      const response = await api.setAvailability(vidID, vidAvail)
-      console.log(response.isAvailable)
-      if (!response.isAvailable){
-        this.loadVideos()
-      }
-      return response.isAvailable;
+      this.loadingTLP = false
     }
   }
 }

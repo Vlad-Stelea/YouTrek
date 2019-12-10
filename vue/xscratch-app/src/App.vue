@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <div id="header">
-      <h1>youTrek</h1>
+      <router-link :to="{ name: 'videos'}">
+        <h1>youTrek</h1>
+      </router-link>
       <b-button id="uploadButton" v-b-modal.upload>+ Upload Video</b-button>
     </div>
     <div id="sidebar">
@@ -34,9 +36,9 @@
       </router-link>
     </div>
     <div id="content">
-      <router-view @reloadPlaylists="loadPlaylists" class="pt-3" />
+      <router-view @reloadPlaylists="loadPlaylists" :reloadFlag="reloadFlag" class="pt-3" />
     </div>
-    <UploadVideo />
+    <UploadVideo @reloadVideos="reloadVideos" />
   </div>
 </template>
 
@@ -56,17 +58,20 @@ export default {
       playlists: [],
       loadingPlaylists: false,
       addingPlaylist: false,
-      addPlaylistValue: ''
+      addPlaylistValue: '',
+      reloadFlag: 0
     }
   },
   mounted: function () {
     this.loadPlaylists()
   },
   methods: {
+    reloadVideos () {
+      this.reloadFlag += 1
+    },
     async loadPlaylists () {
       this.loadingPlaylists = true
       this.playlists = await api.getPlaylists()
-      console.log(this.playlists)
       this.loadingPlaylists = false
     },
     async newPlaylistForm () {
@@ -153,8 +158,9 @@ export default {
   left: 160px;
   height: 100vh;
   padding-bottom: 60px;
-  width: 100vw;
+  width: calc(100vw - 160px);
   padding-left: 20px;
+  padding-right: 20px;
   background-color: #232121;
   overflow: scroll;
 }
@@ -186,6 +192,10 @@ export default {
   border: none;
   border-bottom: 1px solid #0cad0b;
   border-radius: 0px;
+}
+
+router-link {
+  text-decoration: none;
 }
 
 #newPlaylist {

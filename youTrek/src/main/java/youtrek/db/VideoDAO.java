@@ -94,6 +94,28 @@ public class VideoDAO {
         }
     }
 
+    public ListOfVideos getPublicSegments() throws SQLException {
+        try {
+            ListOfVideos videoSegments = new ListOfVideos();
+            Video currentVideo = null;
+            PreparedStatement ps = conn.prepareStatement(SqlStatementProvider.GET_ALL_PUBLIC_VIDEOS);
+            ResultSet resultSet = ps.executeQuery();
+
+            while (resultSet.next()) {
+                currentVideo = generateVideo(resultSet);
+                videoSegments.appendVideo(currentVideo);
+            }
+            resultSet.close();
+            ps.close();
+
+            return videoSegments;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new SQLException("Failed in getting list of videos: " + e.getMessage());
+        }
+    }
+
     public void deleteVideoWithId(int id) throws SQLException {
         try {
             String query = SqlStatementProvider.DELETE_VIDEO_GIVEN_ID;

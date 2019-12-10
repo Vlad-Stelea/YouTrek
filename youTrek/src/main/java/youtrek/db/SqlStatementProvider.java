@@ -7,6 +7,8 @@ public class SqlStatementProvider {
 
     public final static String GET_ALL_VIDEOS = "SELECT * FROM videos;";
 
+    public final static String GET_ALL_PUBLIC_VIDEOS = "SELECT * FROM videos where is_available=true;";
+
     public final static String GET_ALL_VIDEOS_GIVEN_FILTER =
             "SELECT DISTINCT videos.id, videos.name, url, dialogue, date_created, tlp_id, is_remote, is_available\n" +
             "FROM videos\n" +

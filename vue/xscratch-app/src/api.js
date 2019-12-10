@@ -27,9 +27,53 @@ export default {
     })
   },
 
+  async getRemoteVideos () {
+    var tlpList = await this.getTLPs()
+    var remoteVideoList = []
+    for (let index = 0; index < tlpList.length; index++) {
+      const response = await this.getTLPVideos(tlpList[index])
+      response.data.segments.forEach(seg => {
+        let formattedSeg = {
+          characters: [
+            seg.character
+          ],
+          dialogue: seg.text,
+          url: seg.url,
+          name: 'no name'
+        }
+        remoteVideoList.push(formattedSeg)
+      })
+    }
+    return remoteVideoList
+  },
+
+  async getTLPVideos (tlp) {
+    tlp.base = tlp.url.substring(0, tlp.url.indexOf('?'))
+    tlp.key = tlp.url.substring(tlp.url.indexOf('=') + 1)
+    let config = {
+      headers: {
+        'x-api-key': tlp.key
+      }
+    }
+    return axios.get(tlp.base, config).then(res => {
+      return res
+    }).catch((error) => {
+      console.log(error)
+    })
+  },
+
   async getVideos () {
     const response = await this.execute('get', '/videos')
-    return JSON.parse(response.data.body).videos
+    const remoteArray = await this.getRemoteVideos()
+    var videoArray = JSON.parse(response.data.body).videos
+    videoArray.forEach(el => {
+      el.url = el.url
+      console.log(el.url)
+    })
+    remoteArray.forEach(el => {
+      videoArray.push(el)
+    })
+    return videoArray
   },
 
   async searchVideos (searchString) {
@@ -70,7 +114,6 @@ export default {
       'id': id
     }
     const response = await this.execute('post', '/videos/delete', body)
-    console.log(response)
     return JSON.parse(response.data.body).videos
   },
 
@@ -97,11 +140,12 @@ export default {
     const response = await this.execute('post', '/playlists/' + playlistID + '/video', body)
     return JSON.parse(response.data.body)
   },
-  async setAvailability (videoId, vidAvailability) {
+
+  async removeVideo (playlistID, videoID) {
     const body = {
-      'isAvail': vidAvailability
+      'id': videoID
     }
-    const response = await this.execute('post', '/video/' + videoId + '/availability', body)
+    const response = await this.execute('post', '/playlists/' + playlistID + '/video/delete', body)
     return JSON.parse(response.data.body)
   }
 

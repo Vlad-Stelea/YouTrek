@@ -77,9 +77,6 @@ export default {
       loop: false
     }
   },
-  mounted: function () {
-    console.log(this.playlist)
-  },
   methods: {
     registerVideo (index) {
       this.videos.forEach(video => {
@@ -97,7 +94,6 @@ export default {
           video.playing = false
         }
       })
-      console.log(isLoaded)
       this.doneLoading = isLoaded
       // set up the current video so you can see it
       if (isLoaded) {
@@ -134,7 +130,6 @@ export default {
       if (this.playing) this.play()
     },
     playNext (id) {
-      console.log('next')
       var doneWith = 0
       for (let i = 0; i < this.videos.length; i++) {
         var video = this.videos[i]
