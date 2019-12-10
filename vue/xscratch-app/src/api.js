@@ -32,7 +32,6 @@ export default {
     var remoteVideoList = []
     for (let index = 0; index < tlpList.length; index++) {
       const response = await this.getTLPVideos(tlpList[index])
-      console.log(response)
       response.data.segments.forEach(seg => {
         let formattedSeg = {
           characters: [
@@ -67,11 +66,12 @@ export default {
     const response = await this.execute('get', '/videos')
     const remoteArray = await this.getRemoteVideos()
     var videoArray = JSON.parse(response.data.body).videos
-    console.log(remoteArray)
+    videoArray.forEach(el => {
+      el.url = 'https://xscratch-videos.s3.us-east-2.amazonaws.com' + el.url
+    })
     remoteArray.forEach(el => {
       videoArray.push(el)
     })
-    console.log(videoArray)
     return videoArray
   },
 

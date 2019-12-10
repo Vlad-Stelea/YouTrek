@@ -59,48 +59,27 @@
     <Loading key="admin-videos" :active="loading" />
 
     <div id="divVideo">
-      <b-card
+      <VideoCard
         v-for="video in videos"
         v-bind:key="video.name"
-        class="vidContainer m-2"
-        v-bind:footer="video.dialogue"
-        bg-variant="dark"
-      >
-        <b-card-header>
-          <b-row align-h="between">
-            <b-col cols="auto" class="pt-1">{{video.name}}</b-col>
-            <b-col cols="auto" class="mb-1 pr-3">
-              <b-button
-                v-if="video.isAvailable"
-                variant="success"
-                @click="video.isAvailable = false"
-              >
-                <font-awesome-icon icon="globe" />
-              </b-button>
-              <b-button v-else @click="video.isAvailable = true" variant="outline-secondary">
-                <font-awesome-icon icon="globe" />
-              </b-button>
-              <b-button @click="deleteVidProcess(video.id)" variant="outline-danger">
-                <font-awesome-icon icon="trash" />
-              </b-button>
-            </b-col>
-          </b-row>
-        </b-card-header>
-        <video style="padding-bottom: 0px;" controls=" " width="320" height="240">
-          <source v-bind:src="video.url" type="video/ogg" />/>
-        </video>
-      </b-card>
+        :video="video"
+        @remove="deleteVidProcess"
+        :isAdmin="true"
+        :isPlaylist="false"
+      />
     </div>
   </div>
 </template>
 
 <script>
 import Loading from '@/components/Loading'
+import VideoCard from '@/components/VideoCard'
 import api from '@/api'
 
 export default {
   components: {
-    Loading
+    Loading,
+    VideoCard
   },
   props: {
     reloadFlag: Number
@@ -143,6 +122,7 @@ export default {
       }
     },
     async deleteVidProcess (idNum) {
+      if (!confirm('Are you sure you want to delete this video?')) return
       this.loading = true
       this.videos = await api.deleteVideo(idNum)
         .catch(error => {
@@ -182,6 +162,7 @@ export default {
       this.loadingTLP = false
     },
     async deleteTLP (idNum) {
+      if (!confirm('Are you sure you want to delete this TPL?')) return
       this.loadingTLP = true
       var idBody = {
         id: idNum
