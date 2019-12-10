@@ -3,20 +3,21 @@
 -- TLP Inserts
 INSERT INTO tlps (id, base_url) values (NULL, 'https://xscratch-videos.s3.us-east-2.amazonaws.com');
 
--- Video Inserts (TODO after TA verifies our segments)
-INSERT INTO videos (id, name, is_remote, is_available, url, dialogue, tlp_id) values (NULL, 'Computer-Working', false, false, '/C1-Computer_Working.ogg', 'Computer Working', NULL);  -- 1
-INSERT INTO videos (id, name, is_remote, is_available, url, dialogue, tlp_id) values (NULL, 'Mental-Disease', false, false, '/C2-Mental_Disease.ogg', 'Mental disease has affected the entire crew', NULL);  -- 2
-INSERT INTO videos (id, name, is_remote, is_available, url, dialogue, tlp_id) values (NULL, 'Kinky-Hand', false, false, '/C3-Kinky_Hand.ogg', 'My hand just passed through a man and a table', NULL);  -- 3
-INSERT INTO videos (id, name, is_remote, is_available, url, dialogue, tlp_id) values (NULL, 'Chekov-Screaming', false, false, '/C4-Chekov_Screaming.ogg', 'Screaming (AHHH)', NULL);  -- 4
-INSERT INTO videos (id, name, is_remote, is_available, url, dialogue, tlp_id) values (NULL, 'I-Like-Him', false, false, '/C5-I_Like_Him.ogg', 'I like him', NULL);  -- 5
-INSERT INTO videos (id, name, is_remote, is_available, url, dialogue, tlp_id) values (NULL, 'Chekov', false, false, '/C6-Chekov.ogg', 'Chekov', NULL);  -- 6
-INSERT INTO videos (id, name, is_remote, is_available, url, dialogue, tlp_id) values (NULL, 'Dismissed', false, false, '/C7-Dismissed.ogg', 'Dismissed', NULL);  -- 7
-INSERT INTO videos (id, name, is_remote, is_available, url, dialogue, tlp_id) values (NULL, 'Captains-Quarters', false, false, '/C8-Captains_Quarters.ogg', 'There is a duty to be performed in the Captains quarters, which requires our presence', NULL);  -- 8
-INSERT INTO videos (id, name, is_remote, is_available, url, dialogue, tlp_id) values (NULL, 'Scotch', false, false, '/C9-Scotch.ogg', 'Does it make a good mix with Scotch?', NULL);  -- 9
-INSERT INTO videos (id, name, is_remote, is_available, url, dialogue, tlp_id) values (NULL, 'Oral', false, false, '/C10-Oral.ogg', 'Ive ordered it orally', NULL);  -- 10
-INSERT INTO videos (id, name, is_remote, is_available, url, dialogue, tlp_id) values (NULL, 'SPOCK', false, false, '/C11-SPOCK.ogg', 'Spock', NULL);  -- 11
-INSERT INTO videos (id, name, is_remote, is_available, url, dialogue, tlp_id) values (NULL, 'Chekov-Screaming-Again', false, false, '/C12-Chekov_Screams_Again.ogg', 'Screaming (AHHH)', NULL);  -- 12
-INSERT INTO videos (id, name, is_remote, is_available, url, dialogue, tlp_id) values (NULL, 'Space Breaking', false, false, '/C13-Space_Breaking.ogg', 'Space itself is literally breaking up', NULL);  -- 13
+-- Video Inserts
+-- Note that we are now using FULL urls instead of relative to our bucket
+INSERT INTO videos (id, name, is_remote, is_available, url, dialogue, tlp_id) values (NULL, 'Computer-Working', false, false, 'https://xscratch-videos.s3.us-east-2.amazonaws.com/C1-Computer_Working.ogg', 'Computer Working', NULL);  -- 1
+INSERT INTO videos (id, name, is_remote, is_available, url, dialogue, tlp_id) values (NULL, 'Mental-Disease', false, false, 'https://xscratch-videos.s3.us-east-2.amazonaws.com/C2-Mental_Disease.ogg', 'Mental disease has affected the entire crew', NULL);  -- 2
+INSERT INTO videos (id, name, is_remote, is_available, url, dialogue, tlp_id) values (NULL, 'Kinky-Hand', false, false, 'https://xscratch-videos.s3.us-east-2.amazonaws.com/C3-Kinky_Hand.ogg', 'My hand just passed through a man and a table', NULL);  -- 3
+INSERT INTO videos (id, name, is_remote, is_available, url, dialogue, tlp_id) values (NULL, 'Chekov-Screaming', false, false, 'https://xscratch-videos.s3.us-east-2.amazonaws.com/C4-Chekov_Screaming.ogg', 'Screaming (AHHH)', NULL);  -- 4
+INSERT INTO videos (id, name, is_remote, is_available, url, dialogue, tlp_id) values (NULL, 'I-Like-Him', false, false, 'https://xscratch-videos.s3.us-east-2.amazonaws.com/C5-I_Like_Him.ogg', 'I like him', NULL);  -- 5
+INSERT INTO videos (id, name, is_remote, is_available, url, dialogue, tlp_id) values (NULL, 'Chekov', false, false, 'https://xscratch-videos.s3.us-east-2.amazonaws.com/C6-Chekov.ogg', 'Chekov', NULL);  -- 6
+INSERT INTO videos (id, name, is_remote, is_available, url, dialogue, tlp_id) values (NULL, 'Dismissed', false, false, 'https://xscratch-videos.s3.us-east-2.amazonaws.com/C7-Dismissed.ogg', 'Dismissed', NULL);  -- 7
+INSERT INTO videos (id, name, is_remote, is_available, url, dialogue, tlp_id) values (NULL, 'Captains-Quarters', false, false, 'https://xscratch-videos.s3.us-east-2.amazonaws.com/C8-Captains_Quarters.ogg', 'There is a duty to be performed in the Captains quarters, which requires our presence', NULL);  -- 8
+INSERT INTO videos (id, name, is_remote, is_available, url, dialogue, tlp_id) values (NULL, 'Scotch', false, false, 'https://xscratch-videos.s3.us-east-2.amazonaws.com/C9-Scotch.ogg', 'Does it make a good mix with Scotch?', NULL);  -- 9
+INSERT INTO videos (id, name, is_remote, is_available, url, dialogue, tlp_id) values (NULL, 'Oral', false, false, 'https://xscratch-videos.s3.us-east-2.amazonaws.com/C10-Oral.ogg', 'Ive ordered it orally', NULL);  -- 10
+INSERT INTO videos (id, name, is_remote, is_available, url, dialogue, tlp_id) values (NULL, 'SPOCK', false, false, 'https://xscratch-videos.s3.us-east-2.amazonaws.com/C11-SPOCK.ogg', 'Spock', NULL);  -- 11
+INSERT INTO videos (id, name, is_remote, is_available, url, dialogue, tlp_id) values (NULL, 'Chekov-Screaming-Again', false, false, 'https://xscratch-videos.s3.us-east-2.amazonaws.com/C12-Chekov_Screams_Again.ogg', 'Screaming (AHHH)', NULL);  -- 12
+INSERT INTO videos (id, name, is_remote, is_available, url, dialogue, tlp_id) values (NULL, 'Space Breaking', false, false, 'https://xscratch-videos.s3.us-east-2.amazonaws.com/C13-Space_Breaking.ogg', 'Space itself is literally breaking up', NULL);  -- 13
 
 
 -- Playlist Inserts
