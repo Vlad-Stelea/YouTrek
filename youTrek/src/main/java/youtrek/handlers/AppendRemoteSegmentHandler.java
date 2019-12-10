@@ -6,6 +6,7 @@ import youtrek.db.PlaylistDAO;
 import youtrek.http.AppendRemoteSegmentRequest;
 import youtrek.http.AppendRemoteSegmentResponse;
 import youtrek.models.Playlist;
+import youtrek.models.PublicSegment;
 
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -19,6 +20,7 @@ public class AppendRemoteSegmentHandler implements RequestHandler<AppendRemoteSe
         headers.put("Content-Type", "application/json");
         headers.put("X-Custom-Header", "application/json");
         try{
+            PublicSegment ps = new PublicSegment(o.getUrl(), o.getCharacters(), o.getText());
             pl = PlaylistDAO.getInstance().appendRemoteSegment(o.getPs(), o.getPlaylistId());
             return new AppendRemoteSegmentResponse(pl, headers, 200);
         } catch(SQLException e) {

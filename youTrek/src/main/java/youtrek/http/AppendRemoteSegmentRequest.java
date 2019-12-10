@@ -4,31 +4,41 @@ import com.google.gson.GsonBuilder;
 import youtrek.models.PublicSegment;
 
 public class AppendRemoteSegmentRequest {
-    int playlistId;
-    PublicSegment ps;
+    public int playlistId;
+    public String url;
+    public String characters;
+    public String text;
+    // PublicSegment ps;
 
     public AppendRemoteSegmentRequest() {
 
     }
-    public AppendRemoteSegmentRequest(int playlistId, PublicSegment ps) {
+    public AppendRemoteSegmentRequest(int playlistId, String url, String characters, String text) {
         this.playlistId = playlistId;
-        this.ps = ps;
+        this.url = url;
+        this.characters = characters;
+        this.text = text;
+    }
+
+    public PublicSegment getPs() {
+        return new PublicSegment(url, characters, text);
     }
 
     public int getPlaylistId() {
         return this.playlistId;
     }
 
-    public PublicSegment getPs() {
-        return this.ps;
+
+    public String getUrl() {
+        return this.url;
     }
 
-    public void setPs(PublicSegment ps) {
-        this.ps = ps;
+    public String getText() {
+        return this.text;
     }
 
-    public void setPlaylistId(int playlistId) {
-        this.playlistId = playlistId;
+    public String getCharacters() {
+        return this.characters;
     }
 
     @Override
