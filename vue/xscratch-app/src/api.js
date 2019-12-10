@@ -32,17 +32,21 @@ export default {
     var remoteVideoList = []
     for (let index = 0; index < tlpList.length; index++) {
       const response = await this.getTLPVideos(tlpList[index])
-      response.data.segments.forEach(seg => {
-        let formattedSeg = {
-          characters: [
-            seg.character
-          ],
-          dialogue: seg.text,
-          url: seg.url,
-          name: 'no name'
-        }
-        remoteVideoList.push(formattedSeg)
-      })
+      if (response !== 'bad tlp') {
+        response.data.segments.forEach(seg => {
+          let formattedSeg = {
+            characters: [
+              seg.character
+            ],
+            dialogue: seg.text,
+            url: seg.url,
+            name: 'no name'
+          }
+          remoteVideoList.push(formattedSeg)
+        })
+      } else {
+        console.log('bad tlp')
+      }
     }
     return remoteVideoList
   },
@@ -50,6 +54,7 @@ export default {
   async getTLPVideos (tlp) {
     tlp.base = tlp.url.substring(0, tlp.url.indexOf('?'))
     tlp.key = tlp.url.substring(tlp.url.indexOf('=') + 1)
+    if (tlp.base === '' || tlp.key === '') return 'bad tlp'
     let config = {
       headers: {
         'x-api-key': tlp.key
