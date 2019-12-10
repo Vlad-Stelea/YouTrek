@@ -26,9 +26,9 @@ public class UploadVideoHandler implements RequestHandler<UploadVideoPostRequest
             String videoKey =
                     generateUniqueBucketKeyForVideo() + ".ogg";
             S3Util.getInstance().uploadVideoToBucket(BUCKET_LOCATION, videoKey, uploadVideoPostRequest.getVideo());
-
+            String url = S3Util.getInstance().getUrl(BUCKET_LOCATION, videoKey);
             //Insert into the videos table
-            Video insertVideo = new Video(uploadVideoPostRequest.getName(), "/" + videoKey, uploadVideoPostRequest.getDialogue());
+            Video insertVideo = new Video(uploadVideoPostRequest.getName(), url, uploadVideoPostRequest.getDialogue());
             insertVideo.id = VideoDAO.getInstance().createVideo(insertVideo);
 
             //Parse the characters passed in as a string and turn them into character objects

@@ -53,6 +53,13 @@ public class S3Util {
         s3.deleteObject(bucketName, fileName);
     }
 
+    public String getUrl(String bucketName, String fileName) throws Exception{
+        final AmazonS3 s3 = AmazonS3ClientBuilder.standard()
+                .withRegion(Regions.US_EAST_2) //Stick to Ohio region because that's where our buckets are located
+                .build();
+
+        return s3.getUrl(bucketName, fileName).toString();
+    }
 
 
     //Exception should bubble up
