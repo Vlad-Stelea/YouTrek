@@ -67,11 +67,11 @@
               <b-button
                 v-if="video.isAvailable"
                 variant="success"
-                @click="video.isAvailable = false"
+                @click="video.isAvailable = setAvail(video.id, false)"
               >
                 <font-awesome-icon icon="globe" />
               </b-button>
-              <b-button v-else @click="video.isAvailable = true" variant="outline-secondary">
+              <b-button v-else @click="video.isAvailable = setAvail(video.id, true)" variant="outline-secondary">
                 <font-awesome-icon icon="globe" />
               </b-button>
               <b-button @click="deleteVidProcess(video.id)" variant="outline-danger">
@@ -170,6 +170,11 @@ export default {
       }
       await api.deleteTLP(idBody)
       this.loadTLPs()
+    },
+    async setAvail (vidID, vidAvail) {
+      const response = await api.setAvailability(vidID, vidAvail)
+      console.log(response.isAvailable)
+      return response.isAvailable;
     }
   }
 }

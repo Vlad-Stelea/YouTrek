@@ -86,17 +86,23 @@ export default {
     const response = await this.execute('get', '/tlp')
     return JSON.parse(response.data.body).listOfTLP
   },
-  
   async deleteTLP (id) {
     const response = await this.execute('post', '/tlp/delete', id)
     return JSON.parse(response.data.body)
   },
-  
   async appendVideo (playlistID, videoID) {
     const body = {
       'id': videoID
     }
     const response = await this.execute('post', '/playlists/' + playlistID + '/video', body)
     return JSON.parse(response.data.body)
+  },
+  async setAvailability (videoId, vidAvailability) {
+    const body = {
+      'isAvail': vidAvailability
+    }
+    const response = await this.execute('post', '/video/' + videoId + '/availability', body)
+    return JSON.parse(response.data.body)
   }
+
 }
