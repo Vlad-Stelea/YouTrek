@@ -101,7 +101,7 @@ export default {
       this.playlist = await api.getPlaylist(this.$route.params.playlistID)
       this.videos = this.playlist.videos.videos
       this.videos.forEach(el => {
-        el.url = 'https://xscratch-videos.s3.us-east-2.amazonaws.com' + el.url
+        el.url = el.url
       })
       this.loading = false
     },
