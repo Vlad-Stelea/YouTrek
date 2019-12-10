@@ -4,12 +4,11 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import youtrek.models.ListOfPlaylists;
-import youtrek.models.ListOfVideos;
-import youtrek.models.Playlist;
-import youtrek.models.Video;
+import youtrek.models.*;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -82,6 +81,27 @@ public class TestPlaylistDAO {
 
         Playlist pl2video = dao.appendVideo(2, test.id);
         assertEquals(2, pl2video.videos.getNumVideos());
+    }
+
+    @Test
+    public void testAppendRemoteSegment() throws Exception {
+        PlaylistDAO dao = PlaylistDAO.getInstance();
+        Playlist test = dao.createPlaylist("SomeTestPlaylist");
+        PublicSegment ps = new PublicSegment("test.com", "chekov", "hello");
+        test = dao.appendRemoteSegment(ps, test.id);
+        ListOfVideos lov = dao.getPlaylistVideos(test.id);
+        assertEquals(lov.getNumVideos(), 1); // check that video was added
+        Video insertedVideo = null;
+        for (Video v : lov) {
+            insertedVideo = v;
+        }
+        // check fields
+        assertEquals(insertedVideo.dialogue, "hello");
+        assertEquals(insertedVideo.url, "test.com");
+        List<String> characters = new ArrayList<>();
+        characters.add("chekov");
+        assertEquals(characters, insertedVideo.characters);
+
     }
 
     @Test

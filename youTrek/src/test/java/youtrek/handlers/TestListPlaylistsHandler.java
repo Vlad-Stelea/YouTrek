@@ -24,7 +24,7 @@ public class TestListPlaylistsHandler {
     }
 
     @Test
-    public void testSuccesfulResponse() {
+    public void testSuccessfulResponse() {
         ListPlaylistsResponse result = handler.handleRequest(request, null);
         assertEquals(result.getStatusCode(), 200);
         assertEquals(result.getHeaders().get("Content-Type"), "application/json");

@@ -39,7 +39,7 @@ public class TestAppendVideoHandler {
     }
 
      @Test
-     public void testSuccesfulResponse() {
+     public void testSuccessfulResponse() {
      AppendVideoResponse result = handler.handleRequest(request, null);
      assertEquals(result.getStatusCode(), 200);
      assertEquals(result.getHeaders().get("Content-Type"), "application/json");
