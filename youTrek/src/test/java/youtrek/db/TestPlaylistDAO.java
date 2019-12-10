@@ -101,6 +101,7 @@ public class TestPlaylistDAO {
         List<String> characters = new ArrayList<>();
         characters.add("chekov");
         assertEquals(characters, insertedVideo.characters);
+        assertTrue(insertedVideo.isRemote);
 
     }
 
