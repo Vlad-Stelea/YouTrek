@@ -157,8 +157,9 @@ export default {
   left: 160px;
   height: 100vh;
   padding-bottom: 60px;
-  width: 100vw;
+  width: calc(100vw - 160px);
   padding-left: 20px;
+  padding-right: 20px;
   background-color: #232121;
   overflow: scroll;
 }
