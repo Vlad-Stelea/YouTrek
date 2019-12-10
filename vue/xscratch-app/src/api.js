@@ -72,6 +72,7 @@ export default {
     const remoteArray = await this.getRemoteVideos()
     var videoArray = JSON.parse(response.data.body).videos
     remoteArray.forEach(el => {
+      el.isRemote = true
       videoArray.push(el)
     })
     return videoArray
@@ -144,12 +145,24 @@ export default {
     const response = await this.execute('post', '/tlp/delete', id)
     return JSON.parse(response.data.body)
   },
-  async appendVideo (playlistID, videoID) {
-    const body = {
-      'id': videoID
+  async appendVideo (playlistID, video) {
+    if (!video.isRemote) {
+      const body = {
+        'id': video.id
+      }
+      const response = await this.execute('post', '/playlists/' + playlistID + '/video', body)
+      return JSON.parse(response.data.body)
+    } else {
+      const body = {
+        'ps': {
+          'url': video.url,
+          'character': video.characters[0],
+          'text': video.text
+        }
+      }
+      const response = await this.execute('post', '/playlists/' + playlistID + '/video/remote', body)
+      return JSON.parse(response.data.body)
     }
-    const response = await this.execute('post', '/playlists/' + playlistID + '/video', body)
-    return JSON.parse(response.data.body)
   },
 
   async removeVideo (playlistID, videoID) {
@@ -158,6 +171,21 @@ export default {
     }
     const response = await this.execute('post', '/playlists/' + playlistID + '/video/delete', body)
     return JSON.parse(response.data.body)
+  },
+
+  async getCharacters () {
+    // Empty body
+    // const body = {
+    // }
+
+    // const response = await this.execute('get', '/characters', body)
+
+    const mockResponse = {
+      'characters': ['Spock', 'Kirk', 'Conner', 'Emmett', 'Nour', 'Vlad', 'Other Character']
+    }
+
+    // TODO change with actual response
+    return mockResponse.characters
   }
 
 }

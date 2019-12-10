@@ -135,7 +135,7 @@ export default {
         if (el.id === item.id) el.state = 'loading'
       })
       this.$refs.videotable.refresh()
-      await api.appendVideo(this.playlist.id, item.id)
+      await api.appendVideo(this.playlist.id, item)
       this.videos.forEach(el => {
         if (el.id === item.id) el.state = 'added'
       })
