@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "Replacing all of our local segments from backup bucket -- note that you may have to make all of these public again!"
+
 aws s3 cp s3://xeno-raw-video-clips/VideoSegments/C1-Computer_Working.mp4.ogg s3://xscratch-videos/C1-Computer_Working.ogg
 
 aws s3 cp s3://xeno-raw-video-clips/VideoSegments/C2-Mental_Disease.mp4.ogg s3://xscratch-videos/C2-Mental_Disease.ogg
