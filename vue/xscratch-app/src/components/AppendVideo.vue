@@ -143,9 +143,6 @@ export default {
       this.$refs.videotable.refresh()
       this.$emit('reload')
     },
-    submit () {
-      console.log('sub')
-    },
     killAll () {
       this.videos = []
     }

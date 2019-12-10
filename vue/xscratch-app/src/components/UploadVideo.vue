@@ -98,7 +98,6 @@ export default {
       reader.onload = function (readerEvt) {
         var binaryString = readerEvt.target.result.substr(22)
         globalEncodedVideo = binaryString
-        console.log(globalEncodedVideo)
       }
       reader.readAsDataURL(data)
     },
@@ -115,7 +114,6 @@ export default {
         characters: this.upload.characters.split(','),
         video: this.upload.encodedVideo
       }
-      console.log(videoBody)
       await api.createVideo(videoBody)
       await api.getVideos()
       this.submitting = false

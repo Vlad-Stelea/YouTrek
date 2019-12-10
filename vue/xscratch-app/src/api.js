@@ -27,9 +27,52 @@ export default {
     })
   },
 
+  async getRemoteVideos () {
+    var tlpList = await this.getTLPs()
+    var remoteVideoList = []
+    for (let index = 0; index < tlpList.length; index++) {
+      const response = await this.getTLPVideos(tlpList[index])
+      console.log(response)
+      response.data.segments.forEach(seg => {
+        let formattedSeg = {
+          characters: [
+            seg.character
+          ],
+          dialogue: seg.text,
+          url: seg.url,
+          name: 'no name'
+        }
+        remoteVideoList.push(formattedSeg)
+      })
+    }
+    return remoteVideoList
+  },
+
+  async getTLPVideos (tlp) {
+    tlp.base = tlp.url.substring(0, tlp.url.indexOf('?'))
+    tlp.key = tlp.url.substring(tlp.url.indexOf('=') + 1)
+    let config = {
+      headers: {
+        'x-api-key': tlp.key
+      }
+    }
+    return axios.get(tlp.base, config).then(res => {
+      return res
+    }).catch((error) => {
+      console.log(error)
+    })
+  },
+
   async getVideos () {
     const response = await this.execute('get', '/videos')
-    return JSON.parse(response.data.body).videos
+    const remoteArray = await this.getRemoteVideos()
+    var videoArray = JSON.parse(response.data.body).videos
+    console.log(remoteArray)
+    remoteArray.forEach(el => {
+      videoArray.push(el)
+    })
+    console.log(videoArray)
+    return videoArray
   },
 
   async searchVideos (searchString) {
@@ -70,7 +113,6 @@ export default {
       'id': id
     }
     const response = await this.execute('post', '/videos/delete', body)
-    console.log(response)
     return JSON.parse(response.data.body).videos
   },
 

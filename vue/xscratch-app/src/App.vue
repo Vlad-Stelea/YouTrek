@@ -70,7 +70,6 @@ export default {
     async loadPlaylists () {
       this.loadingPlaylists = true
       this.playlists = await api.getPlaylists()
-      console.log(this.playlists)
       this.loadingPlaylists = false
     },
     async newPlaylistForm () {
