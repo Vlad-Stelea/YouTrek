@@ -78,8 +78,18 @@ export default {
   },
 
   async searchVideos (searchString) {
-    const response = await this.execute('get', '/videos?filter=' + searchString)
-    return JSON.parse(response.data.body).videos
+    searchString = searchString.toLowerCase()
+    const response = await this.getVideos()
+    var videoList = response
+    videoList = videoList.filter(el => {
+      var charFlag = false
+      el.characters.forEach(char => {
+        let character = char.toLowerCase()
+        if (character.includes(searchString)) charFlag = true
+      })
+      return el.dialogue.toLowerCase().includes(searchString) || charFlag
+    })
+    return videoList
   },
 
   async getPlaylists () {
