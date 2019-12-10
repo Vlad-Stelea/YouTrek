@@ -26,11 +26,8 @@ public class TestAppendRemoteSegmentHandler {
         DatabaseUtil.setSchema("testing");
         PlaylistDAO dao = PlaylistDAO.getInstance();
         pl = dao.createPlaylist("SomeTestPlaylist");
-        ps = new PublicSegment("test.com", "chekov", "hello");
+        request = new AppendRemoteSegmentRequest(pl.id, "www.google.com", "chekov", "hello");
         handler = new AppendRemoteSegmentHandler();
-        request = new AppendRemoteSegmentRequest();
-        request.setPs(ps);
-        request.setPlaylistId(pl.id);
     }
 
     @After
