@@ -155,11 +155,9 @@ export default {
       return JSON.parse(response.data.body)
     } else {
       const body = {
-        'ps': {
-          'url': video.url,
-          'character': video.characters[0],
-          'text': video.text
-        }
+        'url': video.url,
+        'character': video.characters[0],
+        'text': video.text
       }
       const response = await this.execute('post', '/playlists/' + playlistID + '/video/remote', body)
       return JSON.parse(response.data.body)
