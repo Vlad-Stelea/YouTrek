@@ -18,7 +18,7 @@ public class SqlStatementProvider {
   
     public final static String CREATE_VIDEO =
             "INSERT INTO videos(name, is_remote, is_available, url, dialogue, date_created, tlp_id)\n" +
-            "VALUE (?, false, true, ?, ?, NOW(), NULL);";
+            "VALUE (?, ?, ?, ?, ?, NOW(), NULL);";
 
     public final static String GET_CHARACTERS_GIVEN_VIDEO_ID =
             "SELECT *\n" +
