@@ -5,7 +5,7 @@ public class SqlStatementProvider {
     /* VideoDAO */
     public final static String GET_VIDEOS_GIVEN_ID = "SELECT * FROM videos WHERE id=?;";
 
-    public final static String GET_ALL_VIDEOS = "SELECT * FROM videos;";
+    public final static String GET_ALL_VIDEOS = "SELECT * FROM videos WHERE is_remote=false;";
 
     public final static String GET_ALL_PUBLIC_VIDEOS = "SELECT * FROM videos where is_available=true;";
 
