@@ -60,6 +60,14 @@ export default {
   components: {
     Loading
   },
+  props: {
+    reloadFlag: Number
+  },
+  watch: {
+    reloadFlag: function (val) {
+      this.loadVideos()
+    }
+  },
   data: function () {
     return {
       loading: false,
@@ -73,6 +81,7 @@ export default {
   },
   methods: {
     async deleteVidProcess (idNum) {
+      this.loading = true
       this.videos = await api.deleteVideo(idNum)
         .catch(error => {
           this.errors = []

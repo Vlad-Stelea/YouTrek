@@ -15,12 +15,18 @@
         </div>
       </b-col>
     </b-row>
-    <b-table dark :items="tlps" :fields="tlpFields" class="mt-2 w-50">
+    <b-table dark :busy="loadingTLP" :items="tlps" :fields="tlpFields" class="mt-2 w-50">
       <template v-slot:cell(url)="row">
         <b-button size="sm" class="mr-2" variant="outline-danger" @click="deleteTLP(row.item.id)">
           <font-awesome-icon icon="trash" size="sm" />
         </b-button>
         {{row.item.url}}
+      </template>
+      <template v-slot:table-busy>
+        <div class="text-center text-danger my-2">
+          <b-spinner class="align-middle"></b-spinner>
+          <strong>Loading...</strong>
+        </div>
       </template>
     </b-table>
 
@@ -96,6 +102,14 @@ export default {
   components: {
     Loading
   },
+  props: {
+    reloadFlag: Number
+  },
+  watch: {
+    reloadFlag: function (val) {
+      this.loadVideos()
+    }
+  },
   data: function () {
     return {
       videos: [],
@@ -106,7 +120,8 @@ export default {
       ],
       activeTLP: '',
       activeSearch: '',
-      loading: false
+      loading: false,
+      loadingTLP: false
     }
   },
   mounted: function () {
@@ -116,17 +131,19 @@ export default {
   methods: {
     async registerTLPProcess () {
       if (this.activeTLP !== '') {
+        this.loadingTLP = true
         await api.registerTLP(this.activeTLP)
           .catch(error => {
             this.errors = []
             console.log(error)
           })
         this.loadTLPs()
-        this.loading = false
+        this.loadingTLP = false
         this.activeTLP = ''
       }
     },
     async deleteVidProcess (idNum) {
+      this.loading = true
       this.videos = await api.deleteVideo(idNum)
         .catch(error => {
           this.errors = []
@@ -159,17 +176,21 @@ export default {
       this.activeSearch = ''
     },
     async loadTLPs () {
+      this.loadingTLP = true
       var allTLPs = await api.getTLPs()
       console.log(allTLPs)
       this.tlps = allTLPs
       console.log(this.tlps)
+      this.loadingTLP = false
     },
     async deleteTLP (idNum) {
+      this.loadingTLP = true
       var idBody = {
         id: idNum
       }
       await api.deleteTLP(idBody)
       this.loadTLPs()
+      this.loadingTLP = false
     }
   }
 }
