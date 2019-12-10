@@ -27,7 +27,7 @@
           </b-button>
           <b-button
             v-if="isAdmin && video.isAvailable"
-            @click="available"
+            @click="video.isAvailable = setAvail(video.id, false)"
             variant="outline-success"
             class="border-0"
             title="Mark as private"
@@ -36,7 +36,7 @@
           </b-button>
           <b-button
             v-if="isAdmin && !video.isAvailable"
-            @click="available"
+            @click="video.isAvailable = setAvail(video.id, true)"
             variant="outline-secondary"
             class="border-0"
             title="Mark as public"
@@ -64,11 +64,18 @@ export default {
     },
     available () {
       this.video.isAvailable = !this.video.isAvailable
-    }
-  }
+    },
+    async setAvail (vidID, vidAvail) {
+      const response = await api.setAvailability(vidID, vidAvail)
+      console.log(response.isAvailable)
+      if (!response.isAvailable){
+        this.loadVideos()
+      }
+      return response.isAvailable;
+   }
+ }
 }
 </script>
-
 <style>
 .vidContainer {
   float: left;
