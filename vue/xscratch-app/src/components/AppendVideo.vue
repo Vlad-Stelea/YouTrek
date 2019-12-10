@@ -120,7 +120,6 @@ export default {
       this.loading = true
       this.videos = await api.getVideos()
       this.videos.forEach(el => {
-        el.url = 'https://xscratch-videos.s3.us-east-2.amazonaws.com' + el.url
         el.state = 'ready'
       })
       this.loading = false
