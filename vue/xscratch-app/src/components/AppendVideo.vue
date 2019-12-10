@@ -96,7 +96,6 @@ export default {
       loading: false,
       fields: [
         { key: 'actions', label: 'Add' },
-        { key: 'name', label: 'Video Title', sortable: true, class: 'text-center' },
         { key: 'dialogue', label: 'Dialogue', sortable: true, sortDirection: 'desc' },
         {
           key: 'characters',
