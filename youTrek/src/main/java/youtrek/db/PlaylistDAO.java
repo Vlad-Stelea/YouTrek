@@ -1,9 +1,6 @@
 package youtrek.db;
 
-import youtrek.models.ListOfPlaylists;
-import youtrek.models.ListOfVideos;
-import youtrek.models.Playlist;
-import youtrek.models.Video;
+import youtrek.models.*;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -170,6 +167,17 @@ public class PlaylistDAO {
             throw new SQLException("Failed in adding video to playlist: " + e.getMessage());
         }
 
+    }
+
+    public Playlist appendRemoteSegment(PublicSegment ps) throws SQLException {
+        try {
+            // TODO convert public segment object to video, insert into table
+            // TODO insert converted video into pvjoin, return playlist
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new SQLException("Failed in adding remote video to playlist: " + e.getMessage());
+        }
     }
 
     public Playlist appendVideo(int video_id, int playlist_id) throws SQLException {

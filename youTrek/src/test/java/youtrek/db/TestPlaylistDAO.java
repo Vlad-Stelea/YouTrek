@@ -85,6 +85,11 @@ public class TestPlaylistDAO {
     }
 
     @Test
+    public void testAppendRemoteSegment() throws Exception {
+        //TODO
+    }
+
+    @Test
     public void testDeletePlaylist() throws Exception {
         PlaylistDAO dao = PlaylistDAO.getInstance();
         Playlist test = dao.createPlaylist("SomeTestPlaylist");
