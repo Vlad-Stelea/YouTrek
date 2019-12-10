@@ -43,6 +43,7 @@
       </b-card>
       <!-- Add Video Card -->
       <b-card
+        v-if="!loading"
         class="vidContainer addVideoCard m-2"
         bg-variant="dark"
         footer="Append a video to this playlist"
