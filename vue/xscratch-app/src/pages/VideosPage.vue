@@ -21,18 +21,9 @@
                <b-form-checkbox
                   id="checkbox"
                   class='mx-3'
-                  @click="tlpAllowed = false"
-                  v-if="tlpAllowed"
+                  v-model = "tlpAllowed"
                   button = true
                   button-variant = "outline-success"
-               >TLP Search</b-form-checkbox>
-               <b-form-checkbox
-                  id="checkbox"
-                  class='mx-3'
-                  @click="tlpAllowed = false"
-                  v-if="!tlpAllowed"
-                  button = true
-                  button-variant = "outline-secondary"
                >TLP Search</b-form-checkbox>
             </b-input-group-append>
           </b-input-group>
