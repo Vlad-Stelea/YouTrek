@@ -20,7 +20,7 @@
         </div>
         <div class="float-right d-flex flex-column pt-0 mb-1 pr-3">
           <b-button
-            v-if="!isPlaylist"
+            v-if="!isPlaylist && !video.isRemote"
             @click="remove"
             variant="outline-danger"
             class="border-0"
@@ -29,7 +29,7 @@
             <font-awesome-icon icon="trash" />
           </b-button>
           <b-button
-            v-else
+            v-if="isPlaylist"
             @click="remove"
             variant="outline-danger"
             class="border-0"
