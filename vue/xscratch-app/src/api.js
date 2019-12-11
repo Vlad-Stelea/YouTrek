@@ -84,17 +84,19 @@ export default {
     return videoArray
   },
 
-  async searchVideos (searchString, tlpAllowed) {
-    searchString = searchString.toLowerCase()
+  async searchVideos (textSearch = '', charSearch = '', tlpAllowed) {
+    charSearch = charSearch.toLowerCase()
+    textSearch = textSearch.toLowerCase()
     const response = await this.getVideos(tlpAllowed)
     var videoList = response
     videoList = videoList.filter(el => {
-      var charFlag = false
+      var charFlag = (charSearch === '')
       el.characters.forEach(char => {
         let character = char.toLowerCase()
-        if (character.includes(searchString)) charFlag = true
+        if (character.includes(charSearch)) charFlag = true
       })
-      return el.dialogue.toLowerCase().includes(searchString) || charFlag
+      var textFlag = el.dialogue.toLowerCase().includes(textSearch) || textSearch === ''
+      return textFlag && charFlag
     })
     return videoList
   },

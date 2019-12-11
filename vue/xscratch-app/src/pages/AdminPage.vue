@@ -70,6 +70,32 @@
               >{{ tlpAllowed ? 'TLP Search On' : 'TLP Search Off'}}</b-form-checkbox>
             </b-input-group-append>
           </b-input-group>
+          <b-input-group prepend="Character Filter" class="mb-3">
+            <b-form-input id="search-bar" v-model="charSearch"></b-form-input>
+            <b-input-group-append>
+              <b-button
+                v-if="charSearch != ''"
+                @mouseup="clearCharacter()"
+                variant="outline-danger"
+                id="clear-button"
+              >
+                <font-awesome-icon icon="times" />
+              </b-button>
+            </b-input-group-append>
+          </b-input-group>
+          <b-input-group prepend="Dialogue Filter" class="mb-3">
+            <b-form-input id="search-bar" v-model="textSearch"></b-form-input>
+            <b-input-group-append>
+              <b-button
+                v-if="textSearch != ''"
+                @mouseup="clearDialogue()"
+                variant="outline-danger"
+                id="clear-button"
+              >
+                <font-awesome-icon icon="times" />
+              </b-button>
+            </b-input-group-append>
+          </b-input-group>
         </div>
       </b-col>
     </b-row>
