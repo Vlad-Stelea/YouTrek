@@ -68,21 +68,23 @@ export default {
     })
   },
 
-  async getVideos () {
+  async getVideos (tlpAllowed) {
     const response = await this.execute('get', '/videos')
-    const remoteArray = await this.getRemoteVideos()
     var videoArray = JSON.parse(response.data.body).videos
     videoArray = videoArray.filter(el => el.isRemote === false)
-    remoteArray.forEach(el => {
-      el.isRemote = true
-      videoArray.push(el)
-    })
+    if (tlpAllowed) {
+      const remoteArray = await this.getRemoteVideos()
+      remoteArray.forEach(el => {
+        el.isRemote = true
+        videoArray.push(el)
+      })
+    }
     return videoArray
   },
 
-  async searchVideos (searchString) {
+  async searchVideos (searchString, tlpAllowed) {
     searchString = searchString.toLowerCase()
-    const response = await this.getVideos()
+    const response = await this.getVideos(tlpAllowed)
     var videoList = response
     videoList = videoList.filter(el => {
       var charFlag = false
@@ -172,9 +174,6 @@ export default {
     const response = await this.execute('post', '/playlists/' + playlistID + '/video/delete', body)
     return JSON.parse(response.data.body)
   },
-
-<<<<<<< Updated upstream
-=======
   async setAvailability (vidID, vidAvail) {
     const body = {
       'isAvail': vidAvail
@@ -182,8 +181,6 @@ export default {
     const response = await this.execute('post', '/video/' + vidID + '/availability', body)
     return JSON.parse(response.data.body)
   },
-
->>>>>>> Stashed changes
   async getCharacters () {
     // Empty body
     // const body = {

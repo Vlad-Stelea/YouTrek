@@ -2,7 +2,7 @@
   <div id="videopage">
     <h1>Library:</h1>
     <b-row>
-      <b-col class="col-sm-8 col-md-5 col-lg-4 col-xl-3">
+      <b-col class="col-sm-10 col-md-8 col-lg-6 col-xl-4">
         <div class="topnav pb-4">
           <b-input-group prepend="Search" class="mt-3">
             <b-form-input id="search-bar" v-model="search" @keydown.enter="searchVideos()"></b-form-input>
@@ -18,6 +18,13 @@
               <b-button @click="searchVideos()" variant="success">
                 <font-awesome-icon icon="coffee" />
               </b-button>
+               <b-form-checkbox
+                  id="checkbox"
+                  class="mx-3"
+                  v-model="tlpAllowed"
+                  v-bind:button= true
+                  button-variant = "outline-success"
+               >TLP Search</b-form-checkbox>
             </b-input-group-append>
           </b-input-group>
         </div>
@@ -62,7 +69,8 @@ export default {
       loading: false,
       videos: [],
       search: '',
-      activeSearch: ''
+      activeSearch: '',
+      tlpAllowed: true
     }
   },
   mounted: function () {
@@ -89,8 +97,7 @@ export default {
       this.activeSearch = this.search
       if (this.search === '') this.activeSearch = ''
       this.loading = true
-      console.log(this.search)
-      this.videos = await api.searchVideos(this.search)
+      this.videos = await api.searchVideos(this.search, this.tlpAllowed)
       this.loading = false
     },
     async clearSearch () {
@@ -127,7 +134,7 @@ div {
 }
 #clear-button,
 #clear-button:hover,
-#clear-button:focus {
+#clear-button:focus, {
   border: none;
   border-top: 1px solid;
   border-bottom: 1px solid;
