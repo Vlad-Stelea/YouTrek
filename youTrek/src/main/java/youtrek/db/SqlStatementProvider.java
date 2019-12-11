@@ -5,7 +5,7 @@ public class SqlStatementProvider {
     /* VideoDAO */
     public final static String GET_VIDEOS_GIVEN_ID = "SELECT * FROM videos WHERE id=?;";
 
-    public final static String GET_ALL_VIDEOS = "SELECT * FROM videos;";
+    public final static String GET_ALL_VIDEOS = "SELECT * FROM videos WHERE is_remote=false;";
 
     public final static String GET_ALL_PUBLIC_VIDEOS = "SELECT * FROM videos where is_available=true;";
 
@@ -18,7 +18,7 @@ public class SqlStatementProvider {
   
     public final static String CREATE_VIDEO =
             "INSERT INTO videos(name, is_remote, is_available, url, dialogue, date_created, tlp_id)\n" +
-            "VALUE (?, false, true, ?, ?, NOW(), NULL);";
+            "VALUE (?, ?, ?, ?, ?, NOW(), NULL);";
 
     public final static String GET_CHARACTERS_GIVEN_VIDEO_ID =
             "SELECT *\n" +

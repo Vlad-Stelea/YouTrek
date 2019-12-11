@@ -144,8 +144,11 @@ public class VideoDAO {
             String query = SqlStatementProvider.CREATE_VIDEO;
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1, video.name);
-            ps.setString(2, video.url);
-            ps.setString(3, video.dialogue);
+            ps.setBoolean(2, video.isRemote);
+            ps.setBoolean(3, video.isAvailable);
+            ps.setString(4, video.url);
+            ps.setString(5, video.dialogue);
+
             ps.executeUpdate();
 
             ResultSet rs = ps.getGeneratedKeys();

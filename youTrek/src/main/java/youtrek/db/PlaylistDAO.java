@@ -1,14 +1,14 @@
 package youtrek.db;
 
-import youtrek.models.ListOfPlaylists;
-import youtrek.models.ListOfVideos;
-import youtrek.models.Playlist;
-import youtrek.models.Video;
+import youtrek.models.*;
+import youtrek.models.Character;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PlaylistDAO {
 
@@ -172,6 +172,30 @@ public class PlaylistDAO {
 
     }
 
+    public Playlist appendRemoteSegment(PublicSegment ps, int playlist_id) throws SQLException {
+        try {
+            // convert public segment object to video, insert into table
+            // insert converted video into pvjoin, return playlist
+            VideoDAO vDAO = VideoDAO.getInstance();
+            CharacterDAO cDAO = CharacterDAO.getInstance();
+            Video convertedVideo = new Video(ps);
+            int insertId = vDAO.createVideo(convertedVideo);
+            // find character ids for their characters
+            List<Character> characterList = new ArrayList<>();
+            for (String s : convertedVideo.characters) {
+                // add character ids to list for vcjoin insert, and if character not in DAO, add them to our DB
+                Character c = new Character(s);
+                characterList.add(c);
+            }
+            List<Integer> characterMapIds = cDAO.insertCharacters(characterList);
+            vDAO.insertVideoCharactersPair(insertId, characterMapIds);
+            return appendVideo(insertId, playlist_id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new SQLException("Failed in adding remote video to playlist: " + e.getMessage());
+        }
+    }
+
     public Playlist appendVideo(int video_id, int playlist_id) throws SQLException {
         try {
             PreparedStatement ps = conn.prepareStatement(SqlStatementProvider.APPEND_VIDEO_TO_PLAYLIST_GIVEN_IDS);
@@ -223,7 +247,7 @@ public class PlaylistDAO {
         return pl;
     }
 
-    private Video generateVideo(ResultSet rset) throws Exception {
+    Video generateVideo(ResultSet rset) throws Exception {
         int id = rset.getInt("videos.id");
         String name = rset.getString("videos.name");
         String url = rset.getString("url");
@@ -233,6 +257,33 @@ public class PlaylistDAO {
         boolean isRemote = rset.getBoolean("is_remote");
         boolean isAvailable = rset.getBoolean("is_available");
         Video video = new Video(id,name, url, dialogue, dateCreated, tlpId, isRemote, isAvailable);
+        List<String> characters = getCharacters(id);
+        video.addCharacters(characters);
         return video;
+    }
+
+    List<String> getCharacters(int videoId) throws SQLException{
+        try {
+            String query = SqlStatementProvider.GET_CHARACTERS_GIVEN_VIDEO_ID;
+            List<String> characters = new ArrayList<>();
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setInt(1, videoId);
+            ResultSet resultSet = ps.executeQuery();
+
+            while(resultSet.next()) {
+                String character = resultSet.getString("name");
+                characters.add(character);
+            }
+
+            resultSet.close();
+            ps.close();
+
+            return characters;
+        }catch(SQLException e) {
+            e.printStackTrace();
+            throw new SQLException(new StringBuilder().
+                    append("Failed in getting constant: ").
+                    append(e.getStackTrace()).toString());
+        }
     }
 }

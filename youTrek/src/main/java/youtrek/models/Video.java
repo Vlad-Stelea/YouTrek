@@ -2,6 +2,7 @@ package youtrek.models;
 
 import java.sql.Date; //TODO make sure that we're using java.sql.Date throughout the project (NOT java.util.Date)
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Formatter;
 import java.util.List;
 
@@ -54,6 +55,17 @@ public class Video {
         this.url = url;
         this.characters = characters;
         this.dialogue = dialogue;
+    }
+
+    // convert public segment to video
+    public Video(PublicSegment ps) {
+        this.name = "RemoteSegment";
+        this.url = ps.url;
+        this.dialogue = ps.text;
+        this.tlpId = -1;
+        this.isRemote = true;
+        this.isAvailable = false;
+        this.characters = Arrays.asList(ps.character.split(("\\s*,\\s*")));
     }
 
     public void setIsRemote(boolean b) {

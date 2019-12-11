@@ -40,7 +40,8 @@ export default {
             ],
             dialogue: seg.text,
             url: seg.url,
-            name: 'no name'
+            name: 'remote:' + seg.text,
+            id: 'remote:' + seg.text
           }
           remoteVideoList.push(formattedSeg)
         })
@@ -67,19 +68,33 @@ export default {
     })
   },
 
-  async getVideos () {
+  async getVideos (tlpAllowed = true) {
     const response = await this.execute('get', '/videos')
-    const remoteArray = await this.getRemoteVideos()
     var videoArray = JSON.parse(response.data.body).videos
-    remoteArray.forEach(el => {
-      videoArray.push(el)
-    })
+    videoArray = videoArray.filter(el => el.isRemote === false)
+    if (tlpAllowed) {
+      const remoteArray = await this.getRemoteVideos()
+      remoteArray.forEach(el => {
+        el.isRemote = true
+        videoArray.push(el)
+      })
+    }
     return videoArray
   },
 
-  async searchVideos (searchString) {
-    const response = await this.execute('get', '/videos?filter=' + searchString)
-    return JSON.parse(response.data.body).videos
+  async searchVideos (searchString, tlpAllowed) {
+    searchString = searchString.toLowerCase()
+    const response = await this.getVideos(tlpAllowed)
+    var videoList = response
+    videoList = videoList.filter(el => {
+      var charFlag = false
+      el.characters.forEach(char => {
+        let character = char.toLowerCase()
+        if (character.includes(searchString)) charFlag = true
+      })
+      return el.dialogue.toLowerCase().includes(searchString) || charFlag
+    })
+    return videoList
   },
 
   async getPlaylists () {
@@ -134,12 +149,22 @@ export default {
     const response = await this.execute('post', '/tlp/delete', id)
     return JSON.parse(response.data.body)
   },
-  async appendVideo (playlistID, videoID) {
-    const body = {
-      'id': videoID
+  async appendVideo (playlistID, video) {
+    if (!video.isRemote) {
+      const body = {
+        'id': video.id
+      }
+      const response = await this.execute('post', '/playlists/' + playlistID + '/video', body)
+      return JSON.parse(response.data.body)
+    } else {
+      const body = {
+        'url': video.url,
+        'character': video.characters[0],
+        'text': video.dialogue
+      }
+      const response = await this.execute('post', '/playlists/' + playlistID + '/video/remote', body)
+      return JSON.parse(response.data.body)
     }
-    const response = await this.execute('post', '/playlists/' + playlistID + '/video', body)
-    return JSON.parse(response.data.body)
   },
 
   async removeVideo (playlistID, videoID) {
@@ -149,7 +174,13 @@ export default {
     const response = await this.execute('post', '/playlists/' + playlistID + '/video/delete', body)
     return JSON.parse(response.data.body)
   },
-
+  async setAvailability (vidID, vidAvail) {
+    const body = {
+      'isAvail': vidAvail
+    }
+    const response = await this.execute('post', '/video/' + vidID + '/availability', body)
+    return JSON.parse(response.data.body)
+  },
   async getCharacters () {
     // Empty body
     // const body = {

@@ -1,11 +1,23 @@
 <template>
-  <b-card class="vidContainer m-3" bg-variant="dark">
+  <b-card class="vidContainer m-3">
     <video style="padding-bottom: 0px;" controls=" " width="320" height="240">
       <source v-bind:src="video.url" type="video/ogg" />/>
     </video>
-    <b-card-footer style="height: 5rem;">
+    <b-card-footer style="height: 7rem;">
       <b-row id="footer" class="d-flex justify-content-between">
-        <div id="dialogue" class="pl-3 pt-0 text-wrap font-weight-bold">{{video.dialogue}}</div>
+        <div class="d-flex flex-column">
+          <div id="dialogue" class="pl-3 pt-0 text-wrap font-weight-bold">{{video.dialogue}}</div>
+          <div v-if="!isPlaylist" class="ml-3 pt-1">
+            <b-badge
+              class="mx-1 pt-2"
+              pill
+              id="character-badge"
+              variant="dark"
+              v-for="character in video.characters"
+              :key="character"
+            >{{character}}</b-badge>
+          </div>
+        </div>
         <div class="float-right d-flex flex-column pt-0 mb-1 pr-3">
           <b-button
             v-if="!isPlaylist"
@@ -27,7 +39,7 @@
           </b-button>
           <b-button
             v-if="isAdmin && video.isAvailable"
-            @click="video.isAvailable = setAvail(video.id, false)"
+            @click="setAvail(video.id, false)"
             variant="outline-success"
             class="border-0"
             title="Mark as private"
@@ -36,7 +48,7 @@
           </b-button>
           <b-button
             v-if="isAdmin && !video.isAvailable"
-            @click="video.isAvailable = setAvail(video.id, true)"
+            @click="setAvail(video.id, true)"
             variant="outline-secondary"
             class="border-0"
             title="Mark as public"
@@ -66,12 +78,8 @@ export default {
       this.video.isAvailable = !this.video.isAvailable
     },
     async setAvail (vidID, vidAvail) {
-      const response = await api.setAvailability(vidID, vidAvail)
-      console.log(response.isAvailable)
-      if (!response.isAvailable) {
-        this.loadVideos()
-      }
-      return response.isAvailable
+      await api.setAvailability(vidID, vidAvail)
+      this.available()
     }
   }
 }
@@ -98,5 +106,10 @@ export default {
 
 #dialogue:hover {
   text-decoration: underline;
+}
+
+#character-badge {
+  font-weight: 200;
+  font-size: 1.1rem;
 }
 </style>
