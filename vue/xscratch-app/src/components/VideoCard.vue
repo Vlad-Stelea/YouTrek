@@ -9,7 +9,7 @@
           <div id="dialogue" class="pl-3 pt-0 text-wrap font-weight-bold">{{video.dialogue}}</div>
           <div v-if="!isPlaylist" class="ml-3 pt-1">
             <b-badge
-              class="mx-1 pt-2"
+              class="mr-2 pt-2"
               pill
               id="character-badge"
               variant="dark"
