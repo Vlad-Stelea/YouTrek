@@ -189,7 +189,7 @@ export default {
     // const response = await this.execute('get', '/characters', body)
 
     const mockResponse = {
-      'characters': ['Spock', 'Kirk', 'Conner', 'Emmett', 'Nour', 'Vlad', 'Other Character']
+      'characters': ['Spock', 'Kirk', 'Chekov', 'Uhura', 'Scotty', 'Bones', 'Sulu', 'McCoy', 'Computer', 'Connor', 'Emmett', 'Nour', 'Vlad', 'Other Character']
     }
 
     // TODO change with actual response
