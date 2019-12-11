@@ -38,7 +38,7 @@
             <font-awesome-icon icon="minus-circle" />
           </b-button>
           <b-button
-            v-if="isAdmin && video.isAvailable"
+            v-if="isAdmin && !video.isRemote && video.isAvailable"
             @click="setAvail(video.id, false)"
             variant="outline-success"
             class="border-0"
@@ -47,7 +47,7 @@
             <font-awesome-icon icon="globe" />
           </b-button>
           <b-button
-            v-if="isAdmin && !video.isAvailable"
+            v-if="isAdmin && !video.isRemote && !video.isAvailable"
             @click="setAvail(video.id, true)"
             variant="outline-secondary"
             class="border-0"
