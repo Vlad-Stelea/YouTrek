@@ -4,14 +4,14 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faCoffee, faTrash, faPlus, faTimes, faMinusCircle, faGlobe, faPlayCircle, faPauseCircle, faFastForward, faFastBackward, faRedoAlt, faPlusCircle, faCheckCircle, faSpinner } from '@fortawesome/free-solid-svg-icons'
+import { faCoffee, faTrash, faPlus, faTimes, faMinusCircle, faGlobe, faPlayCircle, faPauseCircle, faFastForward, faFastBackward, faRedoAlt, faPlusCircle, faCheckCircle, faSpinner, faClosedCaptioning } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 Vue.config.productionTip = false
-library.add(faCoffee, faTrash, faPlus, faTimes, faMinusCircle, faGlobe, faPlayCircle, faPauseCircle, faFastForward, faRedoAlt, faPlusCircle, faFastBackward, faCheckCircle, faSpinner)
+library.add(faCoffee, faTrash, faPlus, faTimes, faMinusCircle, faGlobe, faPlayCircle, faPauseCircle, faFastForward, faRedoAlt, faPlusCircle, faFastBackward, faCheckCircle, faSpinner, faClosedCaptioning)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 

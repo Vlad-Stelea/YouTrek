@@ -23,19 +23,38 @@
     >
       <source v-bind:src="video.url" type="video/ogg" />/>
     </video>
+    <div id="caption" v-if="captions" class="d-flex align-text-center">
+      <b-container>
+        <b-row class="justify-content-md-center">
+          <b-col cols="auto">
+            <h2 class="text-white">{{captionContent}}</h2>
+          </b-col>
+        </b-row>
+      </b-container>
+    </div>
     <div id="controls" :class="{ 'hide-controls' : playing }">
       <b-container fluid>
         <b-row align-h="between">
           <b-col cols="auto">
-            <b-button v-if="loop" variant="success" @click="toggleLoop">
-              <font-awesome-icon icon="redo-alt" size="2x" />
+            <b-button
+              v-if="captions"
+              variant="success"
+              @click="toggleCaptions"
+              title="Turn off captions"
+            >
+              <font-awesome-icon icon="closed-captioning" size="2x" />
             </b-button>
-            <b-button v-else variant="outline-success" @click="toggleLoop">
-              <font-awesome-icon icon="redo-alt" size="2x" />
+            <b-button
+              v-else
+              variant="outline-success"
+              @click="toggleCaptions"
+              title="Turn on captions"
+            >
+              <font-awesome-icon icon="closed-captioning" size="2x" />
             </b-button>
           </b-col>
           <b-col cols="auto">
-            <b-button variant="outline-success" @click="backward">
+            <b-button variant="outline-success" @click="backward" title="Previous video">
               <font-awesome-icon icon="fast-backward" size="2x" />
             </b-button>
             <b-button v-if="playing" variant="outline-success" @click="pause">
@@ -44,15 +63,15 @@
             <b-button v-else variant="outline-success" @click="play">
               <font-awesome-icon icon="play-circle" size="2x" />
             </b-button>
-            <b-button variant="outline-success" @click="forward">
+            <b-button variant="outline-success" @click="forward" title="Next video">
               <font-awesome-icon icon="fast-forward" size="2x" />
             </b-button>
           </b-col>
           <b-col cols="auto">
-            <b-button v-if="loop" variant="success" @click="toggleLoop">
+            <b-button v-if="loop" variant="success" @click="toggleLoop" title="Turn off loop">
               <font-awesome-icon icon="redo-alt" size="2x" />
             </b-button>
-            <b-button v-else variant="outline-success" @click="toggleLoop">
+            <b-button v-else variant="outline-success" @click="toggleLoop" title="Turn on loop">
               <font-awesome-icon icon="redo-alt" size="2x" />
             </b-button>
           </b-col>
@@ -74,7 +93,13 @@ export default {
       currentVideo: 0,
       playingID: 0,
       playing: false,
-      loop: false
+      loop: false,
+      captions: false
+    }
+  },
+  computed: {
+    captionContent: function () {
+      return this.videos[this.currentVideo].dialogue
     }
   },
   methods: {
@@ -163,6 +188,9 @@ export default {
     },
     toggleLoop () {
       this.loop = !this.loop
+    },
+    toggleCaptions () {
+      this.captions = !this.captions
     }
   }
 }
@@ -171,7 +199,7 @@ export default {
 <style scoped>
 #filler-div {
   width: 100%;
-  padding-top: 75%;
+  padding-top: 74.2%;
   background-color: #000;
 }
 .videoContainer {
@@ -185,12 +213,24 @@ export default {
   position: absolute;
   opacity: 1;
   z-index: 110 !important;
-  margin-top: -100px !important;
+  margin-top: calc(-100px + 1rem) !important;
   padding-top: 50px;
   left: 0px;
   width: 100%;
   height: 101px;
   background-image: linear-gradient(#00000000, #000000c0, #000000);
+}
+
+#caption {
+  position: absolute;
+  opacity: 1;
+  z-index: 111 !important;
+  margin-top: -100px !important;
+  left: 0px;
+  width: 100%;
+  height: 30px;
+  color: orange;
+  text-shadow: 2px 2px #000;
 }
 
 .hide-controls {
@@ -205,9 +245,12 @@ export default {
 
 .modal-body {
   padding: 0px !important;
+  background: transparent !important;
 }
+
 .modal-footer {
   justify-content: center;
+  background: transparent !important;
 }
 .modal-content {
   background: none !important;
