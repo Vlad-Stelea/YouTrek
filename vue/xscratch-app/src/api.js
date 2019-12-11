@@ -174,11 +174,13 @@ export default {
     const response = await this.execute('post', '/playlists/' + playlistID + '/video/delete', body)
     return JSON.parse(response.data.body)
   },
-
   async setAvailability (vidID, vidAvail) {
-    
-  }
-
+    const body = {
+      'isAvail': vidAvail
+    }
+    const response = await this.execute('post', '/video/' + vidID + '/availability', body)
+    return JSON.parse(response.data.body)
+  },
   async getCharacters () {
     // Empty body
     // const body = {
