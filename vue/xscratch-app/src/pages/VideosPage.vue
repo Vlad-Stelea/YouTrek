@@ -114,6 +114,7 @@ div {
   position: relative;
   overflow: hidden;
   display: inline-block;
+  padding-bottom: 40px;
 }
 
 .titleContainer {
@@ -122,6 +123,7 @@ div {
 
 #videopage {
   padding-right: 40px;
+  margin-bottom: 20px;
 }
 #clear-button,
 #clear-button:hover,
