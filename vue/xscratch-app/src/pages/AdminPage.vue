@@ -181,6 +181,7 @@ div {
   position: relative;
   overflow: hidden;
   display: inline-block;
+  padding-bottom: 40px;
 }
 .vidContainer {
   float: left;
