@@ -20,9 +20,9 @@
               </b-button>
                <b-form-checkbox
                   id="checkbox"
-                  class='mx-3'
-                  v-model = "tlpAllowed"
-                  button = true
+                  class="mx-3"
+                  v-model="tlpAllowed"
+                  v-bind:button= true
                   button-variant = "outline-success"
                >TLP Search</b-form-checkbox>
             </b-input-group-append>
@@ -97,7 +97,6 @@ export default {
       this.activeSearch = this.search
       if (this.search === '') this.activeSearch = ''
       this.loading = true
-      console.log(this.tlpAllowed)
       this.videos = await api.searchVideos(this.search, this.tlpAllowed)
       this.loading = false
     },

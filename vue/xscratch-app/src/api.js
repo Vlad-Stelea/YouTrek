@@ -73,7 +73,6 @@ export default {
     var videoArray = JSON.parse(response.data.body).videos
     videoArray = videoArray.filter(el => el.isRemote === false)
     if (tlpAllowed) {
-      console.log('probably shouldnt be happening')
       const remoteArray = await this.getRemoteVideos()
       remoteArray.forEach(el => {
         el.isRemote = true
@@ -175,6 +174,10 @@ export default {
     const response = await this.execute('post', '/playlists/' + playlistID + '/video/delete', body)
     return JSON.parse(response.data.body)
   },
+
+  async setAvailability (vidID, vidAvail) {
+    
+  }
 
   async getCharacters () {
     // Empty body
