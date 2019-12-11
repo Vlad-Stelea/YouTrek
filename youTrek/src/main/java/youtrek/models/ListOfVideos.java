@@ -27,4 +27,16 @@ public class ListOfVideos implements Iterable<Video> {
     public int getNumVideos() {
         return videos.size();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if(! (o instanceof ListOfVideos)) return false;
+        ListOfVideos other = (ListOfVideos) o;
+        return this.videos.equals(other);
+    }
+
+    @Override
+    public int hashCode() {
+        return videos.hashCode();
+    }
 }
