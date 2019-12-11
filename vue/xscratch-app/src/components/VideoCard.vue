@@ -3,9 +3,21 @@
     <video style="padding-bottom: 0px;" controls=" " width="320" height="240">
       <source v-bind:src="video.url" type="video/ogg" />/>
     </video>
-    <b-card-footer style="height: 5rem;">
+    <b-card-footer style="height: 7rem;">
       <b-row id="footer" class="d-flex justify-content-between">
-        <div id="dialogue" class="pl-3 pt-0 text-wrap font-weight-bold">{{video.dialogue}}</div>
+        <div class="d-flex flex-column">
+          <div id="dialogue" class="pl-3 pt-0 text-wrap font-weight-bold">{{video.dialogue}}</div>
+          <div v-if="!isPlaylist" class="ml-3 pt-1">
+            <b-badge
+              class="mx-1 pt-2"
+              pill
+              id="character-badge"
+              variant="dark"
+              v-for="character in video.characters"
+              :key="character"
+            >{{character}}</b-badge>
+          </div>
+        </div>
         <div class="float-right d-flex flex-column pt-0 mb-1 pr-3">
           <b-button
             v-if="!isPlaylist"
@@ -98,5 +110,10 @@ export default {
 
 #dialogue:hover {
   text-decoration: underline;
+}
+
+#character-badge {
+  font-weight: 200;
+  font-size: 1.1rem;
 }
 </style>
