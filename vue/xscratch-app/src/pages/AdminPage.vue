@@ -28,6 +28,16 @@
           <strong>Loading...</strong>
         </div>
       </template>
+      <template v-slot:cell(valid)="row">
+        <font-awesome-icon
+          v-if="row.item.valid"
+          size="lg"
+          variant="success"
+          class="text-success"
+          icon="coffee"
+        />
+        <font-awesome-icon v-else size="lg" class="text-danger" icon="times" />
+      </template>
     </b-table>
 
     <hr class="bg-success" />
@@ -103,7 +113,9 @@ export default {
       search: '',
       tlps: [],
       tlpFields: [
-        { id: 'id', url: 'url' }
+        { key: 'id', label: 'ID' },
+        { key: 'url', label: 'URL' },
+        { key: 'valid', label: 'Valid?' }
       ],
       activeTLP: '',
       activeSearch: '',
