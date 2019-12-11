@@ -53,6 +53,7 @@ export default {
   },
 
   async getTLPVideos (tlp) {
+    if (tlp.valid === false) return 'bad tlp'
     tlp.base = tlp.url.substring(0, tlp.url.indexOf('?'))
     tlp.key = tlp.url.substring(tlp.url.indexOf('=') + 1)
     if (tlp.base === '' || tlp.key === '') return 'bad tlp'
@@ -65,6 +66,7 @@ export default {
       return res
     }).catch((error) => {
       console.log(error)
+      return 'bad tlp'
     })
   },
 
@@ -143,7 +145,41 @@ export default {
 
   async getTLPs () {
     const response = await this.execute('get', '/tlp')
-    return JSON.parse(response.data.body).listOfTLP
+    var tlpList = JSON.parse(response.data.body).listOfTLP
+    // check tlps
+    for (let index = 0; index < tlpList.length; index++) {
+      const response = await this.getTLPVideos(tlpList[index])
+      if (response !== 'bad tlp') {
+        if (!response.data) tlpList[index].valid = false
+        if (response.data.segments) {
+          response.data.segments.forEach(seg => {
+            try {
+              let formattedSeg = {
+                characters: [
+                  seg.character
+                ],
+                dialogue: seg.text,
+                url: seg.url,
+                name: 'remote:' + seg.text,
+                id: 'remote:' + seg.text
+              }
+              console.log(formattedSeg)
+              tlpList[index].valid = true
+            } catch (error) {
+              console.log('bad tlp')
+              tlpList[index].valid = false
+            }
+          })
+        } else {
+          console.log('bad tlp')
+          tlpList[index].valid = false
+        }
+      } else {
+        console.log('bad tlp')
+        tlpList[index].valid = false
+      }
+    }
+    return tlpList
   },
   async deleteTLP (id) {
     const response = await this.execute('post', '/tlp/delete', id)
