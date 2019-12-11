@@ -96,7 +96,6 @@ export default {
       loading: false,
       fields: [
         { key: 'actions', label: 'Add' },
-        { key: 'name', label: 'Video Title', sortable: true, class: 'text-center' },
         { key: 'dialogue', label: 'Dialogue', sortable: true, sortDirection: 'desc' },
         {
           key: 'characters',
@@ -135,7 +134,7 @@ export default {
         if (el.id === item.id) el.state = 'loading'
       })
       this.$refs.videotable.refresh()
-      await api.appendVideo(this.playlist.id, item.id)
+      await api.appendVideo(this.playlist.id, item)
       this.videos.forEach(el => {
         if (el.id === item.id) el.state = 'added'
       })
