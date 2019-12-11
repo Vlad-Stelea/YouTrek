@@ -1,5 +1,5 @@
 <template>
-  <b-card class="vidContainer m-3" bg-variant="dark">
+  <b-card class="vidContainer m-3">
     <video style="padding-bottom: 0px;" controls=" " width="320" height="240">
       <source v-bind:src="video.url" type="video/ogg" />/>
     </video>

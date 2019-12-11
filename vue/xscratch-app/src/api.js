@@ -72,6 +72,7 @@ export default {
     const response = await this.execute('get', '/videos')
     const remoteArray = await this.getRemoteVideos()
     var videoArray = JSON.parse(response.data.body).videos
+    videoArray = videoArray.filter(el => el.isRemote === false)
     remoteArray.forEach(el => {
       el.isRemote = true
       videoArray.push(el)
