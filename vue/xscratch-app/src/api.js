@@ -71,7 +71,7 @@ export default {
   async getVideos (tlpAllowed) {
     const response = await this.execute('get', '/videos')
     var videoArray = JSON.parse(response.data.body).videos
-    console.log(tlpAllowed)
+    videoArray = videoArray.filter(el => el.isRemote === false)
     if (tlpAllowed) {
       console.log('probably shouldnt be happening')
       const remoteArray = await this.getRemoteVideos()
@@ -80,7 +80,6 @@ export default {
         videoArray.push(el)
       })
     }
-    console.log(videoArray)
     return videoArray
   },
 
