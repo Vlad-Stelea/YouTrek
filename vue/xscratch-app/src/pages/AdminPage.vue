@@ -50,13 +50,14 @@
               <b-button @click="searchVideos()" variant="success">
                 <font-awesome-icon icon="coffee" />
               </b-button>
-                <b-form-checkbox
-                  id="checkbox"
-                  class="mx-3"
-                  v-model="tlpAllowed"
-                  v-bind:button= true
-                  button-variant = "outline-success"
-               >TLP Search</b-form-checkbox>
+              <b-form-checkbox
+                id="checkbox"
+                class="mx-3"
+                v-model="tlpAllowed"
+                v-bind:button="true"
+                @click="searchVideos"
+                button-variant="outline-success"
+              >{{ tlpAllowed ? 'TLP Search On' : 'TLP Search Off'}}</b-form-checkbox>
             </b-input-group-append>
           </b-input-group>
         </div>

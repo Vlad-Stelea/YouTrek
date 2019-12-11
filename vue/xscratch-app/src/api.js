@@ -68,7 +68,7 @@ export default {
     })
   },
 
-  async getVideos (tlpAllowed) {
+  async getVideos (tlpAllowed = true) {
     const response = await this.execute('get', '/videos')
     var videoArray = JSON.parse(response.data.body).videos
     videoArray = videoArray.filter(el => el.isRemote === false)
