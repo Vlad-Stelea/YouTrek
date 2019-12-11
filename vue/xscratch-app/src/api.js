@@ -173,6 +173,17 @@ export default {
     return JSON.parse(response.data.body)
   },
 
+<<<<<<< Updated upstream
+=======
+  async setAvailability (vidID, vidAvail) {
+    const body = {
+      'isAvail': vidAvail
+    }
+    const response = await this.execute('post', '/video/' + vidID + '/availability', body)
+    return JSON.parse(response.data.body)
+  },
+
+>>>>>>> Stashed changes
   async getCharacters () {
     // Empty body
     // const body = {
