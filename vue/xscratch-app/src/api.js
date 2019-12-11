@@ -68,20 +68,25 @@ export default {
     })
   },
 
-  async getVideos () {
+  async getVideos (tlpAllowed) {
     const response = await this.execute('get', '/videos')
-    const remoteArray = await this.getRemoteVideos()
     var videoArray = JSON.parse(response.data.body).videos
-    remoteArray.forEach(el => {
-      el.isRemote = true
-      videoArray.push(el)
-    })
+    console.log(tlpAllowed)
+    if (tlpAllowed) {
+      console.log('probably shouldnt be happening')
+      const remoteArray = await this.getRemoteVideos()
+      remoteArray.forEach(el => {
+        el.isRemote = true
+        videoArray.push(el)
+      })
+    }
+    console.log(videoArray)
     return videoArray
   },
 
-  async searchVideos (searchString) {
+  async searchVideos (searchString, tlpAllowed) {
     searchString = searchString.toLowerCase()
-    const response = await this.getVideos()
+    const response = await this.getVideos(tlpAllowed)
     var videoList = response
     videoList = videoList.filter(el => {
       var charFlag = false
