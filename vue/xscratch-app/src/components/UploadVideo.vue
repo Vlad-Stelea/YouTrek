@@ -36,7 +36,12 @@
             v-model="upload.characters"
             :state="characterState"
             placeholder="Enter video characters"
+            list="character-list"
+            type="email"
           />
+          <datalist id="character-list">
+            <option v-for="character in characters" :key="character" :value="character"></option>
+          </datalist>
           <b-form-invalid-feedback :state="titleState">You must give this video characters</b-form-invalid-feedback>
         </b-form-group>
       </form>
@@ -57,6 +62,7 @@
 <script>
 import api from '@/api'
 var globalEncodedVideo = ''
+
 export default {
   data: function () {
     return {
@@ -67,7 +73,8 @@ export default {
         encodedVideo: ''
       },
       failedValidation: false,
-      submitting: false
+      submitting: false,
+      characters: []
     }
   },
   computed: {
@@ -90,7 +97,9 @@ export default {
       return this.upload.characters === '' ? null : true
     }
   },
-
+  mounted: function () {
+    this.loadCharacters()
+  },
   methods: {
     processFile (event) {
       var data = event.target.files[0]
@@ -128,6 +137,11 @@ export default {
         video: ''
       }
       this.failedValidation = false
+    },
+    async loadCharacters () {
+      console.log('Loading characters')
+      this.characters = await api.getCharacters()
+      console.log(this.characters)
     }
   }
 }
