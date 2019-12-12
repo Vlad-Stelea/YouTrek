@@ -42,12 +42,12 @@
 
     <hr class="bg-success" />
 
-    <h1>Library:</h1>
+ <h1>Library:</h1>
     <b-row>
-      <b-col class="col-sm-10 col-md-10 col-lg-8 col-xl-5">
+      <b-col class="col-sm-10 col-md-8 col-lg-6 col-xl-6">
         <div class="topnav pb-4">
-          <b-input-group prepend="Search" class="mt-3">
-            <b-form-input id="search-bar" v-model="search" @keydown.enter="searchVideos()"></b-form-input>
+          <b-input-group prepend="Dialogue Search" class="mt-3">
+            <b-form-input id="search-bar" v-model="dialogueSearch" @keydown.enter="searchVideos()"></b-form-input>
             <b-input-group-append>
               <b-button
                 v-if="search != ''"
@@ -70,29 +70,25 @@
               >{{ tlpAllowed ? 'TLP Search On' : 'TLP Search Off'}}</b-form-checkbox>
             </b-input-group-append>
           </b-input-group>
-          <b-input-group prepend="Character Filter" class="mb-3">
-            <b-form-input id="search-bar" v-model="charSearch"></b-form-input>
+        </div>
+      </b-col>
+    </b-row>
+        <b-row>
+      <b-col class="col-sm-10 col-md-8 col-lg-6 col-xl-4">
+        <div class="topnav pb-4">
+          <b-input-group prepend="Character Search" class="mt-3">
+            <b-form-input id="search-bar" v-model="charSearch" @keydown.enter="searchVideos()"></b-form-input>
             <b-input-group-append>
               <b-button
-                v-if="charSearch != ''"
-                @mouseup="clearCharacter()"
+                v-if="search != ''"
+                @mouseup="clearSearch()"
                 variant="outline-danger"
                 id="clear-button"
               >
                 <font-awesome-icon icon="times" />
               </b-button>
-            </b-input-group-append>
-          </b-input-group>
-          <b-input-group prepend="Dialogue Filter" class="mb-3">
-            <b-form-input id="search-bar" v-model="textSearch"></b-form-input>
-            <b-input-group-append>
-              <b-button
-                v-if="textSearch != ''"
-                @mouseup="clearDialogue()"
-                variant="outline-danger"
-                id="clear-button"
-              >
-                <font-awesome-icon icon="times" />
+              <b-button @click="searchVideos()" variant="success">
+                <font-awesome-icon icon="coffee" />
               </b-button>
             </b-input-group-append>
           </b-input-group>
@@ -136,7 +132,8 @@ export default {
   data: function () {
     return {
       videos: [],
-      search: '',
+      charSearch: '',
+      dialogueSearch: '',
       tlps: [],
       tlpFields: [
         { key: 'id', label: 'ID' },
@@ -184,15 +181,17 @@ export default {
       this.loading = false
     },
     async searchVideos () {
-      this.activeSearch = this.search
-      if (this.search === '') this.activeSearch = ''
+      this.activeSearch = this.dialogueSearch + ' + Characters: ' + this.charSearch
+      if (this.dialogueSearch === '') this.activeSearch = 'Characters:' + this.charSearch
+      if (this.charSearch === '') this.activeSearch = this.dialogueSearch
+      if (this.charSearch === '' && this.dialogueSearch === '') this.activeSearch = ''
       this.loading = true
-      console.log(this.search)
-      this.videos = await api.searchVideos(this.search, this.tlpAllowed)
+      this.videos = await api.searchVideos(this.dialogueSearch, this.charSearch, this.tlpAllowed)
       this.loading = false
     },
     async clearSearch () {
-      this.search = ''
+      this.charSearch = ''
+      this.dialogueSearch = ''
       this.searchVideos()
       this.activeSearch = ''
     },
