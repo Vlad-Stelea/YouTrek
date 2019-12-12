@@ -50,7 +50,7 @@
             <b-form-input id="search-bar" v-model="dialogueSearch" @keydown.enter="searchVideos()"></b-form-input>
             <b-input-group-append>
               <b-button
-                v-if="search != ''"
+                v-if="dialogueSearch != ''"
                 @mouseup="clearSearch()"
                 variant="outline-danger"
                 id="clear-button"
@@ -80,7 +80,7 @@
             <b-form-input id="search-bar" v-model="charSearch" @keydown.enter="searchVideos()"></b-form-input>
             <b-input-group-append>
               <b-button
-                v-if="search != ''"
+                v-if="charSearch != ''"
                 @mouseup="clearSearch()"
                 variant="outline-danger"
                 id="clear-button"
