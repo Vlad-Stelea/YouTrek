@@ -42,7 +42,7 @@
 
     <hr class="bg-success" />
 
- <h1>Library:</h1>
+    <h1>Library:</h1>
     <b-row>
       <b-col class="col-sm-10 col-md-8 col-lg-6 col-xl-6">
         <div class="topnav pb-4">
@@ -51,7 +51,7 @@
             <b-input-group-append>
               <b-button
                 v-if="dialogueSearch != ''"
-                @mouseup="clearSearch()"
+                @mouseup="dialogueSearch = ''"
                 variant="outline-danger"
                 id="clear-button"
               >
@@ -60,28 +60,16 @@
               <b-button @click="searchVideos()" variant="success">
                 <font-awesome-icon icon="coffee" />
               </b-button>
-              <b-form-checkbox
-                id="checkbox"
-                class="mx-3"
-                v-model="tlpAllowed"
-                v-bind:button="true"
-                @click="searchVideos"
-                button-variant="outline-success"
-              >{{ tlpAllowed ? 'TLP Search On' : 'TLP Search Off'}}</b-form-checkbox>
             </b-input-group-append>
           </b-input-group>
         </div>
-      </b-col>
-    </b-row>
-        <b-row>
-      <b-col class="col-sm-10 col-md-8 col-lg-6 col-xl-4">
         <div class="topnav pb-4">
           <b-input-group prepend="Character Search" class="mt-3">
             <b-form-input id="search-bar" v-model="charSearch" @keydown.enter="searchVideos()"></b-form-input>
             <b-input-group-append>
               <b-button
                 v-if="charSearch != ''"
-                @mouseup="clearSearch()"
+                @mouseup="charSearch = ''"
                 variant="outline-danger"
                 id="clear-button"
               >
@@ -93,6 +81,16 @@
             </b-input-group-append>
           </b-input-group>
         </div>
+      </b-col>
+      <b-col>
+        <b-form-checkbox
+          id="checkbox"
+          class="mx-3 mt-3"
+          v-model="tlpAllowed"
+          v-bind:button="true"
+          @click="searchVideos"
+          button-variant="outline-success"
+        >{{ tlpAllowed ? 'TLP Search On' : 'TLP Search Off'}}</b-form-checkbox>
       </b-col>
     </b-row>
     <h4 class="py-3" v-if="activeSearch">Searching for "{{activeSearch}}"</h4>
