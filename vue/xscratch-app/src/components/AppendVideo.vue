@@ -17,12 +17,25 @@
   >
     <div>
       <!-- Search Bar -->
-      <b-input-group prepend="Search" class="mb-3">
-        <b-form-input id="search-bar" v-model="search"></b-form-input>
+      <b-input-group prepend="Character Filter" class="mb-3">
+        <b-form-input id="search-bar" v-model="charSearch"></b-form-input>
         <b-input-group-append>
           <b-button
-            v-if="search != ''"
-            @mouseup="clearSearch()"
+            v-if="charSearch != ''"
+            @mouseup="clearCharacter()"
+            variant="outline-danger"
+            id="clear-button"
+          >
+            <font-awesome-icon icon="times" />
+          </b-button>
+        </b-input-group-append>
+      </b-input-group>
+      <b-input-group prepend="Dialogue Filter" class="mb-3">
+        <b-form-input id="search-bar" v-model="textSearch"></b-form-input>
+        <b-input-group-append>
+          <b-button
+            v-if="textSearch != ''"
+            @mouseup="clearDialogue()"
             variant="outline-danger"
             id="clear-button"
           >
@@ -39,7 +52,8 @@
         hover
         dark
         borderless
-        :filter="search"
+        :filter="{ 'text': this.textSearch, 'char': this.charSearch }"
+        :filter-function="filter"
         :items="videos"
         :fields="fields"
       >
@@ -94,6 +108,8 @@ export default {
       search: '',
       videos: [],
       loading: false,
+      charSearch: '',
+      textSearch: '',
       fields: [
         { key: 'actions', label: 'Add' },
         { key: 'dialogue', label: 'Dialogue', sortable: true, sortDirection: 'desc' },
@@ -115,6 +131,17 @@ export default {
     }
   },
   methods: {
+    filter (item, filterObj) {
+      const textSearch = filterObj.text.toLowerCase()
+      const charSearch = filterObj.char.toLowerCase()
+      var charFlag = (charSearch === '')
+      item.characters.forEach(char => {
+        let character = char.toLowerCase()
+        if (character.includes(charSearch)) charFlag = true
+      })
+      var textFlag = item.dialogue.toLowerCase().includes(textSearch) || textSearch === ''
+      return textFlag && charFlag
+    },
     async loadVideos () {
       this.loading = true
       this.videos = await api.getVideos()
@@ -123,10 +150,11 @@ export default {
       })
       this.loading = false
     },
-    async clearSearch () {
-      this.search = ''
-      this.searchVideos()
-      this.activeSearch = ''
+    clearCharacter () {
+      this.charSearch = ''
+    },
+    clearDialogue () {
+      this.textSearch = ''
     },
     async appendVid (item, index) {
       if (item.state === 'added') return
